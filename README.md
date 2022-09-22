@@ -1,7 +1,6 @@
 # pro-focus
 
-hello, this is a open source project that I've made, to sharpen my front-end skills. 
-The project is mainly idea is to work more effecientllt by ysing the Promodoro technique. 
+In development phase
 
 # Technologies used
 
