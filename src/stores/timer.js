@@ -1,26 +1,30 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
+// import { ref } from "vue";
 
 export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
+      needToChange: false,
+      timerCountingIs: "promodro",
       longBreakIntarval: 4,
       //
-      isCounting: false,
+      confirmChange: false,
+      TimerIsCounting: false,
       //
       displayModel: false,
       confirmChange: false,
       //
+      todoPromodoros: 4,
       startPromodoro: true,
-      promodoro: 9,
+      promodoro: 90,
       finishedPromodoros: 0,
       //
       startShortBreak: false,
-      shortBreak: 4,
+      shortBreak: 40,
       //
       startLongBreak: false,
-      longBreak: 10,
+      longBreak: 100,
       needLongBreak: false,
-
       //
     };
   },
@@ -29,28 +33,34 @@ export const useCounterStore = defineStore("counter", {
   },
   actions: {
     startPromodorotTimer() {
-      this.isCounting = true;
-      this.startPromodoro = true;
+      this.TimerIsCounting = this.startPromodoro = true;
+      this.timerCountingIs = "promodoro";
       const interval = setInterval(() => {
-        if (this.promodoro === 0) {
+        if (this.needToChange) {
           clearInterval(interval);
-          if (this.longBreakIntarval === 0) {
+          return;
+        }
+        if (this.promodoro === 0 || !this.startPromodoro) {
+          clearInterval(interval);
+          this.finishedPromodoros++;
+          if (this.finishedPromodoros % this.longBreakIntarval === 0) {
             this.getAlongBreak();
             this.longBreakIntarval = 4;
-          } else {
-            this.getAshortBreak();
-          }
+          } else this.getAshortBreak();
           this.promodoro = 9;
         }
         this.promodoro--;
       }, 1000);
     },
     startShortBreakTimer() {
-      this.isCounting = true;
+      this.TimerIsCounting = true;
+      this.timerCountingIs = "shortBreak";
       const interval = setInterval(() => {
-        if (this.shortBreak === 0) {
-          this.finishedPromodoros++;
-          this.longBreakIntarval--;
+        if (this.needToChange) {
+          clearInterval(interval);
+          return;
+        }
+        if (this.shortBreak === 0 || !this.startShortBreak) {
           this.goToPromodoro();
           clearInterval(interval);
           this.shortBreak = 4;
@@ -59,9 +69,14 @@ export const useCounterStore = defineStore("counter", {
       }, 1000);
     },
     startLongBreakTimer() {
-      this.isCounting = true;
+      this.TimerIsCounting = true;
+      this.timerCountingIs = "longBreak";
       const interval = setInterval(() => {
-        if (this.longBreak === 0) {
+        if (this.needToChange) {
+          clearInterval(interval);
+          return;
+        }
+        if (this.longBreak === 0 || !this.startLongBreak) {
           clearInterval(interval);
           this.goToPromodoro();
           this.longBreak = 10;
@@ -77,6 +92,23 @@ export const useCounterStore = defineStore("counter", {
       this.stopAll();
       this.startShortBreak = true;
     },
+    changeToAnewPhase() {
+      this.displayModel = true;
+      this.needToChange = true;
+    },
+    needBreakConfirm(confirm) {
+      if (this.timerCountingIs === "promodoro") {
+        if (confirm) this.promodoro = 0;
+        this.startPromodorotTimer();
+      } else if (this.timerCountingIs === "shortBreak") {
+        if (confirm) this.shortBreak = 0;
+        this.startShortBreakTimer();
+      } else {
+        if (confirm) this.longBreak = 0;
+        this.startLongBreakTimer();
+      }
+      this.needToChange = this.displayModel = false;
+    },
     getAlongBreak() {
       this.stopAll();
       this.startLongBreak = true;
@@ -85,8 +117,12 @@ export const useCounterStore = defineStore("counter", {
       this.startPromodoro =
         this.startShortBreak =
         this.startLongBreak =
-        this.isCounting =
+        this.TimerIsCounting =
           false;
     },
   },
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useCounterStore, import.meta.hot));
+}
