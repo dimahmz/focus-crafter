@@ -40,8 +40,6 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
 }
 
 *,
@@ -49,12 +47,10 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  position: relative;
   font-weight: normal;
 }
 
 body {
-  min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
+  background: var(--secondary-color);
 }
