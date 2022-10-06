@@ -1,26 +1,22 @@
 <template lang="pug">
-main
-h1.title ProFocus
-TimerBtns
-.model-conatiner(v-if="store.displayModel")
-  WarningModel
+AppHeader.header
+TimerBtns.timerBtns
+Footerbtns.footerbtns
+WarningModel
 </template>
 
 <script setup>
-import WarningModel from "./components/timer.vue/warningModel.vue";
-import TimerBtns from "./components/timer.vue/timerBtns.vue";
-import { useCounterStore } from "@/stores/timer";
-const store = useCounterStore();
+import WarningModel from "./components/timer/warningModel.vue";
+import TimerBtns from "./components/timer/timerBtns.vue";
+import AppHeader from "./components/timer/appHeader.vue";
+import Footerbtns from "./components/timer/footerbtns.vue";
 </script>
 
-<style>
-.title {
-  @apply text-center;
+<style scoped>
+.header {
+  @apply mt-4 mb-10;
 }
-.model-conatiner {
-  @apply absolute inset-0 h-screen w-full flex justify-center pt-20 bg-gray-100 opacity-95;
-}
-.model {
-  @apply relative z-30;
+.timerBtns {
+  @apply mb-16;
 }
 </style>

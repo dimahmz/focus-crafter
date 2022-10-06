@@ -1,0 +1,90 @@
+<template lang="pug">
+.circle-bg
+  .circle-wrap
+    .circle
+      .mask.full(data-id="progressBar")
+        .fill(data-id="progressBar")
+      .mask.half
+        .fill(data-id="progressBar")
+      .inside-circle
+        .counter {{counter}}
+        .roundedBtn(v-if="store.TimerIsCounting" @click="store.changeToAnewPhase()") &gt;
+        .roundedBtn(v-else @click="start()") start
+</template>
+<!-- style.transform = "rotate(7deg)"; -->
+<script setup>
+import { useCounterStore } from "@/stores/timer";
+import { watch, onMounted } from "vue";
+
+const store = useCounterStore();
+
+const props = defineProps({ counter: { type: Number, required: true } });
+const initialeCounter = props.counter;
+
+onMounted(() => {});
+
+watch(props, () => {
+  const progress = 180 - parseInt((180 * props.counter) / initialeCounter);
+  document.querySelectorAll('[data-id="progressBar"]').forEach((div) => {
+    div.style.transform = `rotate(${progress}deg)`;
+  });
+});
+
+function start() {
+  if (store.startPromodoro) store.startPromodorotTimer();
+  else if (store.startShortBreak) store.startShortBreakTimer();
+  else store.startLongBreakTimer();
+}
+</script>
+
+<style scoped>
+.circle-wrap {
+  @apply text-white;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid #cdcbd0;
+}
+.circle-wrap .circle .mask,
+.circle-wrap .circle .fill {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask {
+  clip: rect(0px, 150px, 150px, 75px);
+}
+
+.circle-wrap .inside-circle {
+  @apply bg-blue;
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  text-align: center;
+  margin-top: 14px;
+  margin-left: 14px;
+  position: absolute;
+  z-index: 99;
+  font-weight: 700;
+  font-size: 2em;
+}
+
+.mask .fill {
+  @apply bg-pink;
+  clip: rect(0px, 75px, 150px, 0px);
+}
+
+.mask.full,
+.circle .fill {
+  transform: rotate(0);
+  transition: all 0.5s ease-in-out;
+}
+.roundedBtn {
+  @apply cursor-pointer;
+}
+.roundedBtn:hover {
+  @apply transition-all ease-out scale-110;
+}
+</style>
