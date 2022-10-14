@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import seetingIcon from "../icons/setting.vue";
-import tasksIcons from "../icons/tasks.vue";
+import seetingIcon from "../_icons/setting.vue";
+import tasksIcons from "../_icons/tasks.vue";
 import { useCounterStore } from "@/stores/timer";
 const store = useCounterStore();
 </script>

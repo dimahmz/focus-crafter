@@ -8,8 +8,11 @@
         .fill(data-id="progressBar")
       .inside-circle
         .counter {{counter}}
-        .roundedBtn(v-if="store.TimerIsCounting" @click="store.changeToAnewPhase()") &gt;
-        .roundedBtn(v-else @click="start()") start
+        .roundedBtn(v-if="!store.TimerIsCounting" @click="start()") start
+  .contol-timer(v-if="store.TimerIsCounting")
+    .changeBtn(@click="store.pauseOrResumeTimer()")  {{ store.getTimerState}}
+    .changeBtn(@click="store.changeToAnewPhase()")  &gt;
+    p(@click="store.restartTimer()") restart
 </template>
 <!-- style.transform = "rotate(7deg)"; -->
 <script setup>
@@ -86,5 +89,9 @@ function start() {
 }
 .roundedBtn:hover {
   @apply transition-all ease-out scale-110;
+}
+
+.contol-timer {
+  @apply text-white grid place-items-center cursor-pointer;
 }
 </style>
