@@ -47,7 +47,7 @@ export const useCounterStore = defineStore(
         this.TimerIsCounting = this.startPromodoro = true;
         this.timerCountingIs = "promodoro";
         const interval = setInterval(() => {
-          if (this.needToChange) {
+          if (this.needToChange || this.pauseTimer) {
             clearInterval(interval);
             return;
           }
@@ -68,7 +68,7 @@ export const useCounterStore = defineStore(
         this.TimerIsCounting = true;
         this.timerCountingIs = "shortBreak";
         const interval = setInterval(() => {
-          if (this.needToChange) {
+          if (this.needToChange || this.pauseTimer) {
             clearInterval(interval);
             return;
           }
@@ -87,7 +87,7 @@ export const useCounterStore = defineStore(
         this.TimerIsCounting = true;
         this.timerCountingIs = "longBreak";
         const interval = setInterval(() => {
-          if (this.needToChange) {
+          if (this.needToChange || this.pauseTimer) {
             clearInterval(interval);
             return;
           }
@@ -100,7 +100,23 @@ export const useCounterStore = defineStore(
           }
         }, 1000);
       },
-
+      restartTimer() {
+        const store = useSettingsStore();
+        this.pauseTimer = true;
+        this.promodoro = store.promodoro_npt;
+        this.longBreak = store.longBreak_npt;
+        this.shortBreak = store.shortBreak_npt;
+        this.TimerIsCounting = false;
+        setTimeout(() => (this.pauseTimer = false), 1000);
+      },
+      pauseOrResumeTimer() {
+        if (this.pauseTimer) {
+          this.pauseTimer = false;
+          this.needBreakConfirm(false);
+          return;
+        }
+        this.pauseTimer = true;
+      },
       goToPromodoro(autochange) {
         this.stopAll();
         this.startPromodoro = true;
