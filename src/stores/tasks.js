@@ -1,35 +1,53 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { ref, computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useCounterStore } from "./timer";
 
 export const useTasksStore = defineStore("tasks", () => {
   const timerStore = useCounterStore();
 
-  const tasks = [];
+  const tasks = reactive({ value: [] });
+  const selectedTaskNdx = ref(0);
 
   const numberOfTasks = computed(function () {
-    return tasks.length;
+    return tasks.value.length;
   });
 
-  function addTask({ title, notes, promodoros }) {
-    tasks.push({
+  function addTask({ title, notes, estimatedPromodoros, finishedPromdoros }) {
+    tasks.value.push({
       title,
       notes,
-      promodoros,
+      finishedPromdoros,
+      estimatedPromodoros,
+      isSelected: false,
     });
   }
+  function selectTask(ndx) {
+    selectedTaskNdx.value = ndx;
 
-  function editTask(ndx, { title, notes, promodoros }) {
-    tasks[ndx].title = title;
-    tasks[ndx].notes = notes;
-    tasks[ndx].promodoros = promodoros;
+    tasks.value.forEach((task) => {
+      if (task.isSelected) {
+        task.isSelected = false;
+        return;
+      }
+    });
+    tasks.value[ndx].isSelected = true;
+  }
+  function editTask(
+    ndx,
+    { title, notes, estimatedPromodoros, finishedPromdoros }
+  ) {
+    tasks[ndx].value.title = title;
+    tasks[ndx].value.notes = notes;
+    tasks[ndx].value.estimatedPromodoros = estimatedPromodoros;
+    tasks[ndx].value.finishedPromdoros = finishedPromdoros;
   }
 
   function deleteTask(ndx) {
-    this.tasks[ndx].slice(ndx, 1);
+    tasks.value.splice(ndx, 1);
   }
 
   return {
+    selectedTaskNdx,
     tasks,
     addTask,
     editTask,
@@ -39,5 +57,5 @@ export const useTasksStore = defineStore("tasks", () => {
 });
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useCounterStore, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useTasksStore, import.meta.hot));
 }

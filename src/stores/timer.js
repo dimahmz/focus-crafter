@@ -2,6 +2,7 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 
 //setting store
 import { useSettingsStore } from "./settings";
+import { useTasksStore } from "./tasks";
 
 export const useCounterStore = defineStore(
   "counter",
@@ -21,7 +22,6 @@ export const useCounterStore = defineStore(
         displayModel: false,
         confirmChange: false,
         //
-        todoPromodoros: 4,
         startPromodoro: true,
         promodoro: store.promodoro_npt,
         finishedPromodoros: 0,
@@ -44,6 +44,7 @@ export const useCounterStore = defineStore(
     actions: {
       startPromodorotTimer() {
         const store = useSettingsStore();
+        const TasksStore = useTasksStore();
         this.TimerIsCounting = this.startPromodoro = true;
         this.timerCountingIs = "promodoro";
         const interval = setInterval(() => {
@@ -55,6 +56,8 @@ export const useCounterStore = defineStore(
           if (this.promodoro == 2) this.startAlarm = true;
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
+            TasksStore.tasks.value[TasksStore.selectedTaskNdx]
+              .finishedPromdoros++;
             !this.finishedPromodoros % store.rounds === 0
               ? this.getAshortBreak(store.autoStartBreaks)
               : this.getAlongBreak(store.autoStartBreaks);
