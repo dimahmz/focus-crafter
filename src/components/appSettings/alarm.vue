@@ -36,12 +36,16 @@ function changeVolume() {
   audio_elem.play();
 }
 
-watch(counterStore.$state, (state) => {
-  if (audio_elem.volume > 0 && state.startAlarm) {
-    audio_elem.play();
-    state.startAlarm = false;
-  }
-});
+counterStore.$subscribe(
+  (mutaion, state) => {
+    if (audio_elem.volume > 0 && state.startAlarm) {
+      audio_elem.play();
+      state.startAlarm = false;
+      // console.log(mutaion.type);
+    }
+  },
+  { detached: true }
+);
 </script>
 
 <style scoped>
