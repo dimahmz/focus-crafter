@@ -1,10 +1,10 @@
 <template lang="pug">
-h1 hi
-Alarm
 </template>
 
 <script setup>
-import Alarm from "./alarm.vue";
+defineProps({
+  name: { type: String, required: true },
+});
 </script>
 
 <style scoped></style>
