@@ -1,17 +1,18 @@
 <template lang="pug">
-AppHeader.header
-TimerBtns.timerBtns
-Footerbtns.footerbtns
-WarningModel
-.hidden
-  Settings
+main.relative
+  AppHeader.header
+  TimerBtns.timerBtns
+  Footerbtns.footerbtns
+  WarningModel
+  Settings(v-show="settingsStore.showModal")
 </template>
 <script setup>
 import WarningModel from "./components/timer/warningModel.vue";
 import TimerBtns from "./components/timer/timerBtns.vue";
 import AppHeader from "./components/timer/appHeader.vue";
 import Footerbtns from "./components/timer/footerbtns.vue";
-import Settings from "./components/appSettings/settingModel.vue";
+import Settings from "./components/appSettings/settingModal.vue";
+
 import { useTasksStore } from "./stores/tasks";
 import { useSettingsStore } from "./stores/settings";
 import { useCounterStore } from "./stores/timer";
