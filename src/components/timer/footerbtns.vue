@@ -1,6 +1,6 @@
 <template lang="pug">
 .btn-container
-  seetingIcon
+  seetingIcon(@click='()=>settingsStore.showModal=true')
   tasksIcons
 </template>
 
@@ -8,6 +8,8 @@
 import seetingIcon from "../_icons/setting.vue";
 import tasksIcons from "../_icons/tasks.vue";
 import { useCounterStore } from "@/stores/timer";
+import { useSettingsStore } from "@/stores/settings";
+const settingsStore = useSettingsStore();
 const store = useCounterStore();
 </script>
 
