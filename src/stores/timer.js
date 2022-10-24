@@ -56,8 +56,9 @@ export const useCounterStore = defineStore(
           if (this.promodoro == 2) this.startAlarm = true;
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
-            TasksStore.tasks.value[TasksStore.selectedTaskNdx]
-              .finishedPromdoros++;
+            if (TasksStore.tasks.value.length)
+              TasksStore.tasks.value[TasksStore.selectedTaskNdx]
+                .finishedPromdoros++;
             !this.finishedPromodoros % store.rounds === 0
               ? this.getAshortBreak(store.autoStartBreaks)
               : this.getAlongBreak(store.autoStartBreaks);
