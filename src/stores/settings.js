@@ -9,6 +9,7 @@ export const useSettingsStore = defineStore("settings", {
       autoStartBreaks: false,
       autoStartPromodoros: false,
       rounds: 4,
+      alarmVolume: 50,
       alarmSound: [
         {
           text: "Bell",
@@ -29,10 +30,6 @@ export const useSettingsStore = defineStore("settings", {
         {
           text: "wood",
           value: "https://pomofocus.io/audios/alarms/alarm-wood.mp3",
-        },
-        {
-          text: "timer",
-          value: "https://pomofocus.io/audios/alarms/alarm-timer.mp3",
         },
       ],
       selectedAlarm: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
