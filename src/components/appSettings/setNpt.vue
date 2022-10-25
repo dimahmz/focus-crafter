@@ -2,8 +2,9 @@
 section
  h2 {{setPhrase}}
  .npts-container
-    slot(name="npt")
+    slot(name="select")
     slot(name="range-npt")
+    slot(name="npt")
 </template>
 
 <script setup>
