@@ -3,10 +3,30 @@
   .modal
     mHeader(modalName="Promodoro settings" @close-modal="closeTheModal")
     .Times-container
-      AppNpt(nptLabel="promodoro"  nptValue=25)
-      AppNpt(nptLabel="short break" nptValue=5)
-      AppNpt(nptLabel="long break" nptValue=30)
-    ChangeAset(setPhrase="auto start break")
+      AppNpt(nptLabel="promodoro"  nptValue=25 storeSet="promodoro_npt")
+      AppNpt(nptLabel="short break" nptValue=5 storeSet="shortBreak_npt")
+      AppNpt(nptLabel="long break" nptValue=30 storeSet="longBreak_npt")
+    ChangeAset(
+        setPhrase="auto start break"
+        storeSet="autoStartBreaks")
+    ChangeAset(
+        setPhrase="auto start Promodors"
+        storeSet="autoStartPromodoros")
+    ChangeAset(
+        setPhrase="Dark mode when running"
+        storeSet="focusedMode")
+    SetNpt(setPhrase="Long Break Interval")
+      template(#npt)
+        AppNpt(:nptValue="settingsStore.rounds"
+        storeSet="rounds")
+    SetNpt(setPhrase="Alarm")
+      template(#range-npt)
+        AppRangeNpt(:nptValue="settingsStore.alarmVolume"
+        storeSet="alarmVolume"
+        @change="chnageAlarmVolume"
+        )
+      template(#select)
+        AppSelectInput(@change="changeAlarmSound")
 </template>
 
 <script setup>
@@ -14,15 +34,46 @@ import Alarm from "./alarm.vue";
 import mHeader from "./modalHeader.vue";
 import SetNpt from "./setNpt.vue";
 import AppNpt from "../appNpt.vue";
-
-import { useSettingsStore } from "@/stores/settings";
+import AppRangeNpt from "../appRangeNpt.vue";
 import ChangeAset from "./changeAset.vue";
+import AppSelectInput from "../appSelectInput.vue";
+import { useSettingsStore } from "@/stores/settings";
+import { useCounterStore } from "@/stores/timer";
+import { onMounted } from "vue";
 
+const counterStore = useCounterStore();
 const settingsStore = useSettingsStore();
 
 function closeTheModal() {
   settingsStore.showModal = false;
 }
+
+let audio_elem;
+onMounted(() => {
+  audio_elem = document.createElement("audio");
+  audio_elem.src = settingsStore.selectedAlarm;
+  audio_elem.volume = settingsStore.alarmVolume / 100;
+});
+
+function chnageAlarmVolume() {
+  audio_elem.volume = settingsStore.alarmVolume / 100;
+  audio_elem.play();
+}
+
+function changeAlarmSound() {
+  audio_elem.src = settingsStore.selectedAlarm;
+  audio_elem.play();
+}
+counterStore.$subscribe(
+  (mutaion, state) => {
+    if (audio_elem.volume > 0 && state.startAlarm) {
+      audio_elem.play();
+      state.startAlarm = false;
+      // console.log(mutaion.type);
+    }
+  },
+  { detached: true }
+);
 </script>
 
 <style scoped>
@@ -31,7 +82,7 @@ function closeTheModal() {
 }
 .modal {
   @apply relative max-w-xl bg-slate-300;
-  /* z-index: 999; */
+  z-index: 999;
 }
 
 .Times-container {
