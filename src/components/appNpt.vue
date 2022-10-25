@@ -1,13 +1,16 @@
 <template lang="pug">
 .npt-container
   label(name="" for="") {{ nptLabel }}
-  input(type="number" name="" v-model="nptValue")
+  input(type="number" name="" v-model="settingsStore[storeSet]")
   </template>
 
 <script setup>
-defineProps({
-  nptValue: { type: String, required: true },
-  nptLabel: { type: String, required: true },
+import { useSettingsStore } from "@/stores/settings";
+const settingsStore = useSettingsStore();
+const props = defineProps({
+  nptValue: { required: true },
+  nptLabel: { type: String },
+  storeSet: { type: String, required: true },
 });
 </script>
 
