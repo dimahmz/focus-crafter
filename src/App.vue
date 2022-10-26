@@ -1,8 +1,8 @@
 <template lang="pug">
 main.relative
-  AppHeader.header
+  AppHeader.header(v-show="!timerStore.focusMode")
   TimerBtns.timerBtns
-  Footerbtns.footerbtns
+  Footerbtns.footerbtns(v-show="!timerStore.focusMode")
   WarningModel
   Settings(v-show="settingsStore.showModal")
 </template>

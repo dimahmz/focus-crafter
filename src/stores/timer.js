@@ -32,6 +32,7 @@ export const useCounterStore = defineStore(
         startLongBreak: false,
         longBreak: store.longBreak_npt,
         needLongBreak: false,
+        focusMode: false,
       };
     },
     getters: {
@@ -43,27 +44,31 @@ export const useCounterStore = defineStore(
     },
     actions: {
       startPromodorotTimer() {
-        const store = useSettingsStore();
+        const Settingstore = useSettingsStore();
         const TasksStore = useTasksStore();
+        if (Settingstore.focusedMode) this.focusMode = true;
         this.TimerIsCounting = this.startPromodoro = true;
         this.timerCountingIs = "promodoro";
         const interval = setInterval(() => {
           if (this.needToChange || this.pauseTimer) {
             clearInterval(interval);
+            this.focusMode = false;
             return;
           }
           this.promodoro--;
           if (this.promodoro == 2) this.startAlarm = true;
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
-            if (TasksStore.tasks.value.length)
+            if (TasksStore.tasks.value.length) {
               TasksStore.tasks.value[TasksStore.selectedTaskNdx]
                 .finishedPromdoros++;
-            !this.finishedPromodoros % store.rounds === 0
-              ? this.getAshortBreak(store.autoStartBreaks)
-              : this.getAlongBreak(store.autoStartBreaks);
+            }
+            !this.finishedPromodoros % Settingstore.rounds === 0
+              ? this.getAshortBreak(Settingstore.autoStartBreaks)
+              : this.getAlongBreak(Settingstore.autoStartBreaks);
             clearInterval(interval);
-            this.promodoro = store.promodoro_npt;
+            this.focusMode = false;
+            this.promodoro = Settingstore.promodoro_npt;
           }
         }, 1000);
       },
