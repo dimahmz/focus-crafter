@@ -21,7 +21,7 @@ import { watch, onMounted } from "vue";
 
 const store = useCounterStore();
 
-const props = defineProps({ counter: { type: Number, required: true } });
+const props = defineProps({ counter: { type: String, required: true } });
 const initialeCounter = props.counter;
 
 onMounted(() => {});

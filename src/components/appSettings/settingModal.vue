@@ -3,9 +3,9 @@
   .modal
     mHeader(modalName="Promodoro settings" @close-modal="closeTheModal")
     .Times-container
-      AppNpt(nptLabel="promodoro"  nptValue=25 storeSet="promodoro_npt")
-      AppNpt(nptLabel="short break" nptValue=5 storeSet="shortBreak_npt")
-      AppNpt(nptLabel="long break" nptValue=30 storeSet="longBreak_npt")
+      AppNpt(nptLabel="promodoro"   storeSet="promodoro_npt")
+      AppNpt(nptLabel="short break" storeSet="shortBreak_npt")
+      AppNpt(nptLabel="long break" storeSet="longBreak_npt")
     ChangeAset(
         setPhrase="auto start break"
         storeSet="autoStartBreaks")
@@ -30,7 +30,6 @@
 </template>
 
 <script setup>
-import Alarm from "./alarm.vue";
 import mHeader from "./modalHeader.vue";
 import SetNpt from "./setNpt.vue";
 import AppNpt from "../appNpt.vue";
