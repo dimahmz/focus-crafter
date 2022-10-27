@@ -3,11 +3,13 @@ export const useSettingsStore = defineStore("settings", {
   state: () => {
     return {
       showModal: true,
-      promodoro_npt: 25,
-      shortBreak_npt: 5,
-      longBreak_npt: 30,
+      promodoro_npt: 25 * 60,
+      shortBreak_npt: 5 * 60,
+      longBreak_npt: 30 * 60,
       autoStartBreaks: false,
       autoStartPromodoros: false,
+      allowNotification: false,
+      notifyTime: 5,
       rounds: 4,
       alarmVolume: 50,
       alarmSound: [

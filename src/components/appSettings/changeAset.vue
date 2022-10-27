@@ -11,7 +11,7 @@ import { useSettingsStore } from "@/stores/settings";
 const settingsStore = useSettingsStore();
 
 const props = defineProps({
-  setPhrase: { type: String, required: true },
+  setPhrase: { type: String },
   storeSet: { type: String, required: true },
 });
 

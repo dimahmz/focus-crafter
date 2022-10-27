@@ -23,10 +23,18 @@
       template(#range-npt)
         AppRangeNpt(:nptValue="settingsStore.alarmVolume"
         storeSet="alarmVolume"
-        @change="chnageAlarmVolume"
-        )
+        @change="chnageAlarmVolume")
       template(#select)
         AppSelectInput(@change="changeAlarmSound")
+    SetNpt(setPhrase="notify me in the last")
+      template(#npt)
+          AppNpt(:nptValue="settingsStore.notifyTime"
+          storeSet="notifyTime"
+          )
+      template(#switchBtn)
+        ChangeAset(storeSet="allowNotification")
+    
+
 </template>
 
 <script setup>

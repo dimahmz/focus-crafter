@@ -5,11 +5,13 @@ section
     slot(name="select")
     slot(name="range-npt")
     slot(name="npt")
+    slot(name="checkBox")
+    slot(name="switchBtn")
 </template>
 
 <script setup>
 defineProps({
-  setPhrase: { type: String, required: true },
+  setPhrase: { type: String },
 });
 </script>
 

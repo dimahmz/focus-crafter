@@ -64,6 +64,11 @@ export const useCounterStore = defineStore(
             return;
           }
           this.promodoro--;
+          if (
+            this.promodoro === Settingstore.notifyTime * 60 &&
+            Settingstore.allowNotification
+          )
+            this.TimerNotifiesUser(Settingstore.notifyTime);
           if (this.promodoro == 2) this.startAlarm = true;
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
@@ -166,6 +171,25 @@ export const useCounterStore = defineStore(
               ? `0${parseInt(secondsFormat % 60)}`
               : parseInt(secondsFormat % 60);
         return `${min} :${second}`;
+      },
+      TimerNotifiesUser(time) {
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+          console.log("notified");
+          const notification = new Notification(
+            `promodoro will be finished within ${time}`
+          );
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+              const notification = new Notification(
+                `promodoro will be finished within ${time}`
+              );
+              console.log("notified");
+            }
+          });
+        }
       },
       needBreakConfirm(confirm) {
         switch (this.timerCountingIs) {
