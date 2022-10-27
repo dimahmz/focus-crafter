@@ -16,13 +16,21 @@ import Settings from "./components/appSettings/settingModal.vue";
 import { useTasksStore } from "./stores/tasks";
 import { useSettingsStore } from "./stores/settings";
 import { useCounterStore } from "./stores/timer";
-
 //stores
 
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 
+//lastest updates
+
+settingsStore.$subscribe((mutation, state) => {
+  if (!timerStore.TimerIsCounting) {
+    timerStore.promodoro = state.promodoro_npt * 60;
+    timerStore.shortBreak = state.shortBreak_npt * 60;
+    timerStore.longBreak = state.longBreak_npt * 60;
+  }
+});
 //latest changes
 
 timerStore.$patch(JSON.parse(localStorage.getItem("counter")));
