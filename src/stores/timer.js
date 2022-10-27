@@ -9,7 +9,7 @@ export const useCounterStore = defineStore(
 
   {
     state: () => {
-      const store = useSettingsStore();
+      const SettingStore = useSettingsStore();
       return {
         pauseTimer: false,
         needToChange: false,
@@ -23,20 +23,28 @@ export const useCounterStore = defineStore(
         confirmChange: false,
         //
         startPromodoro: true,
-        promodoro: store.promodoro_npt,
+        promodoro: SettingStore.promodoro_npt,
         finishedPromodoros: 0,
         //
         startShortBreak: false,
-        shortBreak: store.shortBreak_npt,
+        shortBreak: SettingStore.shortBreak_npt,
         //
         startLongBreak: false,
-        longBreak: store.longBreak_npt,
+        longBreak: SettingStore.longBreak_npt,
         needLongBreak: false,
         focusMode: false,
       };
     },
     getters: {
-      getcounter: () => {},
+      getPromodorocounter() {
+        return this.timerStringFormat(this.promodoro);
+      },
+      gethortBreakcounter() {
+        return this.timerStringFormat(this.shortBreak);
+      },
+      getLongBreakcounter() {
+        return this.timerStringFormat(this.longBreak);
+      },
       getTimerState() {
         if (this.pauseTimer) return "=>";
         return "||";
@@ -68,7 +76,7 @@ export const useCounterStore = defineStore(
               : this.getAlongBreak(Settingstore.autoStartBreaks);
             clearInterval(interval);
             this.focusMode = false;
-            this.promodoro = Settingstore.promodoro_npt;
+            this.promodoro = Settingstore.promodoro_npt * 60;
           }
         }, 1000);
       },
@@ -112,9 +120,9 @@ export const useCounterStore = defineStore(
       restartTimer() {
         const store = useSettingsStore();
         this.pauseTimer = true;
-        this.promodoro = store.promodoro_npt;
-        this.longBreak = store.longBreak_npt;
-        this.shortBreak = store.shortBreak_npt;
+        this.promodoro = store.promodoro_npt * 60;
+        this.longBreak = store.longBreak_npt * 60;
+        this.shortBreak = store.shortBreak_npt * 60;
         this.TimerIsCounting = false;
         setTimeout(() => (this.pauseTimer = false), 1000);
       },
@@ -147,6 +155,17 @@ export const useCounterStore = defineStore(
       },
       changeAlarmSound(audioSrc) {
         audio_elem.src = audioSrc;
+      },
+      timerStringFormat(secondsFormat) {
+        const min =
+            parseInt(secondsFormat / 60) < 10
+              ? `0${parseInt(secondsFormat / 60)}`
+              : parseInt(secondsFormat / 60),
+          second =
+            parseInt(secondsFormat % 60) < 10
+              ? `0${parseInt(secondsFormat % 60)}`
+              : parseInt(secondsFormat % 60);
+        return `${min} :${second}`;
       },
       needBreakConfirm(confirm) {
         switch (this.timerCountingIs) {
