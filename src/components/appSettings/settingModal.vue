@@ -1,7 +1,8 @@
 <template lang="pug">
 .modal-container
   .modal
-    mHeader(modalName="Promodoro settings" @close-modal="closeTheModal")
+    mHeader(modalName="Promodoro settings"
+    setStore="showSettingsModal")
     .Times-container
       AppNpt(nptLabel="promodoro"   storeSet="promodoro_npt")
       AppNpt(nptLabel="short break" storeSet="shortBreak_npt")
@@ -29,8 +30,7 @@
     SetNpt(setPhrase="notify me in the last")
       template(#npt)
           AppNpt(:nptValue="settingsStore.notifyTime"
-          storeSet="notifyTime"
-          )
+          storeSet="notifyTime")
       template(#switchBtn)
         ChangeAset(storeSet="allowNotification")
     
@@ -50,10 +50,6 @@ import { onMounted } from "vue";
 
 const counterStore = useCounterStore();
 const settingsStore = useSettingsStore();
-
-function closeTheModal() {
-  settingsStore.showModal = false;
-}
 
 let audio_elem;
 onMounted(() => {

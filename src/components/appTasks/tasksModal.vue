@@ -1,7 +1,12 @@
 <template lang="pug">
-h1 tasks modal
+.modal-container
+  .modal
+    ModalHeader(modalName="Tasks "
+    setStore="showTasksModal")
 </template>
 
-<script setup></script>
+<script setup>
+import ModalHeader from "../appSettings/modalHeader.vue";
+</script>
 
 <style scoped></style>

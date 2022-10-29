@@ -1,7 +1,7 @@
 <template lang="pug">
 .btn-container
-  seetingIcon(@click='()=>settingsStore.showModal=true')
-  tasksIcons
+  seetingIcon(@click='()=>settingsStore.showSettingsModal=true')
+  tasksIcons(@click='()=>settingsStore.showTasksModal=true')
 </template>
 
 <script setup>

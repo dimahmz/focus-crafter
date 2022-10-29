@@ -2,7 +2,8 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 export const useSettingsStore = defineStore("settings", {
   state: () => {
     return {
-      showModal: true,
+      showSettingsModal: false,
+      showTasksModal: false,
       promodoro_npt: 25 * 60,
       shortBreak_npt: 5 * 60,
       longBreak_npt: 30 * 60,
