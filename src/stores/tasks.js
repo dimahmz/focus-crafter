@@ -1,12 +1,30 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { computed, reactive, ref } from "vue";
-import { useCounterStore } from "./timer";
 
 export const useTasksStore = defineStore("tasks", () => {
-  const timerStore = useCounterStore();
-
-  const tasks = reactive({ value: [] });
+  const tasks = reactive({
+    value: [
+      {
+        title: "nodeJs",
+        notes: "must work on it",
+        estimatedPromodoros: 4,
+        finishedPromdoros: 1,
+        showEditModal: false,
+        isSelected: true,
+      },
+      {
+        title: "frontProjects",
+        notes: "must work on it",
+        estimatedPromodoros: 4,
+        finishedPromdoros: 1,
+        showEditModal: false,
+        isSelected: false,
+      },
+    ],
+  });
   const selectedTaskNdx = ref(0);
+  const addTaskModal = ref(false);
+  const editTaskModal = ref(false);
 
   const numberOfTasks = computed(function () {
     return tasks.value.length;
@@ -18,6 +36,7 @@ export const useTasksStore = defineStore("tasks", () => {
       notes,
       finishedPromdoros,
       estimatedPromodoros,
+      showEditModal: false,
       isSelected: false,
     });
   }
@@ -40,6 +59,7 @@ export const useTasksStore = defineStore("tasks", () => {
     tasks[ndx].value.notes = notes;
     tasks[ndx].value.estimatedPromodoros = estimatedPromodoros;
     tasks[ndx].value.finishedPromdoros = finishedPromdoros;
+    tasks[ndx].value.showEditModal = false;
   }
 
   function deleteTask(ndx) {
@@ -53,6 +73,9 @@ export const useTasksStore = defineStore("tasks", () => {
     editTask,
     deleteTask,
     numberOfTasks,
+    selectTask,
+    addTaskModal,
+    editTaskModal,
   };
 });
 
