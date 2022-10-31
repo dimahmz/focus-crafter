@@ -11,7 +11,7 @@
       ) 
     .add-icon(v-show="!tasksStore.addTaskModal")
         addTask(@click="()=> tasksStore.addTaskModal=true")
-    .flex.justify-center.m-10
+    .newTask-wrapper
       AddNewTask(v-show="tasksStore.addTaskModal")
     
 
@@ -28,14 +28,25 @@ const tasksNmbr = tasksStore.numberOfTasks;
 </script>
 
 <style scoped>
+.modal-container {
+  @apply absolute w-screen h-screen overflow-hidden;
+}
+.modal {
+  @apply p-4 relative overflow-y-auto;
+  height: 90%;
+}
 .tasks-container {
-  @apply flex flex-col space-y-3 px-3;
+  @apply relative flex flex-col space-y-3 px-3;
 }
 .task {
   @apply cursor-pointer;
 }
-
+.newTask-wrapper {
+  @apply flex justify-center m-10 absolute z-10;
+  top: 10%;
+}
 .add-icon {
-  @apply py-3 flex justify-center;
+  @apply sticky py-3 flex justify-center;
+  bottom: 0%;
 }
 </style>

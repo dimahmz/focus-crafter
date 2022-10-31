@@ -55,11 +55,11 @@ export const useTasksStore = defineStore("tasks", () => {
     ndx,
     { title, notes, estimatedPromodoros, finishedPromdoros }
   ) {
-    tasks[ndx].value.title = title;
-    tasks[ndx].value.notes = notes;
-    tasks[ndx].value.estimatedPromodoros = estimatedPromodoros;
-    tasks[ndx].value.finishedPromdoros = finishedPromdoros;
-    tasks[ndx].value.showEditModal = false;
+    tasks.value[ndx].title = title;
+    tasks.value[ndx].notes = notes;
+    tasks.value[ndx].estimatedPromodoros = estimatedPromodoros;
+    tasks.value[ndx].finishedPromdoros = finishedPromdoros;
+    tasks.value[ndx].showEditModal = false;
   }
 
   function deleteTask(ndx) {
