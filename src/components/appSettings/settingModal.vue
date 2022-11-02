@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-container
+.modal-container(@click.self="() => settingsStore.showSettingsModal=false")
   .modal
     mHeader(modalName="Promodoro settings"
     setStore="showSettingsModal")
@@ -54,17 +54,17 @@ const settingsStore = useSettingsStore();
 let audio_elem;
 onMounted(() => {
   audio_elem = document.createElement("audio");
-  audio_elem.src = settingsStore.selectedAlarm;
-  audio_elem.volume = settingsStore.alarmVolume / 100;
+  audio_elem.src = settingsStore.state.selectedAlarm;
+  audio_elem.volume = settingsStore.state.alarmVolume / 100;
 });
 
 function chnageAlarmVolume() {
-  audio_elem.volume = settingsStore.alarmVolume / 100;
+  audio_elem.volume = settingsStore.state.alarmVolume / 100;
   audio_elem.play();
 }
 
 function changeAlarmSound() {
-  audio_elem.src = settingsStore.selectedAlarm;
+  audio_elem.src = settingsStore.state.selectedAlarm;
   audio_elem.play();
 }
 counterStore.$subscribe(
@@ -81,8 +81,10 @@ counterStore.$subscribe(
 
 <style scoped>
 .modal-container {
-  @apply w-full h-full absolute inset-0 p-4;
+  @apply absolute w-screen h-screen;
+  z-index: 100;
 }
+
 .modal {
   @apply relative max-w-xl bg-slate-300;
   z-index: 999;

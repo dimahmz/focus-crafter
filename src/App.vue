@@ -1,17 +1,21 @@
 <template lang="pug">
-main.relative
+main
   AppHeader.header(v-show="!timerStore.focusMode")
   TimerBtns.timerBtns
   Footerbtns.footerbtns(v-show="!timerStore.focusMode")
   WarningModel
-  Settings(v-show="settingsStore.showModal")
+  SettingsModal(v-if="settingsStore.showSettingsModal")
+  TasksModal(v-if="settingsStore.showTasksModal")
 </template>
+
 <script setup>
 import WarningModel from "./components/timer/warningModel.vue";
 import TimerBtns from "./components/timer/timerBtns.vue";
 import AppHeader from "./components/timer/appHeader.vue";
 import Footerbtns from "./components/timer/footerbtns.vue";
-import Settings from "./components/appSettings/settingModal.vue";
+import SettingsModal from "./components/appSettings/settingModal.vue";
+import TasksModal from "./components/appTasks/tasksModal.vue";
+// import AddNewTask from "./components/appTasks/addNewTask.vue";
 
 import { useTasksStore } from "./stores/tasks";
 import { useSettingsStore } from "./stores/settings";
@@ -22,15 +26,6 @@ const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 
-//lastest updates
-
-settingsStore.$subscribe((mutation, state) => {
-  if (!timerStore.TimerIsCounting) {
-    timerStore.promodoro = state.promodoro_npt * 60;
-    timerStore.shortBreak = state.shortBreak_npt * 60;
-    timerStore.longBreak = state.longBreak_npt * 60;
-  }
-});
 //latest changes
 
 timerStore.$patch(JSON.parse(localStorage.getItem("counter")));

@@ -2,7 +2,7 @@
 section
   h2 {{setPhrase}}
   .switchBtn
-    .circle( @click="activateSet" :class="{ active : settingsStore[storeSet] }" )
+    .circle( @click="activateSet" :class="{ active : settingsStore.state[storeSet] }" )
   hr
 </template>
 
@@ -17,7 +17,7 @@ const props = defineProps({
 
 function activateSet(e) {
   const isActive = e.target.classList.toggle("active");
-  settingsStore[props.storeSet] = isActive;
+  settingsStore.state[props.storeSet] = isActive;
 }
 </script>
 

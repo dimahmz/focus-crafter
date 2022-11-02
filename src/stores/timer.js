@@ -23,14 +23,14 @@ export const useCounterStore = defineStore(
         confirmChange: false,
         //
         startPromodoro: true,
-        promodoro: SettingStore.promodoro_npt,
+        promodoro: SettingStore.state.promodoro_npt * 60,
         finishedPromodoros: 0,
         //
         startShortBreak: false,
-        shortBreak: SettingStore.shortBreak_npt,
+        shortBreak: SettingStore.state.shortBreak_npt * 60,
         //
         startLongBreak: false,
-        longBreak: SettingStore.longBreak_npt,
+        longBreak: SettingStore.state.longBreak_npt * 60,
         needLongBreak: false,
         focusMode: false,
       };
@@ -54,7 +54,7 @@ export const useCounterStore = defineStore(
       startPromodorotTimer() {
         const Settingstore = useSettingsStore();
         const TasksStore = useTasksStore();
-        if (Settingstore.focusedMode) this.focusMode = true;
+        if (Settingstore.state.focusedMode) this.focusMode = true;
         this.TimerIsCounting = this.startPromodoro = true;
         this.timerCountingIs = "promodoro";
         const interval = setInterval(() => {
@@ -65,23 +65,22 @@ export const useCounterStore = defineStore(
           }
           this.promodoro--;
           if (
-            this.promodoro === Settingstore.notifyTime * 60 &&
-            Settingstore.allowNotification
+            this.promodoro === Settingstore.state.notifyTime * 60 &&
+            Settingstore.state.allowNotification
           )
-            this.TimerNotifiesUser(Settingstore.notifyTime);
+            this.TimerNotifiesUser(Settingstore.state.notifyTime);
           if (this.promodoro == 2) this.startAlarm = true;
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
-            if (TasksStore.tasks.value.length) {
-              TasksStore.tasks.value[TasksStore.selectedTaskNdx]
-                .finishedPromdoros++;
+            if (TasksStore.tasks.length) {
+              TasksStore.tasks[TasksStore.selectedTaskNdx].finishedPromdoros++;
             }
-            !this.finishedPromodoros % Settingstore.rounds === 0
-              ? this.getAshortBreak(Settingstore.autoStartBreaks)
-              : this.getAlongBreak(Settingstore.autoStartBreaks);
+            !this.finishedPromodoros % Settingstore.state.rounds === 0
+              ? this.getAshortBreak(Settingstore.state.autoStartBreaks)
+              : this.getAlongBreak(Settingstore.state.autoStartBreaks);
             clearInterval(interval);
             this.focusMode = false;
-            this.promodoro = Settingstore.promodoro_npt * 60;
+            this.promodoro = Settingstore.state.promodoro_npt * 60;
           }
         }, 1000);
       },
@@ -99,8 +98,8 @@ export const useCounterStore = defineStore(
           if (this.shortBreak == 2) this.startAlarm = true;
           if (this.shortBreak <= 0 || !this.startShortBreak) {
             clearInterval(interval);
-            this.goToPromodoro(store.autoStartPromodoros);
-            this.shortBreak = store.shortBreak_npt;
+            this.goToPromodoro(store.state.autoStartPromodoros);
+            this.shortBreak = store.state.shortBreak_npt;
           }
         }, 1000);
       },
@@ -117,17 +116,17 @@ export const useCounterStore = defineStore(
           if (this.longBreak == 2) this.startAlarm = true;
           if (this.longBreak <= 0 || !this.startLongBreak) {
             clearInterval(interval);
-            this.goToPromodoro(store.autoStartPromodoros);
-            this.longBreak = store.longBreak_npt;
+            this.goToPromodoro(store.state.autoStartPromodoros);
+            this.longBreak = store.state.longBreak_npt;
           }
         }, 1000);
       },
       restartTimer() {
         const store = useSettingsStore();
         this.pauseTimer = true;
-        this.promodoro = store.promodoro_npt * 60;
-        this.longBreak = store.longBreak_npt * 60;
-        this.shortBreak = store.shortBreak_npt * 60;
+        this.promodoro = store.state.promodoro_npt * 60;
+        this.longBreak = store.state.longBreak_npt * 60;
+        this.shortBreak = store.state.shortBreak_npt * 60;
         this.TimerIsCounting = false;
         setTimeout(() => (this.pauseTimer = false), 1000);
       },
@@ -162,6 +161,8 @@ export const useCounterStore = defineStore(
         audio_elem.src = audioSrc;
       },
       timerStringFormat(secondsFormat) {
+        const minutes = parseInt(secondsFormat / 60);
+        const seconds = parseInt(secondsFormat % 60);
         const min =
             parseInt(secondsFormat / 60) < 10
               ? `0${parseInt(secondsFormat / 60)}`

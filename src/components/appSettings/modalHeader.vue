@@ -2,7 +2,7 @@
 header
   h2 {{modalName}}
   .grid.place-items-center
-    closeBtn(@click="() => {settingsStore[setStore]=false}")
+    closeBtn(@click="() => {settingsStore[setStore]=false}" )
 hr.h-2
 </template>
 
