@@ -1,81 +1,134 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, toRef } from "vue";
+import { useSettingsStore } from "./settings";
 
 export const useTasksStore = defineStore("tasks", () => {
-  const tasks = reactive({
-    value: [
-      {
-        title: "nodeJs",
-        notes: "must work on it",
-        estimatedPromodoros: 4,
-        finishedPromdoros: 1,
-        showEditModal: false,
-        isSelected: true,
-      },
-      {
-        title: "frontProjects",
-        notes: "must work on it",
-        estimatedPromodoros: 4,
-        finishedPromdoros: 1,
-        showEditModal: false,
-        isSelected: false,
-      },
-    ],
-  });
+  //state
+  const settingstore = useSettingsStore();
+  const tasks = reactive([
+    {
+      title: "nodeJs",
+      notes: "must work on it",
+      estimatedPromodoros: 4,
+      finishedPromdoros: 0,
+      showEditModal: false,
+      isSelected: true,
+      isFinished: false,
+      displayOptions: false,
+    },
+    {
+      title: "frontProjects",
+      notes: "must work on it",
+      estimatedPromodoros: 4,
+      finishedPromdoros: 0,
+      showEditModal: false,
+      isSelected: false,
+      isFinished: false,
+      displayOptions: false,
+    },
+  ]);
   const selectedTaskNdx = ref(0);
   const addTaskModal = ref(false);
   const editTaskModal = ref(false);
 
+  //getters
+
   const numberOfTasks = computed(function () {
-    return tasks.value.length;
+    const nbrTasks = toRef(tasks, "length");
+    return `${nbrTasks.value} tasks`;
   });
+  const workingOnTask = computed(function () {
+    return tasks.length ? tasks[selectedTaskNdx.value].title : "";
+  });
+  const workingOnTaskPromodoros = computed(function () {
+    return tasks.length
+      ? tasks[selectedTaskNdx.value].finishedPromdoros
+      : false;
+  });
+  const estPromodorosRounds = computed(() => {
+    if (tasks.length) {
+      return (
+        tasks[selectedTaskNdx.value].finishedPromdoros %
+          settingstore.state.rounds ===
+          0 && tasks[selectedTaskNdx.value].finishedPromdoros !== 0
+      );
+    }
+    return false;
+  });
+  //CRUD
 
   function addTask({ title, notes, estimatedPromodoros, finishedPromdoros }) {
-    tasks.value.push({
+    tasks.push({
       title,
       notes,
       finishedPromdoros,
       estimatedPromodoros,
       showEditModal: false,
       isSelected: false,
+      isFinished: false,
+      displayOptions: false,
     });
   }
   function selectTask(ndx) {
     selectedTaskNdx.value = ndx;
 
-    tasks.value.forEach((task) => {
+    tasks.forEach((task) => {
       if (task.isSelected) {
         task.isSelected = false;
         return;
       }
     });
-    tasks.value[ndx].isSelected = true;
+    tasks[ndx].isSelected = true;
   }
   function editTask(
     ndx,
     { title, notes, estimatedPromodoros, finishedPromdoros }
   ) {
-    tasks.value[ndx].title = title;
-    tasks.value[ndx].notes = notes;
-    tasks.value[ndx].estimatedPromodoros = estimatedPromodoros;
-    tasks.value[ndx].finishedPromdoros = finishedPromdoros;
-    tasks.value[ndx].showEditModal = false;
+    tasks[ndx].title = title;
+    tasks[ndx].notes = notes;
+    tasks[ndx].estimatedPromodoros = estimatedPromodoros;
+    tasks[ndx].finishedPromdoros = finishedPromdoros;
+    tasks[ndx].showEditModal = false;
+    tasks[ndx].showEditModal = false;
+  }
+  function deleteTask(ndx) {
+    tasks.splice(ndx, 1);
+  }
+  function deleteAllTasks() {
+    tasks.length = 0;
+  }
+  function deleteFinishedTasks() {
+    tasks.forEach((task, i) => {
+      if (task.isFinished) tasks.splice(i, 1);
+    });
   }
 
-  function deleteTask(ndx) {
-    tasks.value.splice(ndx, 1);
+  //other stores calls
+  function updateSelectedTask() {
+    const i = selectedTaskNdx.value;
+    tasks[i].finishedPromdoros++;
+    if (!tasks[i].isFinished)
+      tasks[i].isFinished =
+        tasks.estPromodorosRounds ||
+        tasks[i].finishedPromdoros >= tasks[i].estimatedPromodoros;
   }
 
   return {
-    selectedTaskNdx,
     tasks,
+    addTaskModal,
+    editTaskModal,
+    selectedTaskNdx,
+    numberOfTasks,
+    workingOnTask,
+    workingOnTaskPromodoros,
+    estPromodorosRounds,
     addTask,
     editTask,
     deleteTask,
-    numberOfTasks,
+    deleteAllTasks,
+    deleteFinishedTasks,
     selectTask,
-    addTaskModal,
-    editTaskModal,
+    updateSelectedTask,
   };
 });
 

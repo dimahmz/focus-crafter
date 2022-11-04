@@ -1,10 +1,10 @@
 <template lang="pug">
-.modal-container
+.modal-container(@click.self="() => settingsStore.showTasksModal=false")
   .modal
-    ModalHeader(modalName=`Tasks ${tasksNmbr}` setStore="showTasksModal")
+    ModalHeader(:modalName="tasksStore.numberOfTasks" setStore="showTasksModal")
     .tasks-container      
       Task(
-        v-for="(task , i) in tasksStore.tasks.value" 
+        v-for="(task , i) in tasksStore.tasks" 
         :key="i"
         :newTask="task" 
         :ndx="i"
@@ -13,8 +13,6 @@
         addTask(@click="()=> tasksStore.addTaskModal=true")
     .newTask-wrapper
       AddNewTask(v-show="tasksStore.addTaskModal")
-    
-
 </template>
 
 <script setup>
@@ -22,18 +20,25 @@ import Task from "./task.vue";
 import ModalHeader from "../appSettings/modalHeader.vue";
 import addTask from "../_icons/addTask.vue";
 import AddNewTask from "./addNewTask.vue";
+import closeBtn from "../_icons/close.vue";
+import Dots from "../_icons/dots.vue";
+
 import { useTasksStore } from "../../stores/tasks";
+import { useSettingsStore } from "../../stores/settings";
+import { ref } from "vue";
 const tasksStore = useTasksStore();
-const tasksNmbr = tasksStore.numberOfTasks;
+const settingsStore = useSettingsStore();
 </script>
 
 <style scoped>
 .modal-container {
-  @apply absolute w-screen h-screen overflow-hidden;
+  @apply absolute w-screen h-screen p-5;
+  z-index: 100;
 }
 .modal {
   @apply p-4 relative overflow-y-auto;
   height: 90%;
+  z-index: 999;
 }
 .tasks-container {
   @apply relative flex flex-col space-y-3 px-3;

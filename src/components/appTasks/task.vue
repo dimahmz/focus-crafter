@@ -1,53 +1,79 @@
 <template lang="pug">
 .task(
-  @click.self='selectThisTask(ndx)'
-  :class='{ selectedTask : newTask.isSelected }' 
-)
-  span(@click='selectThisTask(ndx)' ) {{ ndx }}
-  h1(@click='selectThisTask(ndx)' ) {{ newTask.title }}
-  span(@click='selectThisTask(ndx)' ) {{newTask.finishedPromdoros}}/{{newTask.estimatedPromodoros}}
+  @click.self='tasksStore.selectTask(ndx)'
+  :class='{selectedTask: newTask.isSelected, finishedTask : newTask.isFinished}')
+  .select-icons
+    Clock(
+      v-if="newTask.isSelected & timerStore.TimerIsCounting")    
+    Selected(
+      v-else-if="newTask.isFinished"
+      @click="()=>{newTask.isFinished=false}")
+    Unselect(
+      v-else 
+      @click="()=>{newTask.isFinished=true}")
+  h1(
+    @click='tasksStore.selectTask(ndx)') {{ newTask.title }}
+  span(
+    @click='tasksStore.selectTask(ndx)'
+    ) {{newTask.finishedPromdoros}}/{{newTask.estimatedPromodoros}}
   .dots-icon
-    Dots(@click="editTask(ndx)" )
-  .note-icon
-    tasks(@click="displayNotes(ndx)")
-.task-note(v-show="showNotes")
+    Dots(
+      @click="diplayOptions()"
+      )
+  .task-options(v-if="newTask.displayOptions")
+    span(@click="displayEditTask()") edit task
+    span(@click="tasksStore.deleteTask()") clear task
+    span(@click="displayNotes(true)") task note
+.task-note(
+  v-show="showNotes")
   p {{newTask.notes}}
+  Compress(@click="displayNotes(false)")
+
 EditTask(
-  v-show="tasksStore.tasks.value[ndx].showEditModal" :thisTask="newTask" :ndx="ndx"
-)       
+  v-show="tasksStore.tasks[ndx].showEditModal" 
+  :thisTask="newTask" 
+  :ndx="ndx")       
 </template>
 
 <script setup>
+import Clock from "../_icons/clock.vue";
+import Compress from "../_icons/compress.vue";
 import Dots from "../_icons/dots.vue";
+import Selected from "../_icons/selected.vue";
+import Unselect from "../_icons/unselect.vue";
 import AddNewTask from "./addNewTask.vue";
 import EditTask from "./EditTask.vue";
-import tasks from "../_icons/tasks.vue";
 
 import { ref } from "vue";
 import { useTasksStore } from "../../stores/tasks";
 import { useSettingsStore } from "../../stores/settings";
+import { useCounterStore } from "../../stores/timer";
 
 const settingsStore = useSettingsStore();
+const timerStore = useCounterStore();
+const tasksStore = useTasksStore();
 
-defineProps({
+const props = defineProps({
   newTask: { type: Object, required: true },
   ndx: { type: Number, required: true },
 });
 
-const tasksStore = useTasksStore();
 const showNotes = ref(false);
-
-function displayNotes(ndx) {
-  tasksStore.tasks.value[ndx].showEditModal = false;
-  showNotes.value = !showNotes.value;
+function displayNotes(option) {
+  tasksStore.tasks[props.ndx].showEditModal = false;
+  showNotes.value = option;
+  tasksStore.tasks[props.ndx].displayOptions = false;
 }
-function editTask(ndx) {
-  showNotes.value = false;
-  tasksStore.tasks.value[ndx].showEditModal =
-    !tasksStore.tasks.value[ndx].showEditModal;
+function diplayOptions() {
+  tasksStore.tasks.forEach((task, i) => {
+    if (i !== props.ndx) task.displayOptions = false;
+  });
+  tasksStore.tasks[props.ndx].displayOptions =
+    !tasksStore.tasks[props.ndx].displayOptions;
 }
-function selectThisTask(ndx) {
-  tasksStore.selectTask(ndx);
+function displayEditTask() {
+  tasksStore.tasks[props.ndx].displayOptions = false;
+  tasksStore.tasks[props.ndx].showEditModal = true;
 }
 </script>
 
@@ -57,5 +83,13 @@ function selectThisTask(ndx) {
 }
 .selectedTask {
   @apply bg-pink;
+}
+.finishedTask {
+  @apply line-through;
+}
+
+.task-options {
+  @apply flex flex-col absolute right-9 top-10 z-30 p-3
+  bg-white text-black;
 }
 </style>

@@ -3,7 +3,7 @@
   .task-header
     input(v-model="editedTaskName")
     .grid.place-items-center
-      closeBtn(@click="closeModal")
+      closeBtn(@click="()=> tasksStore.tasks[props.ndx].showEditModal = false")
   .promodoros
     h1 promodoros 
     .promodors-btns
@@ -12,9 +12,9 @@
     textarea(cols="30" rows="4" v-model="editedTaskNote" placeholder="add notes")
   .edit-task-footer
     .delete-btn
-      button(@click="deleteTask") Delete
+      button(@click="()=> tasksStore.deleteTask(ndx)") Delete
     .other-btns
-      button(@click="closeModal")  Cancel
+      button(@click="()=> tasksStore.tasks[props.ndx].showEditModal = false")  Cancel
       button(@click="savechangedTask") saveChanges()
     </template>
 
@@ -47,13 +47,6 @@ function savechangedTask() {
     estimatedPromodoros: estimatedPromo.value,
     finishedPromdoros: finishedPromo.value,
   });
-}
-
-function closeModal() {
-  tasksStore.tasks.value[props.ndx].showEditModal = false;
-}
-function deleteTask() {
-  tasksStore.deleteTask(props.ndx);
 }
 </script>
 <style scoped>
