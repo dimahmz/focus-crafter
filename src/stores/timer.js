@@ -39,7 +39,7 @@ export const useCounterStore = defineStore(
       getPromodorocounter() {
         return this.timerStringFormat(this.promodoro);
       },
-      gethortBreakcounter() {
+      getShortBreakcounter() {
         return this.timerStringFormat(this.shortBreak);
       },
       getLongBreakcounter() {
@@ -73,11 +73,11 @@ export const useCounterStore = defineStore(
           if (this.promodoro <= 0 || !this.startPromodoro) {
             this.finishedPromodoros++;
             if (TasksStore.tasks.length) {
-              TasksStore.tasks[TasksStore.selectedTaskNdx].finishedPromdoros++;
+              TasksStore.updateSelectedTask();
             }
-            !this.finishedPromodoros % Settingstore.state.rounds === 0
-              ? this.getAshortBreak(Settingstore.state.autoStartBreaks)
-              : this.getAlongBreak(Settingstore.state.autoStartBreaks);
+            TasksStore.estPromodorosRounds
+              ? this.getAlongBreak(Settingstore.state.autoStartBreaks)
+              : this.getAshortBreak(Settingstore.state.autoStartBreaks);
             clearInterval(interval);
             this.focusMode = false;
             this.promodoro = Settingstore.state.promodoro_npt * 60;
@@ -99,7 +99,7 @@ export const useCounterStore = defineStore(
           if (this.shortBreak <= 0 || !this.startShortBreak) {
             clearInterval(interval);
             this.goToPromodoro(store.state.autoStartPromodoros);
-            this.shortBreak = store.state.shortBreak_npt;
+            this.shortBreak = store.state.shortBreak_npt * 60;
           }
         }, 1000);
       },
@@ -117,7 +117,7 @@ export const useCounterStore = defineStore(
           if (this.longBreak <= 0 || !this.startLongBreak) {
             clearInterval(interval);
             this.goToPromodoro(store.state.autoStartPromodoros);
-            this.longBreak = store.state.longBreak_npt;
+            this.longBreak = store.state.longBreak_npt * 60;
           }
         }, 1000);
       },
@@ -174,6 +174,7 @@ export const useCounterStore = defineStore(
         return `${min} :${second}`;
       },
       TimerNotifiesUser(time) {
+        console.log(`promodoro will be finished within ${time}`);
         if (!("Notification" in window)) {
           alert("This browser does not support desktop notification");
         } else if (Notification.permission === "granted") {

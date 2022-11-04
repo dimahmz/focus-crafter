@@ -1,17 +1,23 @@
 <template lang="pug">
-.timer-state-container
-  .wrapper(v-if="timerStore.startPromodoro")
-    roundedBtn(:counter="timerStore.getPromodorocounter")
-  .wrapper(v-else-if="timerStore.startShortBreak") 
-    roundedBtn(:counter="timerStore.gethortBreakcounter")
-  .wrapper(v-else-if="timerStore.startLongBreak")
-    roundedBtn(:counter="timerStore.getLongBreakcounter")
+.timer
+  .task-wrapper.text-white.text-center
+    h1 {{tasksStore.workingOnTask}}
+    h2 # {{tasksStore.workingOnTaskPromodoros}}
+  .timer-state-container
+    .wrapper(v-if="timerStore.startPromodoro")
+      roundedBtn(:counter="timerStore.getPromodorocounter")
+    .wrapper(v-else-if="timerStore.startShortBreak") 
+      roundedBtn(:counter="timerStore.getShortBreakcounter")
+    .wrapper(v-else-if="timerStore.startLongBreak")
+      roundedBtn(:counter="timerStore.getLongBreakcounter")
 </template>
 
 <script setup>
 import roundedBtn from "./roundedBtn.vue";
 import { useCounterStore } from "@/stores/timer";
+import { useTasksStore } from "@/stores/tasks";
 const timerStore = useCounterStore();
+const tasksStore = useTasksStore();
 </script>
 <style scoped>
 .btns-conatiner {

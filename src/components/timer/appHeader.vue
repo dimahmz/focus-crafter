@@ -7,7 +7,7 @@
       button.btn(:class="{ activeTimer: store.startShortBreak }" @click="store.getAshortBreak()") short break
       button.btn(:class="{ activeTimer: store.startLongBreak }" @click="store.getAlongBreak()") long break
   .promodorsCount
-    button.btn.bg-pink {{store.finishedPromodoros}} / {{store.todoPromodoros}}
+    button.btn.bg-pink {{store.finishedPromodoros}}
 </template>
 
 <script setup>
