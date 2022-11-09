@@ -1,6 +1,6 @@
 <template lang="pug">
 .modal-container(@click.self="() => settingsStore.showTasksModal=false")
-  .modal
+  .modal(@click.self="hideSubModals")
     ModalHeader(:modalName="tasksStore.numberOfTasks" setStore="showTasksModal")
     .tasks-container      
       Task(
@@ -28,6 +28,18 @@ import { useSettingsStore } from "../../stores/settings";
 import { ref } from "vue";
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
+
+function hideSubModals() {
+  //hide add a new task modal
+  tasksStore.addTaskModal = false;
+  //hide edit a task modal
+  for (let task of tasksStore.tasks) {
+    if (task.displayOptions) {
+      task.displayOptions = false;
+      return;
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -38,7 +50,6 @@ const settingsStore = useSettingsStore();
 .modal {
   @apply p-4 relative overflow-y-auto;
   height: 90%;
-  z-index: 999;
 }
 .tasks-container {
   @apply relative flex flex-col space-y-3 px-3;
@@ -49,9 +60,13 @@ const settingsStore = useSettingsStore();
 .newTask-wrapper {
   @apply flex justify-center m-10 absolute z-10;
   top: 10%;
+  z-index: 600;
 }
 .add-icon {
-  @apply sticky py-3 flex justify-center;
+  @apply sticky py-3 w-10 mx-auto;
   bottom: 0%;
+}
+.icon {
+  @apply relative;
 }
 </style>

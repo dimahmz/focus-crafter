@@ -65,6 +65,7 @@ function displayNotes(option) {
   tasksStore.tasks[props.ndx].displayOptions = false;
 }
 function diplayOptions() {
+  tasksStore.addTaskModal = false;
   tasksStore.tasks.forEach((task, i) => {
     if (i !== props.ndx) task.displayOptions = false;
   });
@@ -89,7 +90,7 @@ function displayEditTask() {
 }
 
 .task-options {
-  @apply flex flex-col absolute right-9 top-10 z-30 p-3
+  @apply flex flex-col absolute right-9 top-10  p-3 z-20
   bg-white text-black;
 }
 </style>
