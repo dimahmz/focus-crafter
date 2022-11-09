@@ -7,7 +7,7 @@
       .mask.half
         .fill(data-id="progressBar")
       .inside-circle
-        .counter {{counter}}
+        .counter {{counter }}
         .roundedBtn(v-if="!store.TimerIsCounting" @click="start()") start
   .contol-timer(v-if="store.TimerIsCounting")
     .changeBtn(@click="store.pauseOrResumeTimer()")  {{ store.getTimerState}}
@@ -21,13 +21,16 @@ import { watch, onMounted } from "vue";
 
 const store = useCounterStore();
 
-const props = defineProps({ counter: { type: String, required: true } });
-const initialeCounter = props.counter;
+const props = defineProps({
+  counter: { type: String, required: true },
+  timing: { type: Number, required: true },
+});
 
 onMounted(() => {});
 
+const initialeCounter = props.timing;
 watch(props, () => {
-  const progress = 180 - parseInt((180 * props.counter) / initialeCounter);
+  const progress = 180 - parseInt((180 * props.timing) / initialeCounter);
   document.querySelectorAll('[data-id="progressBar"]').forEach((div) => {
     div.style.transform = `rotate(${progress}deg)`;
   });

@@ -5,11 +5,11 @@
     h2 # {{tasksStore.workingOnTaskPromodoros}}
   .timer-state-container
     .wrapper(v-if="timerStore.startPromodoro")
-      roundedBtn(:counter="timerStore.getPromodorocounter")
+      roundedBtn(:counter="timerStore.getPromodorocounter" :timing="timerStore.promodoro")
     .wrapper(v-else-if="timerStore.startShortBreak") 
-      roundedBtn(:counter="timerStore.getShortBreakcounter")
+      roundedBtn(:counter="timerStore.getShortBreakcounter" :timing="timerStore.shortBreak")
     .wrapper(v-else-if="timerStore.startLongBreak")
-      roundedBtn(:counter="timerStore.getLongBreakcounter")
+      roundedBtn(:counter="timerStore.getLongBreakcounter" :timing="timerStore.longBreak")
 </template>
 
 <script setup>
