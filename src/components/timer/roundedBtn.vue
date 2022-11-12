@@ -17,7 +17,7 @@
 <!-- style.transform = "rotate(7deg)"; -->
 <script setup>
 import { useCounterStore } from "@/stores/timer";
-import { watch, onMounted } from "vue";
+import { watch, onMounted,ref } from "vue";
 
 const store = useCounterStore();
 
@@ -29,11 +29,12 @@ const props = defineProps({
 onMounted(() => {});
 
 const initialeCounter = props.timing;
+
+const progress=ref(0);   
+
 watch(props, () => {
-  const progress = 180 - parseInt((180 * props.timing) / initialeCounter);
-  document.querySelectorAll('[data-id="progressBar"]').forEach((div) => {
-    div.style.transform = `rotate(${progress}deg)`;
-  });
+  progress.value = 180 - parseInt((180 * props.timing) / initialeCounter);
+  progress.value=`rotate(${progress.value}deg)`;
 });
 
 function start() {
@@ -84,7 +85,7 @@ function start() {
 
 .mask.full,
 .circle .fill {
-  transform: rotate(0);
+  transform: v-bind(progress);
   transition: all 0.5s ease-in-out;
 }
 .roundedBtn {
