@@ -33,6 +33,7 @@
           storeSet="notifyTime")
       template(#switchBtn)
         ChangeAset(storeSet="allowNotification")
+    changeColor
     
 
 </template>
@@ -44,6 +45,7 @@ import AppNpt from "../appNpt.vue";
 import AppRangeNpt from "../appRangeNpt.vue";
 import ChangeAset from "./changeAset.vue";
 import AppSelectInput from "../appSelectInput.vue";
+import ChangeColor from "./changeColor.vue";
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
 import { onMounted } from "vue";
@@ -86,7 +88,7 @@ counterStore.$subscribe(
 }
 
 .modal {
-  @apply relative max-w-xl bg-slate-300;
+  @apply relative max-w-xl bg-slate-300 px-5 py-7;
   z-index: 999;
 }
 
