@@ -1,8 +1,8 @@
 <template lang="pug">
 .npt-container
-  label(name="" for="") {{ nptLabel }}
-  input(type="number" min="1"  name="" v-model="settingsStore[storeSet]")
-  </template>
+  label(for="inputNumber") {{ nptLabel }}
+  a-input-number(id="inputNumber" v-model:value="settingsStore.state[storeSet]" :min="1")
+</template>
 
 <script setup>
 import { useSettingsStore } from "@/stores/settings";

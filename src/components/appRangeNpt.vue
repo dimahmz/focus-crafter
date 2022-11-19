@@ -1,7 +1,7 @@
 <template lang="pug">
-.relative.pt-1
+.change-volume-container
   label(for='MusicVolume') {{nptLabel}}
-  input#MusicVolume(type='range' min=0 max=100 v-model="settingsStore[storeSet]" @click="$emit('change')")
+  a-slider#MusicVolume(v-model:value="settingsStore.state[storeSet]" @afterChange="()=>$emit('change')")
 </template>
 
 <script setup>
@@ -16,7 +16,7 @@ const props = defineProps({
 </script>
 
 <style scoped>
-input {
-  @apply appearance-none w-full h-1 p-0 bg-white focus:outline-none focus:ring-0 focus:shadow-none;
+.ant-slider {
+  @apply w-28;
 }
 </style>
