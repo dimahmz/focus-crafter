@@ -24,16 +24,16 @@ const store = useCounterStore();
 const props = defineProps({
   counter: { type: String, required: true },
   timing: { type: Number, required: true },
+  timerNpt: { type: Number, required: true },
 });
 
 onMounted(() => {});
 
-const initialeCounter = props.timing;
 
 const progress=ref(0);   
 
 watch(props, () => {
-  progress.value = 180 - parseInt((180 * props.timing) / initialeCounter);
+  progress.value = 180 - parseInt((180 * props.timing) / (props.timerNpt * 60));
   progress.value=`rotate(${progress.value}deg)`;
 });
 
