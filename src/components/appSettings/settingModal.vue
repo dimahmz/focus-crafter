@@ -1,9 +1,7 @@
 <template lang="pug">
-.modal-container(@click.self="() => settingsStore.showSettingsModal=false")
+a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro settings")
   .modal
-    mHeader(modalName="Promodoro settings"
-    setStore="showSettingsModal")
-    .Times-container
+    .times-npts-container
       AppNpt(nptLabel="promodoro"   storeSet="promodoro_npt")
       AppNpt(nptLabel="short break" storeSet="shortBreak_npt")
       AppNpt(nptLabel="long break" storeSet="longBreak_npt")
@@ -17,25 +15,23 @@
         setPhrase="Dark mode when running"
         storeSet="focusedMode")
     SetNpt(setPhrase="Long Break Interval")
-      template(#npt)
+      template(#aNpt)
         AppNpt(:nptValue="settingsStore.rounds"
         storeSet="rounds")
-    SetNpt(setPhrase="Alarm")
-      template(#range-npt)
-        AppRangeNpt(:nptValue="settingsStore.alarmVolume"
-        storeSet="alarmVolume"
-        @change="chnageAlarmVolume")
-      template(#select)
+    SetNpt(setPhrase="Alarm Music")
+      template(#aNpt)
         AppSelectInput(@change="changeAlarmSound")
+    SetNpt(setPhrase="Alarm volume")
+      template(#aNpt)
+          AppRangeNpt(:nptValue="settingsStore.alarmVolume"
+            storeSet="alarmVolume"
+            @change="chnageAlarmVolume")
     SetNpt(setPhrase="notify me in the last")
-      template(#npt)
-          AppNpt(:nptValue="settingsStore.notifyTime"
+      template(#aNpt)
+        AppNpt(:nptValue="settingsStore.notifyTime"
           storeSet="notifyTime")
-      template(#switchBtn)
-        ChangeAset(storeSet="allowNotification")
+      ChangeAset(storeSet="allowNotification")
     changeColor
-    
-
 </template>
 
 <script setup>
@@ -82,17 +78,7 @@ counterStore.$subscribe(
 </script>
 
 <style scoped>
-.modal-container {
-  @apply absolute w-screen h-screen;
-  z-index: 100;
-}
-
-.modal {
-  @apply relative max-w-xl bg-slate-300 px-5 py-7;
-  z-index: 999;
-}
-
-.Times-container {
+.times-npts-container {
   @apply flex justify-between space-x-3 overflow-hidden;
 }
 </style>

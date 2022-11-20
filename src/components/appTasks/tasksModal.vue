@@ -1,7 +1,6 @@
 <template lang="pug">
-.modal-container(@click.self="() => settingsStore.showTasksModal=false")
-  .modal(@click.self="hideSubModals")
-    ModalHeader(:modalName="tasksStore.numberOfTasks" setStore="showTasksModal")
+a-modal(v-model:visible="settingsStore.showTasksModal" :title="tasksStore.numberOfTasks")
+  div(@click.self="hideSubModals")
     .tasks-container      
       Task(
         v-for="(task , i) in tasksStore.tasks" 
@@ -10,7 +9,7 @@
         :ndx="i"
       ) 
     .add-icon(v-show="!tasksStore.addTaskModal")
-        addTask(@click="()=> tasksStore.addTaskModal=true")
+      addTask(@click="()=> tasksStore.addTaskModal=true")
     .newTask-wrapper
       AddNewTask(v-show="tasksStore.addTaskModal")
 </template>
@@ -43,12 +42,8 @@ function hideSubModals() {
 </script>
 
 <style scoped>
-.modal-container {
-  @apply absolute w-screen h-screen p-5;
-  z-index: 100;
-}
 .modal {
-  @apply p-4 relative overflow-y-auto;
+  @apply overflow-y-auto relative;
   height: 90%;
 }
 .tasks-container {
@@ -58,8 +53,8 @@ function hideSubModals() {
   @apply cursor-pointer;
 }
 .newTask-wrapper {
-  @apply flex justify-center m-10 absolute z-10;
-  top: 10%;
+  @apply absolute z-10;
+  top: 20%;
   z-index: 600;
 }
 .add-icon {

@@ -1,12 +1,9 @@
 <template lang="pug">
 section
- h2 {{setPhrase}}
+ h2.title {{setPhrase}}
  .npts-container
-    slot(name="select")
-    slot(name="range-npt")
-    slot(name="npt")
-    slot(name="checkBox")
-    slot(name="switchBtn")
+    slot(name="aNpt")
+    slot
 </template>
 
 <script setup>
@@ -17,9 +14,11 @@ defineProps({
 
 <style scoped>
 section {
-  @apply flex justify-between;
+  @apply my-1 flex justify-between items-center;
 }
 .npts-container {
-  @apply flex flex-col space-y-4;
+  @apply flex space-x-3 items-center;
+}
+.title {
 }
 </style>

@@ -1,21 +1,21 @@
 <template lang="pug">
 .edit-task
   .task-header
-    input(v-model="editedTaskName")
+  a-input(v-model:value="editedTaskName")
     .grid.place-items-center
       closeBtn(@click="()=> tasksStore.tasks[props.ndx].showEditModal = false")
   .promodoros
     h1 promodoros 
     .promodors-btns
-      input(type="number" min="1" v-model="estimatedPromo")
+      a-input-number(v-model:value="estimatedPromo" :min="1")
   .notes-conatiner
-    textarea(cols="30" rows="4" v-model="editedTaskNote" placeholder="add notes")
+    a-textarea(v-model:value="editedTaskNote" placeholder="add notes" :rows=4)
   .edit-task-footer
     .delete-btn
-      button(@click="()=> tasksStore.deleteTask(ndx)") Delete
+      a-button(type="primary" @click="()=> tasksStore.deleteTask(ndx)") Delete
     .other-btns
-      button(@click="()=> tasksStore.tasks[props.ndx].showEditModal = false")  Cancel
-      button(@click="savechangedTask") saveChanges()
+      a-button(type="primary" @click="()=> tasksStore.tasks[props.ndx].showEditModal = false") Cancel
+      a-button(type="primary" @click="savechangedTask") Save
     </template>
 
 <script setup>

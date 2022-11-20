@@ -16,14 +16,18 @@
   span(
     @click='tasksStore.selectTask(ndx)'
     ) {{newTask.finishedPromdoros}}/{{newTask.estimatedPromodoros}}
-  .dots-icon
-    Dots(
-      @click="diplayOptions()"
-      )
-  .task-options(v-if="newTask.displayOptions")
-    span(@click="displayEditTask()") edit task
-    span(@click="tasksStore.deleteTask()") clear task
-    span(@click="displayNotes(true)") task note
+  a-dropdown
+    .dots-icon.ant-dropdown-link
+      Dots
+    template(#overlay)
+      a-menu
+        a-menu-item
+          span(@click="displayEditTask()") edit task
+        a-menu-item
+          span(@click="tasksStore.deleteTask()") clear task
+        a-menu-item
+          span(@click="displayNotes(true)") task note
+
 .task-note(
   v-show="showNotes")
   p {{newTask.notes}}

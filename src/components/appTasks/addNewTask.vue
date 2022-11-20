@@ -1,23 +1,19 @@
 <template lang="pug">
 .edit-task
   .task-header
-    input( ref="npt" v-model="newTaskName" placeholder="what are you working on?")
+  a-input( ref="npt" v-model:value="newTaskName" placeholder="what are you working on?")
     .grid.place-items-center
       closeBtn(@click="closeModal")
   .promodoros
     h1 promodoros 
-    .promodors-btns
-      button(@click="decrement")   -
-      input(type="number" min="1" v-model="estimatedPromo" )
-      button(@click="()=>estimatedPromo++")  +
+      a-input-number(v-model:value="estimatedPromo" :min="1")
   .notes-conatiner
-    textarea(cols="30" rows="4" v-model="newTaskNote" placeholder="add notes")
+    a-textarea(:rows=4 v-model:value="newTaskNote" placeholder="add notes")
   .edit-task-footer
     .other-btns
-      button(@click="closeModal")  Cancel
-      button(@click="saveNewTask") add
-
-  </template>
+      a-button(type="primary" @click="closeModal") Cancel
+      a-button(type="primary" @click="saveNewTask") Add
+</template>
 
 <script setup>
 import closeBtn from "../_icons/close.vue";
@@ -31,8 +27,8 @@ const props = defineProps({
   thisTask: {
     type: Object,
     default: {
-      title: "",
-      notes: "",
+      title: " ",
+      notes: " ",
       estimatedPromodoros: 4,
       finishedPromdoros: 0,
     },
@@ -90,7 +86,7 @@ textarea {
   padding: 5px 7px;
 }
 .edit-task {
-  @apply bg-slate-300;
+  @apply bg-slate-300 w-full;
 }
 .task-header {
   @apply flex justify-between;
