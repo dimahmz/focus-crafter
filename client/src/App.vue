@@ -24,13 +24,13 @@ const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 
-// latest changes
+//latest changes
 
 timerStore.$patch(JSON.parse(localStorage.getItem("counter")));
 tasksStore.$patch(JSON.parse(localStorage.getItem("tasks")));
 settingsStore.$patch(JSON.parse(localStorage.getItem("settings")));
 
-// subscribing to the latest changes
+//subscribing to the latest changes
 
 settingsStore.$subscribe(setData);
 timerStore.$subscribe(setData);
