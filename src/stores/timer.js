@@ -19,7 +19,6 @@ export const useCounterStore = defineStore(
         confirmChange: false,
         TimerIsCounting: false,
         //
-        displayModel: false,
         confirmChange: false,
         //
         startPromodoro: true,
@@ -44,10 +43,6 @@ export const useCounterStore = defineStore(
       },
       getLongBreakcounter() {
         return this.timerStringFormat(this.longBreak);
-      },
-      getTimerState() {
-        if (this.pauseTimer) return "=>";
-        return "||";
       },
     },
     actions: {
@@ -154,7 +149,6 @@ export const useCounterStore = defineStore(
         if (autochange) setTimeout(() => this.startLongBreakTimer(), 900);
       },
       changeToAnewPhase() {
-        this.displayModel = true;
         this.needToChange = true;
       },
       changeAlarmSound(audioSrc) {

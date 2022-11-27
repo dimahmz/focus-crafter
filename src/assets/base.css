@@ -24,6 +24,19 @@
   --secondary-color-light: #252736;
   --tertiary-color-light: #ff6d7f;
 
+  /* timers colors */
+  --promodoro-primary-color: #00042c;
+  --promodoro-secondary-color: #12163d;
+  --promodoro-tertiary-color: #ff6d7f;
+
+  --shortBraek-primary-color: #00042c;
+  --shortBraek-secondary-color: #12163d;
+  --shortBraek-tertiary-color: #ff6d7f;
+
+  --longBreak-primary-color: #00042c;
+  --longBreak-secondary-color: #12163d;
+  --longBreak-tertiary-color: #ff6d7f;
+
   /* fonts */
   --headingFont: "Roboto", sans-serif;
   --bodyFont: "Nunito", sans-serif;
@@ -47,6 +60,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   font-weight: normal;
 }
 

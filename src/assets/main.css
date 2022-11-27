@@ -9,3 +9,33 @@ a {
   text-decoration: none;
   transition: 0.4s;
 }
+
+/* App models styling */
+
+.modal-container {
+  @apply absolute overflow-auto flex justify-center py-5 inset-0;
+  z-index: 100;
+}
+
+.modal {
+  @apply bg-slate-300;
+  z-index: 999;
+}
+
+/* buttons header */
+
+.btns-conatiner {
+  background-color: var(--promodoro-primary-color);
+}
+
+/* .btns-conatiner .btn {
+  background-color: var(--promodoro-primary-color);
+} */
+
+.activeTimer {
+  background-color: var(--promodoro-tertiary-color);
+}
+
+.Times-container {
+  @apply flex justify-between space-x-3 overflow-hidden;
+}

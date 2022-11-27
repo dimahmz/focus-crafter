@@ -1,12 +1,11 @@
 <template lang="pug">
 .btn-container
-  seetingIcon(@click='()=>settingsStore.showSettingsModal=true')
-  tasksIcons(@click='()=>settingsStore.showTasksModal=true')
+  setting-filled(@click='()=>settingsStore.showSettingsModal=true')
+  align-left-outlined(@click='()=>settingsStore.showTasksModal=true')
 </template>
 
 <script setup>
-import seetingIcon from "../_icons/setting.vue";
-import tasksIcons from "../_icons/tasks.vue";
+import {  SettingFilled , AlignLeftOutlined } from "@ant-design/icons-vue";
 import { useCounterStore } from "@/stores/timer";
 import { useSettingsStore } from "@/stores/settings";
 const settingsStore = useSettingsStore();

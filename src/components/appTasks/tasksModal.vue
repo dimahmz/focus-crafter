@@ -9,9 +9,11 @@ a-modal(v-model:visible="settingsStore.showTasksModal" :title="tasksStore.number
         :ndx="i"
       ) 
     .add-icon(v-show="!tasksStore.addTaskModal")
-      addTask(@click="()=> tasksStore.addTaskModal=true")
+      plus-circle-filled(@click="()=> tasksStore.addTaskModal=true")
     .newTask-wrapper
       AddNewTask(v-show="tasksStore.addTaskModal")
+  template(#footer)
+    a-button(@click="saveTasks()") ok
 </template>
 
 <script setup>
@@ -19,11 +21,10 @@ import Task from "./task.vue";
 import ModalHeader from "../appSettings/modalHeader.vue";
 import addTask from "../_icons/addTask.vue";
 import AddNewTask from "./addNewTask.vue";
-import closeBtn from "../_icons/close.vue";
-import Dots from "../_icons/dots.vue";
 
 import { useTasksStore } from "../../stores/tasks";
 import { useSettingsStore } from "../../stores/settings";
+import { PlusCircleFilled } from "@ant-design/icons-vue";
 import { ref } from "vue";
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
@@ -38,6 +39,10 @@ function hideSubModals() {
       return;
     }
   }
+}
+
+function saveTasks() {
+  settingsStore.showTasksModal = false;
 }
 </script>
 

@@ -1,15 +1,48 @@
 <template lang="pug">
-.model-conatiner(v-if="store.displayModel")
-  .model
-    .message-container are u sure?
-    .btns-container
-      .btn(@click="store.needBreakConfirm(true)") yes
-      .btn(@click="store.needBreakConfirm(false)") no
+
 </template>
 
 <script setup>
+import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
+import { createVNode, onMounted, onUnmounted } from "vue";
 import { useCounterStore } from "@/stores/timer";
+import { Modal } from "ant-design-vue";
+
 const store = useCounterStore();
+
+function needBreakConfirm(confirm) {
+  switch (store.timerCountingIs) {
+    case "promodoro":
+      if (confirm) store.promodoro = 0;
+      store.startPromodorotTimer();
+      break;
+    case "shortBreak":
+      if (confirm) store.shortBreak = 0;
+      store.startShortBreakTimer();
+      break;
+    case "longBreak":
+      if (confirm) store.longBreak = 0;
+      store.startLongBreakTimer();
+      break;
+  }
+  store.needToChange = store.displayModel = false;
+}
+const modal = Modal.confirm();
+
+onMounted(() => {
+  modal.confirm({
+    title: "Confirm",
+    icon: createVNode(ExclamationCircleOutlined),
+    content: "are u sure?",
+    okText: "yes",
+    cancelText: "no",
+  });
+
+  modal.onOk = needBreakConfirm(true);
+  modal.onCancel = needBreakConfirm(false);
+});
+
+onUnmounted(() => modal.destroy());
 </script>
 
 <style scoped>

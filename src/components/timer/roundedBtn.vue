@@ -1,25 +1,26 @@
 <template lang="pug">
 .circle-bg
-  .circle-wrap
-    .circle
-      .mask.full(data-id="progressBar")
-        .fill(data-id="progressBar")
-      .mask.half
-        .fill(data-id="progressBar")
-      .inside-circle
-        .counter {{counter }}
-        .roundedBtn(v-if="!store.TimerIsCounting" @click="start()") start
-  .contol-timer(v-if="store.TimerIsCounting")
-    .changeBtn(@click="store.pauseOrResumeTimer()")  {{ store.getTimerState}}
-    .changeBtn(@click="store.changeToAnewPhase()")  &gt;
-    p(@click="store.restartTimer()") restart
+  a-progress(type="circle" :percent="progress")
+    template(#format="percent")
+      .counter {{counter }}
+  .roundedBtn(v-if="!timerStore.TimerIsCounting")
+    a-button( @click="start()") start
+  .control-timer(v-if="timerStore.TimerIsCounting")
+    .change-btns
+      .restart-timer(@click="timerStore.restartTimer()")
+        retweet-outlined
+      .changeBtn(@click="timerStore.pauseOrResumeTimer()")
+        play-circle-outlined(v-if="timerStore.pauseTimer")
+        pause-circle-outlined(v-else)
+      .changeBtn(@click="forceChange()")
+        caret-right-outlined
 </template>
-<!-- style.transform = "rotate(7deg)"; -->
 <script setup>
 import { useCounterStore } from "@/stores/timer";
-import { watch, onMounted,ref } from "vue";
-
-const store = useCounterStore();
+import { watch, onMounted, ref, createVNode } from "vue";
+import { CaretRightOutlined, ExclamationCircleOutlined,PauseCircleOutlined , PlayCircleOutlined , RetweetOutlined} from "@ant-design/icons-vue";
+import { Modal } from "ant-design-vue";
+const timerStore = useCounterStore();
 
 const props = defineProps({
   counter: { type: String, required: true },
@@ -27,75 +28,53 @@ const props = defineProps({
   timerNpt: { type: Number, required: true },
 });
 
-onMounted(() => {});
-
-
-const progress=ref(0);   
+const progress = ref(0);
 
 watch(props, () => {
-  progress.value = 180 - parseInt((180 * props.timing) / (props.timerNpt * 60));
-  progress.value=`rotate(${progress.value}deg)`;
+  progress.value = 100 - ( props.timing / (props.timerNpt * 60) ) * 100;
 });
 
 function start() {
-  if (store.startPromodoro) store.startPromodorotTimer();
-  else if (store.startShortBreak) store.startShortBreakTimer();
-  else store.startLongBreakTimer();
+  if (timerStore.startPromodoro) timerStore.startPromodorotTimer();
+  else if (timerStore.startShortBreak) timerStore.startShortBreakTimer();
+  else timerStore.startLongBreakTimer();
+}
+
+function forceChange() {
+  timerStore.changeToAnewPhase();
+  Modal.confirm({
+    title: "Confirm",
+    icon: createVNode(ExclamationCircleOutlined),
+    content: "are u sure?",
+    okText: "yes",
+    cancelText: "no",
+    onOk() {
+      timerStore.needBreakConfirm(true);
+    },
+    onCancel() {
+      timerStore.needBreakConfirm(false);
+    },
+  });
 }
 </script>
 
-<style scoped>
-.circle-wrap {
+<style scoped>*
+.circle-bg{
   @apply text-white;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 1px solid #cdcbd0;
 }
-.circle-wrap .circle .mask,
-.circle-wrap .circle .fill {
-  width: 150px;
-  height: 150px;
-  position: absolute;
-  border-radius: 50%;
-}
-
-.circle-wrap .circle .mask {
-  clip: rect(0px, 150px, 150px, 75px);
-}
-
-.circle-wrap .inside-circle {
-  @apply bg-blue;
-  width: 122px;
-  height: 122px;
-  border-radius: 50%;
-  text-align: center;
-  margin-top: 14px;
-  margin-left: 14px;
-  position: absolute;
-  z-index: 99;
-  font-weight: 700;
-  font-size: 2em;
-}
-
-.mask .fill {
-  @apply bg-pink;
-  clip: rect(0px, 75px, 150px, 0px);
-}
-
-.mask.full,
-.circle .fill {
-  transform: v-bind(progress);
-  transition: all 0.5s ease-in-out;
+.changeBtn{
+  @apply text-white;
 }
 .roundedBtn {
-  @apply cursor-pointer;
+  @apply cursor-pointer flex justify-center m-5;
 }
 .roundedBtn:hover {
   @apply transition-all ease-out scale-110;
 }
-
-.contol-timer {
-  @apply text-white grid place-items-center cursor-pointer;
+.control-timer{
+  @apply  flex flex-col justify-center items-center cursor-pointer text-white;
+}
+.change-btns {
+  @apply text-white flex justify-center items-center cursor-pointer space-x-4 m-4;
 }
 </style>

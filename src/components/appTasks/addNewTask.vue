@@ -1,9 +1,9 @@
 <template lang="pug">
 .edit-task
   .task-header
-  a-input( ref="npt" v-model:value="newTaskName" placeholder="what are you working on?")
-    .grid.place-items-center
-      closeBtn(@click="closeModal")
+    a-input(v-model:value="newTaskName" placeholder="what are you working on?" id="npt")
+      .grid.place-items-center
+        closeBtn(@click="closeModal")
   .promodoros
     h1 promodoros 
       a-input-number(v-model:value="estimatedPromo" :min="1")
@@ -35,9 +35,10 @@ const props = defineProps({
   },
 });
 
-const npt = ref(null);
+let npt = null;
 onMounted(() => {
-  npt.value.focus();
+  npt = document.getElementById("npt");
+  npt.focus();
 });
 
 const newTaskName = ref(props.thisTask.title),
@@ -47,7 +48,7 @@ const newTaskName = ref(props.thisTask.title),
 
 function saveNewTask() {
   if (newTaskName.value.length === 0) {
-    npt.value.classList.add("invalid-npt");
+    npt.classList.add("invalid-npt");
     return;
   }
   tasksStore.addTask({
@@ -56,8 +57,8 @@ function saveNewTask() {
     estimatedPromodoros: estimatedPromo.value,
     finishedPromdoros: finishedPromo.value,
   });
-  npt.value.classList.remove("invalid-npt");
-  npt.value.focus();
+  npt.classList.remove("invalid-npt");
+  npt.focus();
   newTaskName.value = newTaskNote.value = "";
   estimatedPromo.value = 4;
 }
@@ -70,11 +71,6 @@ function decrement() {
 }
 </script>
 <style scoped>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
-}
 input[type="number"] {
   @apply w-6 text-center;
 }
@@ -86,7 +82,7 @@ textarea {
   padding: 5px 7px;
 }
 .edit-task {
-  @apply bg-slate-300 w-full;
+  @apply bg-slate-300;
 }
 .task-header {
   @apply flex justify-between;

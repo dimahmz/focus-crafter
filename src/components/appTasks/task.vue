@@ -3,12 +3,12 @@
   @click.self='tasksStore.selectTask(ndx)'
   :class='{selectedTask: newTask.isSelected, finishedTask : newTask.isFinished}')
   .select-icons
-    Clock(
+    clock-circle-outlined(
       v-if="newTask.isSelected & timerStore.TimerIsCounting")    
-    Selected(
+    check-circle-outlined(
       v-else-if="newTask.isFinished"
       @click="()=>{newTask.isFinished=false}")
-    Unselect(
+    minus-circle-outlined(
       v-else 
       @click="()=>{newTask.isFinished=true}")
   h1(
@@ -17,8 +17,8 @@
     @click='tasksStore.selectTask(ndx)'
     ) {{newTask.finishedPromdoros}}/{{newTask.estimatedPromodoros}}
   a-dropdown
-    .dots-icon.ant-dropdown-link
-      Dots
+    .dots-icon
+      more-outlined
     template(#overlay)
       a-menu
         a-menu-item
@@ -27,7 +27,6 @@
           span(@click="tasksStore.deleteTask()") clear task
         a-menu-item
           span(@click="displayNotes(true)") task note
-
 .task-note(
   v-show="showNotes")
   p {{newTask.notes}}
@@ -47,6 +46,8 @@ import Selected from "../_icons/selected.vue";
 import Unselect from "../_icons/unselect.vue";
 import AddNewTask from "./addNewTask.vue";
 import EditTask from "./EditTask.vue";
+
+import { ClockCircleOutlined, CheckCircleOutlined, MinusCircleOutlined, MoreOutlined } from "@ant-design/icons-vue";
 
 import { ref } from "vue";
 import { useTasksStore } from "../../stores/tasks";

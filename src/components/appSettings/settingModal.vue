@@ -1,5 +1,5 @@
 <template lang="pug">
-a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro settings")
+a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro settings" )
   .modal
     .times-npts-container
       AppNpt(nptLabel="promodoro"   storeSet="promodoro_npt")
@@ -31,7 +31,8 @@ a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro setti
         AppNpt(:nptValue="settingsStore.notifyTime"
           storeSet="notifyTime")
       ChangeAset(storeSet="allowNotification")
-    changeColor
+  template(#footer)
+    a-button(@click="saveSettings()") ok
 </template>
 
 <script setup>
@@ -41,7 +42,7 @@ import AppNpt from "../appNpt.vue";
 import AppRangeNpt from "../appRangeNpt.vue";
 import ChangeAset from "./changeAset.vue";
 import AppSelectInput from "../appSelectInput.vue";
-import ChangeColor from "./changeColor.vue";
+
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
 import { onMounted } from "vue";
@@ -70,11 +71,14 @@ counterStore.$subscribe(
     if (audio_elem.volume > 0 && state.startAlarm) {
       audio_elem.play();
       state.startAlarm = false;
-      // console.log(mutaion.type);
     }
   },
   { detached: true }
 );
+
+function saveSettings() {
+  settingsStore.showSettingsModal = false;
+}
 </script>
 
 <style scoped>
