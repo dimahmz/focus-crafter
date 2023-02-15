@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const { UserSettings , settingsSchema } = require("./settings");
 const { Task , taskSchema }= require("./task");
+const crypto = require("crypto");
+
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -25,6 +27,17 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     maxlength: 1024,
     required: true,
+  },
+
+  verified_account:{
+    type:Boolean,
+    default:false
+  },
+
+  verifivation_token:{
+    type:String,
+    required:true,
+    default: () => crypto.randomBytes(20).toString('hex'),
   },
   
   task:[ taskSchema ],
