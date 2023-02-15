@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi");
 
 router.get("/", async (req, res) => {
-  console.log(req.body);
   res.send("this auth route");
 });
 
@@ -13,23 +12,24 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("password or email is invalid!");
-  
+  let user = await User.findOne({ name: req.body.name });
+  if (!user) return res.status(400).send("password or name is invalid!");
+
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
-    return res.status(400).send("password or email is invalid!");
+    return res.status(400).send("password or name is invalid!");
 
   const token = user.generateToken();
-  return res.send(token);
+  return res.header("x-auth-token", token).send("logged in!");
+
 });
 
 function validate(user) {
-  const schema = {
-    email: Joi.string().required().email().min(8).max(255),
+  const schema = Joi.object({
+    name: Joi.string().min(4).max(255).required(),
     password: Joi.string().min(8).max(255).required(),
-  };
+  });
 
-  return Joi.validate(user, schema);
+  return schema.validate(user);
 }
 module.exports = router;
