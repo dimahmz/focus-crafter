@@ -3,7 +3,9 @@ const app = Express();
 const auth = require("./routes/auth");
 const signup = require("./routes/signup");
 const me = require("./routes/me");
-const verify = require("./routes/verification")
+const reset=require("./routes/resetpassword");
+const verify = require("./routes/verification");
+
 const mongoose = require("mongoose");
 const logger = require("./middleware/logger");
 require("dotenv").config();
@@ -20,10 +22,10 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/auth", auth);
-
 app.use("/signup", signup);
-
+app.use("/me", me);
 app.use("/verification", verify);
+app.use("/resetpassword", reset);
 
 
 const mongoDbUri = `mongodb+srv://proFocusDB:${process.env.db_password}@atlascluster.t8zzfhk.mongodb.net/?retryWrites=true&w=majority`;
