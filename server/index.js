@@ -1,15 +1,23 @@
 const Express = require("express");
 const app = Express();
+// routes
 const auth = require("./routes/auth");
 const signup = require("./routes/signup");
 const me = require("./routes/me");
 const reset = require("./routes/resetpassword");
 const verify = require("./routes/verification");
-const requestPath = require("./middleware/req");
 const editUser = require("./routes/editUser");
+const editTasks = require("./routes/editTasks");
+// middlewares
+const requestPath = require("./middleware/req");
+const logger = require("./startup/logging");
+const notFound = require("./middleware/notFound");
+const errorHandler = require("./middleware/errorHandler");
+
+// configurations
+const localIP = require("./startup/privateIP");
 
 const mongoose = require("mongoose");
-const logger = require("./middleware/logger");
 require("dotenv").config();
 
 // parse incoming data
@@ -25,18 +33,30 @@ if (!process.env.pro_focus_jwtKey) {
 
 // send a static html
 app.get("/", async (req, res) => {
-  res.sendFile(__dirname+"/index.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
-// log requested paths
-app.use(requestPath);
-
+// app routes
 app.use("/auth", auth);
 app.use("/signup", signup);
 app.use("/me", me);
 app.use("/verification", verify);
 app.use("/resetpassword", reset);
 app.use("/editUser", editUser);
+app.use("/editTasks", editTasks);
+
+// handlling express errors
+app.use((err, req, res, next) => {
+  console.log(err.message);
+  // logger.debug(err.message);
+  res.status(500).send("Something broke!");
+});
+
+// serve static files
+app.use(Express.static("/"));
+
+// unavailable routes
+app.use(notFound);
 
 // connecting to the database
 const mongoDbUri = `mongodb+srv://proFocusDB:${process.env.db_password}@atlascluster.t8zzfhk.mongodb.net/?retryWrites=true&w=majority`;
@@ -52,14 +72,14 @@ mongoose
   .then(() => console.log("Connected to the database"))
   .catch((e) => logger.error(`DB connection error: ${e.message}`));
 
-
-
 // stating the server
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
+if (process.env.NODE_ENV == "development") {
+  localIP();
+}
 
 // projest base directory
-
 global.__basedir = __dirname;

@@ -8,11 +8,9 @@ const resetPasswordSchema = new mongoose.Schema(
       reuquired: true,
       unique: true,
     },
-
     reset_token: {
       type: String,
       reuquired: true,
-      unique: true,
       unique: true,
       default: () => crypto.randomBytes(30).toString("hex"),
     },
@@ -25,7 +23,11 @@ resetPasswordSchema.index({ createdOn: 1 }, { expireAfterSeconds: 7200 });
 
 const resetPassword = mongoose.model("ResetPasswords", resetPasswordSchema);
 
-function verifyPasswordResetToken(userId, token) {
-  return resetPassword.findOne({ user_id: userId, reset_token: token}).exec();
+async function verifyPasswordResetToken(userId, token) {
+  const foundToken = await resetPassword.findOne({
+    user_id: userId,
+    reset_token: token,
+  });
+  return foundToken;
 }
 module.exports = { resetPassword, verifyPasswordResetToken };

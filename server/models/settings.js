@@ -1,61 +1,63 @@
 const mongoose = require("mongoose");
 
 const settingsSchema = new mongoose.Schema({
-
-  promodoro:{
+  promodoro_npt: {
     type: Number,
-    default:25
+    default: 35,
   },
 
-  shortBreak:{
+  shortBreak_npt: {
     type: Number,
-    default:5
+    default: 15,
   },
 
-  longBreak:{
+  longBreak_npt: {
     type: Number,
-    default:30
+    default: 50,
   },
 
-  longBreakInterval:{
+  longBreakInterval: {
     type: Number,
-    default:false
+    default: 4,
   },
 
-  autoStartBreak:{ 
-    type: Boolean ,
-    default:false
+  autoStartBreaks: {
+    type: Boolean,
+    default: false,
   },
 
-  autoStartPromodors:{ 
-    type: Boolean ,
-    default:false
+  autoStartPromodoros: {
+    type: Boolean,
+    default: false,
   },
 
-  DarkModeWhenRunning:{ 
-    type: Boolean ,
-    default:false
+  focusMode: {
+    type: Boolean,
+    default: false,
   },
 
-  alarmMusic:{ 
+  selectedAlarm: {
     type: String,
-    default:"firstOne" 
+    default: "https://pomofocus.io/audios/alarms/alarm-digital.mp3",
   },
 
-  AlarmVolume:{
-    type:Number,
-    default:50
+  alarmVolume: {
+    type: Number,
+    default: 50,
   },
 
-  notifyMe:{
-    type : Boolean,
-    default:false
-  }
-
+  rounds: {
+    type: Number,
+    default: 4,
+  },
+  notifyTime: {
+    type: Number,
+    default: 5,
+  },
+  allowNotification: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const UserSettings = mongoose.model("Settings" , settingsSchema);
-
-
-module.exports={ UserSettings, settingsSchema };
-
+module.exports = settingsSchema;
