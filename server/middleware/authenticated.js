@@ -3,7 +3,10 @@ const logger = require("./logger");
 const { User } = require("../models/user");
 
 module.exports = async function (req, res, next) {
-  const token = req.body["x-auth-token"] || req.headers["x-auth-token"];
+  const token =
+    req.body["x-auth-token"] ||
+    req.headers["x-auth-token"] ||
+    req.cookies.x_auth_token;
   if (!token) return res.status(401).send("request denied, token not provided");
   try {
     const decodedPayload = jwt.verify(token, process.env.pro_focus_jwtKey);

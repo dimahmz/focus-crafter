@@ -1,9 +1,4 @@
-function createResponseObject({
-  statusCode = 200,
-  title = "",
-  description = "",
-  errorLevel = 0,
-}) {
+function createResponseObject(statusCode, title, description, errorLevel) {
   const response = {
     statusCode,
     title,

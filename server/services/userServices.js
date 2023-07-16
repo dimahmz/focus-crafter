@@ -1,8 +1,11 @@
-const { User, validatePasswords } = require("../models/user");
+const { User, validatePasswords, nameSchema } = require("../models/user");
 const { resetPassword } = require("../models/resetPasswords");
-const { changeToNewEmail } = require("../models/changeEmail");
+const { createResponseObject } = require("../helpers/responses");
 const bcrypt = require("bcrypt");
 const sendEmailTo = require("../services/sendEmail");
+const logger = require("../middleware/logger");
+const appError = require("../helpers/appErrors");
+const fs = require("fs");
 require("dotenv").config();
 
 module.exports = class UserServices {
@@ -32,19 +35,37 @@ module.exports = class UserServices {
 
   static async changeUserName(userId, name) {
     let user = await User.findOne({ name });
-    if (user) throw new Error("name is taken!");
+    // name is already taken
+    if (user)
+      throw new appError(
+        "bad name",
+        createResponseObject(
+          400,
+          "name is taken!",
+          "the name you entred is already taken!"
+        )
+      );
+    // check name
+    const { error } = nameSchema.validate(name);
+    if (error)
+      throw new appError(
+        "bad name",
+        createResponseObject(400, "invalid name", error.details[0].message, 1)
+      );
     user = await User.findById(userId).select("name");
     if (!user) throw new Error("user not found!");
     user.name = name;
     user.save();
   }
 
+  // chage the profile image
   static async changeProfileImg(userId, file) {
-    const user = await User.findById(userId).select(
-      "-password  -verifivation_token"
-    );
+    const user = await User.findById(userId).select("img");
     if (!user) throw new Error("user not found!");
-    // console.log(file);
+    // delete old profile picture
+    fs.unlink(user.img.path, (err) => {
+      if (err) logger.error(err);
+    });
     user.img.path = file.path;
     user.img.contentType = file.mimetype;
     user.img.size = file.size;
@@ -64,31 +85,32 @@ module.exports = class UserServices {
     const user = await User.findById(user_id);
     if (!user) throw new Error("user not found!");
 
-    // !
     const { error } = validatePasswords({ old_password, new_password });
-    if (error) throw new Error(error.message);
+    if (error)
+      throw new appError(
+        "passwords aren't not matched",
+        createResponseObject(
+          400,
+          "password is invalid!",
+          error.details[0].message,
+          1
+        )
+      );
 
     const validPassword = await bcrypt.compare(old_password, user.password);
-    if (!validPassword) throw new Error("The old password is invalid!");
-
+    if (!validPassword)
+      throw new appError(
+        "passwords aren't not matched",
+        createResponseObject(
+          400,
+          "incorrect password!",
+          "The old password is invalid!",
+          1
+        )
+      );
     const slat = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(new_password, slat);
     await user.save();
-    await resetPassword.findOneAndDelete({ user_id: user.id });
     return true;
-  }
-
-  // change a user's email
-  static async changeEmail(user, new_email) {
-    if (user.email == new_email) return;
-    const isEmailTaken = await User.findOne({ email: new_email });
-    if (isEmailTaken) throw new Error("email is taken");
-    const newEmailModal = new changeToNewEmail({
-      user_id: user._id,
-      new_email,
-    });
-    await newEmailModal.save();
-    const activationLink = `verification/verify/newEmail/${user._id}/${newEmailModal.reset_token}`;
-    await sendEmailTo(newEmailModal.new_email, activationLink);
   }
 };

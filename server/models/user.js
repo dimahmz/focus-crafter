@@ -54,6 +54,8 @@ const userSchema = new mongoose.Schema({
   settings: settingsSchema,
 });
 
+// methos related to the User
+
 // generate a token to be used in the cliet-side
 userSchema.methods.generateToken = function () {
   return jwt.sign(
@@ -75,6 +77,10 @@ function validateUser(user) {
   return schema.validate(user);
 }
 
+// User properties to validate when updating user
+const nameSchema = Joi.string().required().min(4).max(255);
+const emailSchema = Joi.string().email().required();
+
 // validate the updation of a new password
 function validatePasswords(passwords) {
   const schema = Joi.object({
@@ -88,6 +94,10 @@ function validatePasswords(passwords) {
   return schema.validate(passwords);
 }
 
-exports.User = User;
-exports.validate = validateUser;
-exports.validatePasswords = validatePasswords;
+module.exports = {
+  User,
+  validate: validateUser,
+  validatePasswords,
+  nameSchema,
+  emailSchema,
+};

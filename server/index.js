@@ -10,9 +10,12 @@ const editUser = require("./routes/editUser");
 const editTasks = require("./routes/editTasks");
 // middlewares
 const requestPath = require("./middleware/req");
-const logger = require("./startup/logging");
+// const logger = require("./startup/logging");
+const logger = require("./middleware/logger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
+
+const cookieParser = require("cookie-parser");
 
 // configurations
 const localIP = require("./startup/privateIP");
@@ -21,8 +24,10 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 // parse incoming data
-
 app.use(Express.json());
+
+// cookie parser
+app.use(cookieParser());
 
 // check if a secret pharase is set
 
@@ -66,7 +71,6 @@ const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-
 mongoose
   .connect(mongoDbUri, connectionParams)
   .then(() => console.log("Connected to the database"))
