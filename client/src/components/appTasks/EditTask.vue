@@ -9,20 +9,21 @@
     .promodors-btns
       a-input-number(v-model:value="estimatedPromo" :min="1")
   .notes-conatiner
-    a-textarea(v-model:value="editedTaskNote" placeholder="add notes" :rows=4)
+    a-textarea(v-model:value="editedTaskNote" placeholder="add notes" :rows=4 )
   .edit-task-footer
     .delete-btn
       a-button(type="primary" @click="()=> tasksStore.deleteTask(ndx)") Delete
     .other-btns
-      a-button(type="primary" @click="()=> tasksStore.tasks[props.ndx].showEditModal = false") Cancel
+      a-button(type="primary" @click="()=> tasksStore.tasks[props.ndx].showEditModal = tasksStore.editTaskModal = false ") Cancel
       a-button(type="primary" @click="savechangedTask") Save
-    </template>
+</template>
 
 <script setup>
 import closeBtn from "../_icons/close.vue";
 import { useTasksStore } from "../../stores/tasks";
 import { useSettingsStore } from "../../stores/settings";
 import { ref } from "vue";
+
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
 const props = defineProps({

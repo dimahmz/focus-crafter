@@ -3,7 +3,7 @@ a-select(
   v-model:value="settingsStore.state.selectedAlarm"
   style="width: 120px")
   a-select-option(
-    v-for="option in settingsStore.state.alarmSound" 
+    v-for="option in settingsStore._state.alarmSound" 
     :value="option.value"
     @click="$emit('change')"
   ) {{ option.text }}

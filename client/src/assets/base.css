@@ -66,5 +66,5 @@
 
 body {
   color: var(--color-text);
-  background: var(--secondary-color);
+  /* background: var(--secondary-color); */
 }

@@ -1,5 +1,5 @@
 <template lang="pug">
-a-modal(v-model:visible="settingsStore.showTasksModal" :title="tasksStore.numberOfTasks")
+a-modal(v-model:visible="settingsStore.showTasksModal" :title="modalTitle")
   div(@click.self="hideSubModals")
     .tasks-container      
       Task(
@@ -8,10 +8,10 @@ a-modal(v-model:visible="settingsStore.showTasksModal" :title="tasksStore.number
         :newTask="task" 
         :ndx="i"
       ) 
-    .add-icon(v-show="!tasksStore.addTaskModal")
-      plus-circle-filled(@click="()=> tasksStore.addTaskModal=true")
+    .add-icon(v-show="!tasksStore.addNewTaskModal && !tasksStore.editTaskModal")
+      plus-circle-filled(@click="()=> tasksStore.addNewTaskModal=true")
     .newTask-wrapper
-      AddNewTask(v-show="tasksStore.addTaskModal")
+      AddNewTask(v-show="tasksStore.addNewTaskModal")
   template(#footer)
     a-button(@click="saveTasks()") ok
 </template>
@@ -25,9 +25,16 @@ import AddNewTask from "./addNewTask.vue";
 import { useTasksStore } from "../../stores/tasks";
 import { useSettingsStore } from "../../stores/settings";
 import { PlusCircleFilled } from "@ant-design/icons-vue";
-import { ref } from "vue";
+import { computed } from "vue";
+
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();
+
+const modalTitle = computed(() => {
+  if (tasksStore.numberOfTasks == 0) return "No Task!";
+  if (tasksStore.numberOfTasks == 1) return "You have one task.";
+  return `You have ${tasksStore.numberOfTasks} tasks.`;
+});
 
 function hideSubModals() {
   //hide add a new task modal

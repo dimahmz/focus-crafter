@@ -20,6 +20,7 @@ a {
 .modal {
   @apply bg-slate-300;
   z-index: 999;
+  padding: 10px 14px;
 }
 
 /* buttons header */
@@ -38,4 +39,8 @@ a {
 
 .Times-container {
   @apply flex justify-between space-x-3 overflow-hidden;
+}
+
+.ant-btn-primary {
+  background-color: #1890ff;
 }

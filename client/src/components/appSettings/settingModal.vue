@@ -32,16 +32,16 @@ a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro setti
           storeSet="notifyTime")
       ChangeAset(storeSet="allowNotification")
   template(#footer)
-    a-button(@click="saveSettings()") ok
+    a-button(@click="saveSettings()") save
 </template>
 
 <script setup>
 import mHeader from "./modalHeader.vue";
 import SetNpt from "./setNpt.vue";
-import AppNpt from "../appNpt.vue";
-import AppRangeNpt from "../appRangeNpt.vue";
 import ChangeAset from "./changeAset.vue";
-import AppSelectInput from "../appSelectInput.vue";
+import AppNpt from "../appBtns/appNpt.vue";
+import AppRangeNpt from "../appBtns/appRangeNpt.vue";
+import AppSelectInput from "../appBtns/appSelectInput.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
@@ -51,6 +51,7 @@ const counterStore = useCounterStore();
 const settingsStore = useSettingsStore();
 
 let audio_elem;
+
 onMounted(() => {
   audio_elem = document.createElement("audio");
   audio_elem.src = settingsStore.state.selectedAlarm;
@@ -77,7 +78,9 @@ counterStore.$subscribe(
 );
 
 function saveSettings() {
+  // console.log("clicked to save bnt");
   settingsStore.showSettingsModal = false;
+  settingsStore.saveToDataBase();
 }
 </script>
 

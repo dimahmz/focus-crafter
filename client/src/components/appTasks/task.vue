@@ -24,7 +24,7 @@
         a-menu-item
           span(@click="displayEditTask()") edit task
         a-menu-item
-          span(@click="tasksStore.deleteTask()") clear task
+          span(@click="tasksStore.deleteTask(ndx)") clear task
         a-menu-item
           span(@click="displayNotes(true)") task note
 .task-note(
@@ -47,7 +47,12 @@ import Unselect from "../_icons/unselect.vue";
 import AddNewTask from "./addNewTask.vue";
 import EditTask from "./EditTask.vue";
 
-import { ClockCircleOutlined, CheckCircleOutlined, MinusCircleOutlined, MoreOutlined } from "@ant-design/icons-vue";
+import {
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  MinusCircleOutlined,
+  MoreOutlined,
+} from "@ant-design/icons-vue";
 
 import { ref } from "vue";
 import { useTasksStore } from "../../stores/tasks";
@@ -70,15 +75,12 @@ function displayNotes(option) {
   tasksStore.tasks[props.ndx].displayOptions = false;
 }
 function diplayOptions() {
-  tasksStore.addTaskModal = false;
-  tasksStore.tasks.forEach((task, i) => {
-    if (i !== props.ndx) task.displayOptions = false;
-  });
-  tasksStore.tasks[props.ndx].displayOptions =
-    !tasksStore.tasks[props.ndx].displayOptions;
+  tasksStore.hideAll();
+  tasksStore.tasks[props.ndx].displayOptions = true;
 }
 function displayEditTask() {
-  tasksStore.tasks[props.ndx].displayOptions = false;
+  tasksStore.editTaskModal = true;
+  tasksStore.hideAll();
   tasksStore.tasks[props.ndx].showEditModal = true;
 }
 </script>
@@ -86,6 +88,9 @@ function displayEditTask() {
 <style scoped>
 .task {
   @apply flex p-2 justify-between bg-blue text-white cursor-pointer relative;
+}
+.task h1 {
+  @apply text-white;
 }
 .selectedTask {
   @apply bg-pink;

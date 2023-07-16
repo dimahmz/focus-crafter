@@ -19,6 +19,6 @@ section {
 .npts-container {
   @apply flex space-x-3 items-center;
 }
-.title {
-}
+/* .title {
+} */
 </style>

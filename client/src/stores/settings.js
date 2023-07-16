@@ -1,13 +1,18 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
-import { reactive, watch ,toRef,computed} from "vue";
+import { defineStore } from "pinia";
+import { computed, reactive, watch } from "vue";
+import axios from "../plugins/axiosConfig";
 
-//other stores
+// stores
 import { useCounterStore } from "./timer";
+import { useUserStore } from "./user";
 
 export const useSettingsStore = defineStore("settings", () => {
+  // other stores
+  const userStore = useUserStore();
+  const timerStore = useCounterStore();
+
+  // state is similar to the database settings document
   const state = reactive({
-    showSettingsModal: false,
-    showTasksModal: true,
     promodoro_npt: 25,
     shortBreak_npt: 5,
     longBreak_npt: 30,
@@ -17,6 +22,15 @@ export const useSettingsStore = defineStore("settings", () => {
     notifyTime: 5,
     rounds: 4,
     alarmVolume: 50,
+    selectedAlarm: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
+    focusMode: false,
+    finishedPomodoros: 0,
+  });
+
+  // this state is related to only the fron-end
+  const _state = reactive({
+    showSettingsModal: false,
+    showTasksModal: true,
     alarmSound: [
       {
         text: "Bell",
@@ -39,71 +53,80 @@ export const useSettingsStore = defineStore("settings", () => {
         value: "https://pomofocus.io/audios/alarms/alarm-wood.mp3",
       },
     ],
-    selectedAlarm: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
-
-    diplayPallete:false,
-    
-    appSelectedColor: {
-      promodoro:{
-        primaryColor: "#00042c",
-        secondaryColor: "#12163d",
-        tertiaryColor: "#ff6d7f",
-      },
-      shortBreak:{
-        primaryColor: "#00042c",
-        secondaryColor: "#12163d",
-        tertiaryColor: "#ff6d7f",
-      },
-      longBreak:{
-        primaryColor: "#00042c",
-        secondaryColor: "#12163d",
-        tertiaryColor: "#ff6d7f",
-      }
-    },
-    focusedMode: false,
   });
 
-  const promodoroBgColor = computed(function () {
-    const bgColor = toRef(state.appSelectedColor, "promodoro");
-    return bgColor.value.primaryColor;
-  });
-  const shortBreakBgColor = computed(function () {
-    const bgColor = toRef(state.appSelectedColor, "shortBreak");
-    return bgColor.value.primaryColor;
-  });
-  const longBreakBgColor = computed(function () {
-    const bgColor = toRef(state.appSelectedColor, "longBreak");
-    return bgColor.value.primaryColor;
+  /* ----Getters---- */
+
+  // decide to which break to go
+  const isRoundsCompleted = computed(function () {
+    return state.finishedPomodoros % state.rounds === 0;
   });
 
+  //sync the timer with the lastest changes made in the settings
+  syncWithTimer();
 
-  function changeAppColor(selectedColor,timer) {
-    document.documentElement.style.setProperty(`--${timer}-primary-color`,selectedColor.primaryColor);
-    document.documentElement.style.setProperty(`--${timer}-secondary-color`,selectedColor.secondaryColor);
-    document.documentElement.style.setProperty(`--${timer}-tertiary-color`,selectedColor.tertiaryColor);
-    state.appSelectedColor[timer] = selectedColor;
+  function saveToDataBase() {
+    if (userStore.state.loggedIn) {
+      const stateCopy = JSON.stringify(state);
+      axios.put("/editUser/settings", {
+        settingsUpdate: stateCopy,
+      });
+    }
   }
 
-  watch(state, updateTimer);
+  // sync the settings store with the database
+  function syncSettingsWithDB(settings) {
+    for (const prop in settings) {
+      if (state.hasOwnProperty(prop)) {
+        state[prop] = settings[prop];
+      }
+    }
+  }
 
-  function updateTimer() {
-    const timerStore = useCounterStore();
-    if (!timerStore.TimerIsCounting) {
+  function syncWithTimer() {
+    if (!timerStore.isTimerCounting) {
       timerStore.promodoro = state.promodoro_npt * 60;
       timerStore.shortBreak = state.shortBreak_npt * 60;
       timerStore.longBreak = state.longBreak_npt * 60;
     }
   }
+  // make the timer updated
+  watch(state, syncWithTimer);
+
   return {
     state,
-    promodoroBgColor,
-    shortBreakBgColor,
-    longBreakBgColor,
-    changeAppColor,
-
+    _state,
+    isRoundsCompleted,
+    saveToDataBase,
+    syncSettingsWithDB,
   };
 });
 
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useSettingsStore, import.meta.hot));
-}
+// const promodoroBgColor = computed(function () {
+//   const bgColor = toRef(state.appSelectedColor, "promodoro");
+//   return bgColor.value.primaryColor;
+// });
+// const shortBreakBgColor = computed(function () {
+//   const bgColor = toRef(state.appSelectedColor, "shortBreak");
+//   return bgColor.value.primaryColor;
+// });
+// const longBreakBgColor = computed(function () {
+//   const bgColor = toRef(state.appSelectedColor, "longBreak");
+//   return bgColor.value.primaryColor;
+// });
+
+// function changeAppColor(selectedColor, timer) {
+//   document.documentElement.style.setProperty(
+//     `--${timer}-primary-color`,
+//     selectedColor.primaryColor
+//   );
+//   document.documentElement.style.setProperty(
+//     `--${timer}-secondary-color`,
+//     selectedColor.secondaryColor
+//   );
+//   document.documentElement.style.setProperty(
+//     `--${timer}-tertiary-color`,
+//     selectedColor.tertiaryColor
+//   );
+//   state.appSelectedColor[timer] = selectedColor;
+// }

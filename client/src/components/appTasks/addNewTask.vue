@@ -47,8 +47,10 @@ const newTaskName = ref(props.thisTask.title),
   estimatedPromo = ref(props.thisTask.estimatedPromodoros);
 
 function saveNewTask() {
+  newTaskName.value = newTaskName.value.trim();
   if (newTaskName.value.length === 0) {
     npt.classList.add("invalid-npt");
+    npt.focus();
     return;
   }
   tasksStore.addTask({
@@ -56,6 +58,8 @@ function saveNewTask() {
     notes: newTaskNote.value,
     estimatedPromodoros: estimatedPromo.value,
     finishedPromdoros: finishedPromo.value,
+    isSelected: false,
+    isFinished: false,
   });
   npt.classList.remove("invalid-npt");
   npt.focus();
@@ -64,7 +68,7 @@ function saveNewTask() {
 }
 
 function closeModal() {
-  tasksStore.addTaskModal = false;
+  tasksStore.addNewTaskModal = false;
 }
 function decrement() {
   if (estimatedPromo.value > 1) estimatedPromo.value--;

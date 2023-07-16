@@ -2,7 +2,7 @@
 header
   h2 {{modalName}}
   .grid.place-items-center
-    closeBtn(@click="() => {settingsStore[setStore]=false}" )
+    closeBtn(@click="closeModal" )
 hr.h-2
 </template>
 
@@ -15,6 +15,10 @@ defineProps({
   setStore: { type: String, required: true },
 });
 const settingsStore = useSettingsStore();
+function closeModal(){
+  settingsStore[setStore]=false;
+  settingsStore.saveToDataBase();
+}
 </script>
 
 <style scoped>
