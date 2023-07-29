@@ -68,8 +68,8 @@ import { useSettingsStore } from "../stores/settings";
 const settingsStore = useSettingsStore();
 
 const formState = reactive({
-  username: "diboy",
-  password: "diboy1234",
+  username: "best",
+  password: "best12345",
   remember: true,
 });
 

@@ -2,7 +2,7 @@
   "name": "pro-focus",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --port 4173"
   },
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.3",
+    "@vue/language-plugin-pug": "^1.8.8",
     "autoprefixer": "^10.4.12",
     "postcss": "^8.4.16",
     "pug": "^3.0.2",

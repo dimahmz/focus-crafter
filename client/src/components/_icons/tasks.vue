@@ -24,3 +24,9 @@
     />
   </svg>
 </template>
+<script setup>
+import { defineProps } from "vue";
+defineProps({
+  color: { type: String, default: "black" },
+});
+</script>

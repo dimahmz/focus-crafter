@@ -11,6 +11,10 @@ export const useUserStore = defineStore("user", () => {
     name: "john",
     email: "johndeo1@anemail.com",
     imagePath: "http://localhost:3000",
+    resetPassModal: false,
+    messageModal: false,
+    popupImg: false,
+    serverResponse: {},
   });
 
   // state for changes
@@ -40,34 +44,54 @@ export const useUserStore = defineStore("user", () => {
   }
 
   // change the user name
-
   async function changeUserName() {
     if (_state.name.length < 4) {
       _state.name = state.name;
-      window.alert("name is short");
-      return;
+      return {
+        title: "name is too short ",
+        description: "name should contain at least four carachters!",
+        errorLevel: 1,
+      };
     }
-    if (_state.name == state.name) return;
-    const token =
-      sessionStorage.getItem("x-auth-token") ||
-      localStorage.getItem("x-auth-token");
     const name = _state.name;
     try {
-      const response = await axios.put("/editUser/name", {
-        name,
-      });
+      const response = await axios.put("/editUser/name", { name });
       state.name = _state.name;
-      window.alert(response.data);
+      return response.data;
     } catch (e) {
       _state.name = state.name;
-      const res = e?.response?.data;
-      if (res) return window.alert(res);
-      window.alert("name hasn't been updated!");
+      return e.response.data;
+    }
+  }
+
+  // change the user password
+  async function changePassword(old_password, new_password) {
+    try {
+      const response = await axios.put("/editUser/password", {
+        old_password,
+        new_password,
+      });
+      return response.data;
+    } catch (e) {
+      return e.response.data;
+    }
+  }
+
+  // change the user image
+  async function changeUserProfile(formData) {
+    try {
+      const response = await axios.put("/editUser/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (e) {
+      return e.response.data;
     }
   }
 
   // log out the user
-
   async function logOutUser() {
     if (sessionStorage.getItem("x-auth-token")) {
       sessionStorage.removeItem("x-auth-token");
@@ -77,5 +101,13 @@ export const useUserStore = defineStore("user", () => {
     window.location.href = "/";
   }
 
-  return { state, _state, syncAllTheStoresWithDB, changeUserName, logOutUser };
+  return {
+    state,
+    _state,
+    syncAllTheStoresWithDB,
+    changeUserName,
+    logOutUser,
+    changePassword,
+    changeUserProfile,
+  };
 });
