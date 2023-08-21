@@ -8,6 +8,7 @@ const reset = require("./routes/resetpassword");
 const verify = require("./routes/verification");
 const editUser = require("./routes/editUser");
 const editTasks = require("./routes/editTasks");
+const appData = require("./routes/appData");
 // middlewares
 const requestPath = require("./middleware/req");
 // const logger = require("./startup/logging");
@@ -49,6 +50,7 @@ app.use("/verification", verify);
 app.use("/resetpassword", reset);
 app.use("/editUser", editUser);
 app.use("/editTasks", editTasks);
+app.use("/appData", appData);
 
 // handlling express errors
 app.use((err, req, res, next) => {
