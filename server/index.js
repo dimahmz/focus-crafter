@@ -4,13 +4,12 @@ const app = Express();
 const auth = require("./routes/auth");
 const signup = require("./routes/signup");
 const me = require("./routes/me");
-const reset = require("./routes/resetpassword");
+const reset = require("./routes/forgotpassword");
 const verify = require("./routes/verification");
 const editUser = require("./routes/editUser");
+const editSettings = require("./routes/editSettings");
 const editTasks = require("./routes/editTasks");
-const appData = require("./routes/appData");
-// middlewares
-const requestPath = require("./middleware/req");
+const userData = require("./routes/userData");
 // const logger = require("./startup/logging");
 const logger = require("./middleware/logger");
 const notFound = require("./middleware/notFound");
@@ -49,8 +48,9 @@ app.use("/me", me);
 app.use("/verification", verify);
 app.use("/resetpassword", reset);
 app.use("/editUser", editUser);
+app.use("/editSettings", editSettings);
 app.use("/editTasks", editTasks);
-app.use("/appData", appData);
+app.use("/userData", userData);
 
 // handlling express errors
 app.use((err, req, res, next) => {
@@ -76,16 +76,20 @@ const connectionParams = {
 mongoose
   .connect(mongoDbUri, connectionParams)
   .then(() => console.log("Connected to the database"))
-  .catch((e) => logger.error(`DB connection error: ${e.message}`));
+  .catch((e) => {
+    logger.error(`DB connection error: ${e.message}`);
+    console.log(`error ${e.message}`);
+  });
 
 // stating the server
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
-
+// for testing in the LAN
 if (process.env.NODE_ENV == "development") {
   localIP();
 }
+
+app.listen(port, () => console.log(`network ${process.env.app_domain_name}`));
 
 // projest base directory
 global.__basedir = __dirname;

@@ -8,10 +8,15 @@ const logger = winston.createLogger({
     winston.format.prettyPrint()
   ),
   transports: [
-    new winston.transports.File({ filename: "error.log", level: "error" }),
-    new winston.transports.File({ filename: "combined.log", level: "info" }),
+    new winston.transports.File({
+      filename: "storage/logs/error.log",
+      level: "error",
+    }),
+    new winston.transports.File({
+      filename: "storage/logs/combined.log",
+      level: "info",
+    }),
   ],
-
 });
 
 module.exports = logger;

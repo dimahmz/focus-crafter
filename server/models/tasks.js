@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const taskSchema = mongoose.Schema({
   title: {
     type: String,
-    default: "first task",
+    default: "a task",
   },
   notes: {
     type: String,
-    default: "first task's notes",
+    default: "a task's notes",
   },
   estimatedPromodoros: {
     type: Number,

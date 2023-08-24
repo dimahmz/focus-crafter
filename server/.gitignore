@@ -18,3 +18,5 @@ node_modules
 index.html
 static/images/profiles_imgs/*
 *.rest
+*.local*
+.env

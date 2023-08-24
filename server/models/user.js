@@ -76,7 +76,11 @@ function validateUser(user) {
   });
   return schema.validate(user);
 }
-
+// validate email
+function validateEmail(email) {
+  const schema = Joi.string().email().required();
+  return schema.validate(email);
+}
 // User properties to validate when updating user
 const nameSchema = Joi.string().required().min(4).max(255);
 const emailSchema = Joi.string().email().required();
@@ -98,6 +102,7 @@ module.exports = {
   User,
   validate: validateUser,
   validatePasswords,
+  validateEmail,
   nameSchema,
   emailSchema,
 };

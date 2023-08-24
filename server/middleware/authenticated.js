@@ -1,22 +1,53 @@
 const jwt = require("jsonwebtoken");
 const logger = require("./logger");
 const { User } = require("../models/user");
+const Responses = require("../helpers/responses");
 
 module.exports = async function (req, res, next) {
   const token =
-    req.body["x-auth-token"] ||
-    req.headers["x-auth-token"] ||
+    req.body["x_auth_token"] ||
+    req.headers["x_auth_token"] ||
     req.cookies.x_auth_token;
-  if (!token) return res.status(401).send("request denied, token not provided");
+  if (!token)
+    return res
+      .status(401)
+      .send(
+        Responses.create(
+          false,
+          "token not provided",
+          "request send without a token",
+          1
+        )
+      );
   try {
     const decodedPayload = jwt.verify(token, process.env.pro_focus_jwtKey);
     const user = await User.findById(decodedPayload._id);
     // the user clould not be found
-    if (!user) res.status(404).send({ error: "User not found" });
+    // TODO is there a case where this can happen?
+    if (!user)
+      res
+        .status(401)
+        .send(
+          Responses.create(
+            false,
+            "invalid token",
+            "the token you provided is invalid",
+            2
+          )
+        );
     req.user = decodedPayload;
     next();
-  } catch (ex) {
-    logger.error(ex.message);
-    res.status(400).send("token is invalid!");
+  } catch (error) {
+    logger.error(error.message);
+    res
+      .status(401)
+      .send(
+        Responses.create(
+          false,
+          "token error",
+          "your token is either expired or invalid",
+          2
+        )
+      );
   }
 };
