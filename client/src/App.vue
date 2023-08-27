@@ -1,20 +1,23 @@
 <template lang="pug">
-router-view
+main
+  router-view
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, watch, inject } from "vue";
+import { onMounted, onBeforeUnmount, onBeforeMount, watch, inject } from "vue";
 import { useCounterStore } from "@/stores/timer";
 
 const timerStore = useCounterStore();
 
-// confirm before leaving the page
-onMounted(() => {
-  window.addEventListener("beforeunload", confirmExit);
-  // sync the app
-  const syncing = inject("syncStores");
-  syncing();
-});
+// sync the app
+// const syncing = inject("syncStores");
+// syncing();
+
+onBeforeMount(() => {}),
+  onMounted(() => {
+    //add a listner to to catch the user confirmation before leaving the page
+    window.addEventListener("beforeunload", confirmExit);
+  });
 
 onBeforeUnmount(() => {
   window.removeEventListener("beforeunload", confirmExit);
@@ -23,7 +26,7 @@ onBeforeUnmount(() => {
 const confirmExit = (event) => {
   // this funtion  knows the timer's state 😎
   timerStore.pauseOrResumeTimer();
-  // don't leave the page if the timer is working or stopped in a session
+  // just leave the page if the timer is not working or unstopped in a session
   if (!timerStore.isTimerCounting) return false;
 
   event.preventDefault();

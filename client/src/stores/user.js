@@ -2,12 +2,17 @@ import { defineStore } from "pinia";
 import { reactive } from "vue";
 import { useSettingsStore } from "../stores/settings";
 import { useTasksStore } from "../stores/tasks";
-
 import axios from "../plugins/axiosConfig";
+import { useRouter } from "vue-router";
+import Cookies from "../utils/appCookies";
+import router from "../router/routes";
+
+// const router = useRouter();
 
 export const useUserStore = defineStore("user", () => {
   const state = reactive({
     loggedIn: false,
+    rememberMe: false,
     name: "john",
     email: "johndeo1@anemail.com",
     imagePath: "http://localhost:3000",
@@ -32,6 +37,7 @@ export const useUserStore = defineStore("user", () => {
     // sync with the settings store
     if (data.settings) useSettingsStore().syncSettingsWithDB(data.settings);
     // sync with the tasks store
+
     if (data.task) useTasksStore().syncTasksWithDB(data.task);
     // sync the user store
     state.name = data.name;
@@ -41,6 +47,27 @@ export const useUserStore = defineStore("user", () => {
     _state.name = data.name;
     _state.email = data.email;
     _state.imagePath += data.img.path;
+  }
+
+  // log in the user
+  async function loginUser({ name, password }, rememberMe) {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "auth",
+        data: { name, password },
+      });
+      const days = rememberMe ? 100 : 0;
+      const user = response.data.user;
+      // get the token from the response and store it in the cookies
+      Cookies.setCookie("x_auth_token", response.data["x-auth-token"], days);
+      // synchronize the stores with th the database
+      syncAllTheStoresWithDB(user);
+      // redirect to home page
+      router.push({ name: "home" });
+    } catch (e) {
+      return e.response;
+    }
   }
 
   // change the user name
@@ -93,12 +120,10 @@ export const useUserStore = defineStore("user", () => {
 
   // log out the user
   async function logOutUser() {
-    if (sessionStorage.getItem("x-auth-token")) {
-      sessionStorage.removeItem("x-auth-token");
-    } else {
-      localStorage.removeItem("x-auth-token");
-    }
-    window.location.href = "/";
+    Cookies.removeCookie("x_auth_token");
+    state.loggedIn = false;
+    state.serverResponse = {};
+    router.push({ name: "home" });
   }
 
   return {
@@ -107,6 +132,7 @@ export const useUserStore = defineStore("user", () => {
     syncAllTheStoresWithDB,
     changeUserName,
     logOutUser,
+    loginUser,
     changePassword,
     changeUserProfile,
   };

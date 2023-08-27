@@ -1,9 +1,8 @@
 <template lang="pug">
-header
+header.flex.justify-around
   h2 {{modalName}}
   .grid.place-items-center
-    closeBtn(@click="closeModal" )
-hr.h-2
+    closeBtn(@click="closeModal")
 </template>
 
 <script setup>
@@ -15,14 +14,8 @@ defineProps({
   setStore: { type: String, required: true },
 });
 const settingsStore = useSettingsStore();
-function closeModal(){
-  settingsStore[setStore]=false;
+function closeModal() {
+  settingsStore[setStore] = false;
   settingsStore.saveToDataBase();
 }
 </script>
-
-<style scoped>
-header {
-  @apply flex justify-around;
-}
-</style>

@@ -22,9 +22,3 @@ section {
   @apply flex flex-col space-y-4;
 }
 </style>
-<!-- select(v-model="settingsStore.state.selectedAlarm")
-  option(
-    v-for="option in settingsStore.state.alarmSound" 
-    :value="option.value"
-    @click="$emit('change')"
-  ) {{ option.text }} -->

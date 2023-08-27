@@ -1,38 +1,35 @@
 <template lang="pug">
-a-modal(v-model:visible="settingsStore.showSettingsModal" title="Promodoro settings" )
-  .modal
-    .times-npts-container
-      AppNpt(nptLabel="promodoro"   storeSet="promodoro_npt")
-      AppNpt(nptLabel="short break" storeSet="shortBreak_npt")
-      AppNpt(nptLabel="long break" storeSet="longBreak_npt")
-    ChangeAset(
-        setPhrase="auto start break"
-        storeSet="autoStartBreaks")
-    ChangeAset(
-        setPhrase="auto start Promodors"
-        storeSet="autoStartPromodoros")
-    ChangeAset(
-        setPhrase="Dark mode when running"
-        storeSet="focusedMode")
-    SetNpt(setPhrase="Long Break Interval")
-      template(#aNpt)
-        AppNpt(:nptValue="settingsStore.rounds"
-        storeSet="rounds")
-    SetNpt(setPhrase="Alarm Music")
-      template(#aNpt)
-        AppSelectInput(@change="changeAlarmSound")
-    SetNpt(setPhrase="Alarm volume")
-      template(#aNpt)
-          AppRangeNpt(:nptValue="settingsStore.alarmVolume"
-            storeSet="alarmVolume"
-            @change="chnageAlarmVolume")
-    SetNpt(setPhrase="notify me in the last")
-      template(#aNpt)
-        AppNpt(:nptValue="settingsStore.notifyTime"
-          storeSet="notifyTime")
-      ChangeAset(storeSet="allowNotification")
+AppModal(title="Pomodoro settings" ).bg-secondary
+  .flex.justify-between.space-x-3
+    AppNpt(nptLabel="Pomodoro"   storeSet="promodoro_npt")
+    AppNpt(nptLabel="Short break" storeSet="shortBreak_npt")
+    AppNpt(nptLabel="Long break" storeSet="longBreak_npt")
+  Line      
+  ChangeAset(
+      label="Auto start Promodors"
+      storeSet="autoStartPromodoros")
+  ChangeAset(
+      label="Auto start breaks"
+      storeSet="autoStartBreaks")
+  SetNpt(label="Rounds before long break")
+    template(#aNpt)
+      AppNpt(:nptValue="settingsStore.rounds"
+      storeSet="rounds")
+  Line
+  ChangeAset(
+      label="Dark mode when running"
+      storeSet="focusedMode")
+  Line
+  SetNpt(label="Alarm sound")
+    template(#aNpt)
+      AppSelectInput(@change="changeAlarmSound")
+  SetNpt(label="Volume")
+    template(#aNpt)
+        AppRangeNpt(:nptValue="settingsStore.alarmVolume"
+          storeSet="alarmVolume"
+          @change="chnageAlarmVolume")
   template(#footer)
-    a-button(@click="saveSettings()") save
+    a-button(type="primary" @click="saveSettings()") save
 </template>
 
 <script setup>
@@ -42,6 +39,8 @@ import ChangeAset from "./changeAset.vue";
 import AppNpt from "../appBtns/appNpt.vue";
 import AppRangeNpt from "../appBtns/appRangeNpt.vue";
 import AppSelectInput from "../appBtns/appSelectInput.vue";
+import Line from "./line.vue";
+import AppModal from "../appModal.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
@@ -83,9 +82,3 @@ function saveSettings() {
   settingsStore.saveToDataBase();
 }
 </script>
-
-<style scoped>
-.times-npts-container {
-  @apply flex justify-between space-x-3 overflow-hidden;
-}
-</style>

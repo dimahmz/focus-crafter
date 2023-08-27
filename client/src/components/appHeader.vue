@@ -1,5 +1,5 @@
 <template lang="pug">
-section.app-header 
+section.app-header.text-secondary
   .title-container
     h1.title PomodoroPro
 </template>

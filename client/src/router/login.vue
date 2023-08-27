@@ -10,10 +10,10 @@
       >
         <a-form-item
           label="Username"
-          name="username"
+          name="name"
           :rules="[{ required: true, message: 'Please input your username!' }]"
         >
-          <a-input v-model:value="formState.username">
+          <a-input v-model:value="formState.name">
             <template #prefix>
               <UserOutlined class="site-form-item-icon" />
             </template>
@@ -34,7 +34,7 @@
 
         <a-form-item>
           <a-form-item name="remember" no-style>
-            <a-checkbox v-model:checked="formState.remember"
+            <a-checkbox v-model:checked="formState.rememberUser"
               >Remember me</a-checkbox
             >
           </a-form-item>
@@ -62,52 +62,25 @@ import { reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
-import axios from "axios";
-
-import { useSettingsStore } from "../stores/settings";
-const settingsStore = useSettingsStore();
 
 const formState = reactive({
-  username: "best",
+  name: "best",
   password: "best12345",
-  remember: true,
+  rememberUser: true,
 });
 
 const router = useRouter();
 
-const onFinish = (values) => {
-  axios({
-    method: "post",
-    url: "/api/auth",
-    data: {
-      name: values.username,
-      password: values.password,
-    },
-  })
-    .then(async (res) => {
-      const data = res.data;
-      const token = data["x-auth-token"];
-      if (formState.remember) {
-        localStorage.setItem("x-auth-token", token);
-      } else {
-        sessionStorage.setItem("x-auth-token", token);
-      }
-      sessionStorage.setItem("loggedIn", true);
-      useUserStore().syncAllTheStoresWithDB(data.user);
-      router.push({ name: "home" });
-    })
-    .catch((err) => {
-      const res = err?.response?.data;
-      if (res) {
-        window.alert(res.title + "\n" + res.text);
-      } else window.alert("internal server Error!");
-    });
-};
-const onFinishFailed = (errorInfo) => {
-  // console.log("Failed:", errorInfo);
+const onFinish = async (values) => {
+  const user = useUserStore();
+  const response = await user.loginUser(
+    { name: formState.name, password: formState.password },
+    formState.rememberUser
+  );
+  console.log(response);
 };
 const disabled = computed(() => {
-  return !(formState.username && formState.password);
+  return !(formState.name && formState.password);
 });
 </script>
 <style scoped>

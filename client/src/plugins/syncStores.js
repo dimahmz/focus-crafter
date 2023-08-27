@@ -4,14 +4,9 @@ import { useUserStore } from "../stores/user";
 export default () => {
   // synchronize all the stores with the database
   axios
-    .post(`/me`)
+    .get(`/appData`)
     .then((res) => {
       useUserStore().syncAllTheStoresWithDB(res.data);
-      sessionStorage.setItem("loggedIn", true);
     })
-    .catch((e) => {
-      console.log(e);
-      useUserStore().state.loggedIn = false;
-      sessionStorage.setItem("loggedIn", false);
-    });
+    .catch(() => (useUserStore().state.loggedIn = false));
 };

@@ -1,5 +1,5 @@
 <template lang="pug">
-.grid.place-items-center.mt-4.mb-3
+.grid.place-items-center
   .task-container
     .title-container
       h1 {{ tasksStore.workingOnTask }}

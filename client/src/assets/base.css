@@ -1,6 +1,10 @@
 /* color palette from <https://github.com/vuejs/theme> */
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Sarabun:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@100&display=swap");
+
+/* defauult font */
 
 :root {
   /* colors */
@@ -15,27 +19,6 @@
   --gray-normal: #c2c9d1;
   --gray-light: #d9dcdf;
   --gray-lighter: #ecedee;
-  /* app main colors */
-
-  --primary-color: #00042c;
-  --secondary-color: #12163d;
-  --tertiary-color: #ff6d7f;
-  --primary-color-light: #00042c;
-  --secondary-color-light: #252736;
-  --tertiary-color-light: #ff6d7f;
-
-  /* timers colors */
-  --promodoro-primary-color: #00042c;
-  --promodoro-secondary-color: #12163d;
-  --promodoro-tertiary-color: #ff6d7f;
-
-  --shortBraek-primary-color: #00042c;
-  --shortBraek-secondary-color: #12163d;
-  --shortBraek-tertiary-color: #ff6d7f;
-
-  --longBreak-primary-color: #00042c;
-  --longBreak-secondary-color: #12163d;
-  --longBreak-tertiary-color: #ff6d7f;
 
   /* fonts */
   --headingFont: "Roboto", sans-serif;
@@ -43,7 +26,7 @@
 }
 
 /* semantic color variables for this project */
-:root {
+/* :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
@@ -53,18 +36,12 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
-}
-
-*,
-*::before,
-*::after {
+} */
+html,
+body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-weight: normal;
-}
-
-body {
-  color: var(--color-text);
-  /* background: var(--secondary-color); */
+  height: auto;
 }
