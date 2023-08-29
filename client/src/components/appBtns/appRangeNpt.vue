@@ -15,7 +15,29 @@ const props = defineProps({
 });
 </script>
 
-<style scoped>
+<style>
+.ant-slider-rail {
+  @apply bg-secondary;
+}
+.ant-slider-handle:focus {
+  @apply border-quaternary;
+  box-shadow: none;
+}
+.ant-slider-rail:hover {
+  @apply bg-secondary !important;
+}
+.ant-slider-rail:hover {
+  @apply bg-secondary;
+}
+.ant-slider-handle {
+  @apply bg-tertiary border-2 border-secondary w-4 h-4;
+}
+.ant-slider-track {
+  @apply bg-tertiary;
+}
+.ant-slider-track:hover .ant-slider-track:focus {
+  background-color: none;
+}
 .ant-slider {
   @apply w-28;
 }

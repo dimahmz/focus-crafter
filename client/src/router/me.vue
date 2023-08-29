@@ -94,7 +94,7 @@ async function changeUserName() {
   @apply mb-16;
 }
 .modal-background {
-  @apply absolute-fullScreen flex-center z-20 backdrop-blur;
+  @apply absolute-full-screen flex-center z-20 backdrop-blur;
 }
 
 nav {

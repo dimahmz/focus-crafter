@@ -3,11 +3,8 @@ import { reactive } from "vue";
 import { useSettingsStore } from "../stores/settings";
 import { useTasksStore } from "../stores/tasks";
 import axios from "../plugins/axiosConfig";
-import { useRouter } from "vue-router";
 import Cookies from "../utils/appCookies";
 import router from "../router/routes";
-
-// const router = useRouter();
 
 export const useUserStore = defineStore("user", () => {
   const state = reactive({
@@ -57,16 +54,28 @@ export const useUserStore = defineStore("user", () => {
         url: "auth",
         data: { name, password },
       });
+      // remember the user
+      if (rememberMe) {
+        localStorage.setItem("authenticated", true);
+        sessionStorage.removeItem("authenticated");
+      } else {
+        sessionStorage.setItem("authenticated", true);
+        localStorage.removeItem("authenticated");
+      }
       const days = rememberMe ? 100 : 0;
-      const user = response.data.user;
+      const user = response.data.payload.user;
       // get the token from the response and store it in the cookies
-      Cookies.setCookie("x_auth_token", response.data["x-auth-token"], days);
+      Cookies.setCookie(
+        "x_auth_token",
+        response.data.payload.x_auth_token,
+        days
+      );
       // synchronize the stores with th the database
       syncAllTheStoresWithDB(user);
       // redirect to home page
       router.push({ name: "home" });
     } catch (e) {
-      return e.response;
+      return e.response.data;
     }
   }
 
@@ -118,11 +127,21 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  function isUserLoggedIn() {
+    return (
+      state.loggedIn ||
+      JSON.parse(sessionStorage.getItem("authenticated")) ||
+      JSON.parse(localStorage.getItem("authenticated"))
+    );
+  }
+
   // log out the user
   async function logOutUser() {
     Cookies.removeCookie("x_auth_token");
     state.loggedIn = false;
     state.serverResponse = {};
+    localStorage.removeItem("authenticated");
+    sessionStorage.removeItem("authenticated");
     router.push({ name: "home" });
   }
 
@@ -135,5 +154,6 @@ export const useUserStore = defineStore("user", () => {
     loginUser,
     changePassword,
     changeUserProfile,
+    isUserLoggedIn,
   };
 });

@@ -61,21 +61,17 @@ const router = createRouter({
 
 // routes protections
 router.beforeEach(async (to, from, next) => {
-  const user = useUserStore();
-
-  // in case the user enter directly to a protected route from the browser
-  if (!user.state.loggedIn && Cookies.getCookie("x_auth_token")) {
-    await syncStores();
+  const isLoggedIn = useUserStore().isUserLoggedIn();
+  // redirect to login page when navigating into protected routes
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next({ name: "login" });
+  }
+  // protected pages that are accessible only for unauthenticated users
+  else if (to.meta.ifNotAuthenticated && isLoggedIn) {
+    next({ name: "home" });
+  } else {
     next();
   }
-  // redirect to login page when navigating into protected routes
-  if (to.meta.requiresAuth && !useUserStore().state.loggedIn)
-    next({ name: "login" });
-  // protected pages that are accessible only for unauthenticated users
-  if (to.meta.ifNotAuthenticated && useUserStore().state.loggedIn)
-    next({ name: "home" });
-
-  next();
 });
 
 export default router;

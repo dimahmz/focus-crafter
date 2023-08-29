@@ -1,4 +1,4 @@
 <template lang="pug">
-.flex-center.my-6.mx-6
+.flex-center.my-8
   hr.bg-quaternary.w-full.h-px
 </template>

@@ -1,23 +1,23 @@
 @import "./base.css";
 
-/* customizing ant design styling */
-
-/* modal */
-/* .ant-modal-content .ant-modal-body {
-  padding: 0;
-} */
-.ant-modal-close svg {
-  height: 22px;
-  width: 22px;
+/* scrollbar-corner */
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* switch button */
-.ant-switch {
-  @apply bg-secondary;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
-.ant-switch-handle::before {
-  @apply bg-quaternary;
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
 }
-.ant-switch-checked {
-  @apply bg-tertiary;
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
