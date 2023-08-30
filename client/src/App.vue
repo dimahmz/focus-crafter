@@ -1,23 +1,25 @@
 <template lang="pug">
-main
-  router-view
+router-view
 </template>
 
 <script setup>
 import { onMounted, onBeforeUnmount, onBeforeMount, watch, inject } from "vue";
 import { useCounterStore } from "@/stores/timer";
+import { useUserStore } from "./stores/user";
 
 const timerStore = useCounterStore();
+const userStore = useUserStore();
 
 // sync the app
-// const syncing = inject("syncStores");
-// syncing();
+onBeforeMount(() => {
+  const syncing = inject("syncStores");
+  syncing();
+});
 
-onBeforeMount(() => {}),
-  onMounted(() => {
-    //add a listner to to catch the user confirmation before leaving the page
-    window.addEventListener("beforeunload", confirmExit);
-  });
+onMounted(() => {
+  //add a listner to to catch the user confirmation before leaving the page
+  window.addEventListener("beforeunload", confirmExit);
+});
 
 onBeforeUnmount(() => {
   window.removeEventListener("beforeunload", confirmExit);

@@ -1,6 +1,6 @@
 <template lang="pug">
-.flex.flex-col.space-y-2
-  label(for="inputNumber") {{ nptLabel }}
+.flex.flex-col.justify-center.space-y-2
+  p.text-center {{ nptLabel }}
   .custom-number-input.h-10.w-32
     .flex.flex-row.w-full.rounded-2xl.relative.mt-1.bg-secondary
       button.h-full.w-20.cursor-pointer.outline-none(@click="decrement")

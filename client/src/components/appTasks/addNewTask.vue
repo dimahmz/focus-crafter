@@ -1,18 +1,13 @@
 <template lang="pug">
-.edit-task
+.p-5
   .task-header
-    a-input(v-model:value="newTaskName" placeholder="what are you working on?" id="npt")
-      .grid.place-items-center
-        closeBtn(@click="closeModal")
-  .promodoros
+    a-input(v-model:value="newTaskName" placeholder="Task's name" id="npt")
+  .flex-space-x-4
     h1 promodoros 
-      a-input-number(v-model:value="estimatedPromo" :min="1")
-  .notes-conatiner
-    a-textarea(:rows=4 v-model:value="newTaskNote" placeholder="add notes")
-  .edit-task-footer
-    .other-btns
-      a-button(type="primary" @click="closeModal") Cancel
-      a-button(type="primary" @click="saveNewTask") Add
+    a-input-number(v-model:value="estimatedPromo" :min="1")
+  a-textarea(:rows=4 v-model:value="newTaskNote" placeholder="Description")
+  .flex.justify-end
+    AppBtn(@click="saveNewTask" label="Add")
 </template>
 
 <script setup>
@@ -74,33 +69,4 @@ function decrement() {
   if (estimatedPromo.value > 1) estimatedPromo.value--;
 }
 </script>
-<style scoped>
-input[type="number"] {
-  @apply w-6 text-center;
-}
-.invalid-npt {
-  border: 2px solid red;
-}
-input,
-textarea {
-  padding: 5px 7px;
-}
-.edit-task {
-  @apply bg-slate-300;
-}
-.task-header {
-  @apply flex justify-between;
-}
-.promodoros {
-  @apply flex justify-center space-x-6;
-}
-.promodoros button {
-  @apply bg-blue text-white px-2 py-0.5;
-}
-.task {
-  @apply flex p-2 justify-between bg-blue text-white;
-}
-.edit-task-footer {
-  @apply flex justify-end;
-}
-</style>
+<style scoped></style>

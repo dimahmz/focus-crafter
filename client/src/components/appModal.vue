@@ -1,25 +1,23 @@
 <template lang="pug">
-.absolute-full-screen.flex-center.bg-tertiary
-  .mt-10.relative.z-200.border-solid
-    h1 {{ title }}
-    slot
-    span.absolute.top-0.right-10.cursor-pointer(@click='closeModal')
-      Close
+#modal-wrapper.fixed.w-screen.h-screen.top-0.left-0.z-10(@click.self="closeModal")
+    slot(class="z-[200]").w-full.mx-auto.h-auto.relative
 </template>
 
 <script setup>
-import { useSettingsStore } from "../stores/settings";
 import Close from "./_icons/close.vue";
+import { useSettingsStore } from "../stores/settings";
 const settingsStore = useSettingsStore();
-defineProps({
-  title: { type: String },
+const props = defineProps({
+  modalStoreSet: { type: String },
 });
 
 function closeModal() {
-  settingsStore.showSettingsModal = false;
+  settingsStore[props.modalStoreSet] = false;
 }
 </script>
-
 <style scoped>
-/* App models styling */
+#modal-wrapper {
+  background-color: #0003;
+  backdrop-filter: blur(10px);
+}
 </style>

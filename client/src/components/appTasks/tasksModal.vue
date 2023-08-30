@@ -1,7 +1,11 @@
 <template lang="pug">
-a-modal(v-model:visible="settingsStore.showTasksModal" :title="modalTitle")
-  div(@click.self="hideSubModals")
-    .tasks-container      
+AppModal(modalStoreSet="showTasksModal")
+  .bg-secondary.py-4.px-3.relative.mt-20.m-auto(class="max-w-[400px]")
+    .flex-center-between
+      .text-center Tasks
+      span.cursor-pointer(@click='closeModal')
+        Close      
+    .tasks-container
       Task(
         v-for="(task , i) in tasksStore.tasks" 
         :key="i"
@@ -10,10 +14,9 @@ a-modal(v-model:visible="settingsStore.showTasksModal" :title="modalTitle")
       ) 
     .add-icon(v-show="!tasksStore.addNewTaskModal && !tasksStore.editTaskModal")
       plus-circle-filled(@click="()=> tasksStore.addNewTaskModal=true")
-    .newTask-wrapper
-      AddNewTask(v-show="tasksStore.addNewTaskModal")
-  template(#footer)
-    a-button(@click="saveTasks()") ok
+    AppBtn(@click="saveTasks()" label="ok")
+AppModal(v-show="tasksStore.editTaskModal" modalStoreSet="addNewTaskModa" class="z-[300]")
+  AddNewTask
 </template>
 
 <script setup>
@@ -21,6 +24,9 @@ import Task from "./task.vue";
 import ModalHeader from "../appSettings/modalHeader.vue";
 import addTask from "../_icons/addTask.vue";
 import AddNewTask from "./addNewTask.vue";
+import AppModal from "../appModal.vue";
+import AppBtn from "../appBtns/appBtn.vue";
+import Close from "../_icons/close.vue";
 
 import { useTasksStore } from "../../stores/tasks";
 import { useSettingsStore } from "../../stores/settings";
@@ -47,6 +53,9 @@ function hideSubModals() {
     }
   }
 }
+function closeModal() {
+  settingsStore.showTasksModal = false;
+}
 
 function saveTasks() {
   settingsStore.showTasksModal = false;
@@ -63,11 +72,6 @@ function saveTasks() {
 }
 .task {
   @apply cursor-pointer;
-}
-.newTask-wrapper {
-  @apply absolute z-10;
-  top: 20%;
-  z-index: 600;
 }
 .add-icon {
   @apply sticky py-3 w-10 mx-auto;

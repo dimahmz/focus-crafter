@@ -17,8 +17,9 @@ app.use(createPinia());
 
 app.use(Antd);
 
-app.use(router);
 // privide a function that fetch the user
 app.provide("syncStores", syncStores);
+
+app.use(router);
 
 app.mount("#app");

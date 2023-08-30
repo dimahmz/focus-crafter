@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div v-if="errorMsg">
+      <p>{{ errorMsg }}</p>
+    </div>
     <div class="form">
       <a-form
         :model="formState"
@@ -56,12 +59,15 @@
       </a-form>
     </div>
   </div>
+  <appModal v-if="errorModal">
+    <h1></h1>
+  </appModal>
 </template>
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useUserStore } from "../stores/user";
-import { useRouter } from "vue-router";
+import AppModal from "../components/appModal.vue";
 
 const formState = reactive({
   name: "best",
@@ -69,15 +75,23 @@ const formState = reactive({
   rememberUser: true,
 });
 
-const router = useRouter();
+const errorMsg = ref(false);
+const errorModal = ref(false);
+const modalMsg = reactive({});
 
 const onFinish = async (values) => {
+  errorMsg.value = false;
   const user = useUserStore();
   const response = await user.loginUser(
     { name: formState.name, password: formState.password },
     formState.rememberUser
   );
-  console.log(response);
+  if (response?.success == false) {
+    if (response.errolevel == 3) {
+      modalMsg.title = response.title;
+      modalMsg.description = reponse.description;
+    } else errorMsg.value = response.description;
+  }
 };
 const disabled = computed(() => {
   return !(formState.name && formState.password);

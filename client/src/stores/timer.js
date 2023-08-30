@@ -205,7 +205,7 @@ export const useCounterStore = defineStore(
             ? `0${parseInt(secondsFormat % 60)}`
             : parseInt(secondsFormat % 60);
 
-        return `${min} :${second}`;
+        return `${min} : ${second}`;
       },
 
       // notify the user in the last n minutes

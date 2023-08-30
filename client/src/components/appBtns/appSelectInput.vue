@@ -14,11 +14,20 @@ import { useSettingsStore } from "@/stores/settings";
 const settingsStore = useSettingsStore();
 </script>
 
-<style scoped>
-section {
-  @apply flex justify-between;
+<style>
+.ant-select {
+  @apply border-red-900 border-solid;
 }
-.npts-container {
-  @apply flex flex-col space-y-4;
+.ant-select-selector {
+  @apply border-red-900;
+}
+.ant-selector-focused {
+  @apply border-quaternary;
+}
+.ant-select-item-option-active {
+  @apply bg-quaternary;
+}
+.ant-select-item-option-selected {
+  @apply bg-quaternary;
 }
 </style>

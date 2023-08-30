@@ -1,35 +1,44 @@
 <template lang="pug">
-AppModal(title="Pomodoro settings" ).bg-secondary
-  .flex.justify-between.space-x-3
-    AppNpt(nptLabel="Pomodoro"   storeSet="promodoro_npt")
-    AppNpt(nptLabel="Short break" storeSet="shortBreak_npt")
-    AppNpt(nptLabel="Long break" storeSet="longBreak_npt")
-  Line      
-  ChangeAset(
-      label="Auto start Promodors"
-      storeSet="autoStartPromodoros")
-  ChangeAset(
-      label="Auto start breaks"
-      storeSet="autoStartBreaks")
-  SetNpt(label="Rounds before long break")
-    template(#aNpt)
-      AppNpt(:nptValue="settingsStore.rounds"
-      storeSet="rounds")
-  Line
-  ChangeAset(
-      label="Dark mode when running"
-      storeSet="focusedMode")
-  Line
-  SetNpt(label="Alarm sound")
-    template(#aNpt)
-      AppSelectInput(@change="changeAlarmSound")
-  SetNpt(label="Volume")
-    template(#aNpt)
-        AppRangeNpt(:nptValue="settingsStore.alarmVolume"
-          storeSet="alarmVolume"
-          @change="chnageAlarmVolume")
-  template(#footer)
-    a-button(type="primary" @click="saveSettings()") save
+AppModal(modalStoreSet="showSettingsModal")
+  .bg-primary.p-8.max-w-lg.mx-auto.mt-12.mb-8
+    .flex.justify-between.mb-6
+        h1 Settings
+        span.cursor-pointer(@click='closeModal')
+          Close      
+    .flex.justify-between.space-x-3
+      AppNpt(nptLabel="Pomodoro"   storeSet="promodoro_npt")
+      AppNpt(nptLabel="Short break" storeSet="shortBreak_npt")
+      AppNpt(nptLabel="Long break" storeSet="longBreak_npt")
+    .px-4
+      Line
+      .flex-column.space-y-3      
+        ChangeAset(
+            label="Auto start Promodors"
+            storeSet="autoStartPromodoros")
+        ChangeAset(
+            label="Auto start breaks"
+            storeSet="autoStartBreaks")
+        ChangeAset(
+            label="Dark mode when running"
+            storeSet="focusedMode")
+      Line
+      SetNpt(label="Rounds before long break")
+        template(#aNpt)
+          AppNpt(:nptValue="settingsStore.rounds"
+          storeSet="rounds")
+      Line
+      .flex-column.space-y-4
+        SetNpt(label="Alarm sound")
+          template(#aNpt)
+            AppSelectInput(@change="changeAlarmSound")
+        SetNpt(label="Volume")
+          template(#aNpt)
+              AppRangeNpt(:nptValue="settingsStore.alarmVolume"
+                storeSet="alarmVolume"
+                @change="chnageAlarmVolume")
+      .flex.justify-end.mt-12
+        //- @click="saveSettings()"
+        AppBtn(label="save") 
 </template>
 
 <script setup>
@@ -41,6 +50,8 @@ import AppRangeNpt from "../appBtns/appRangeNpt.vue";
 import AppSelectInput from "../appBtns/appSelectInput.vue";
 import Line from "./line.vue";
 import AppModal from "../appModal.vue";
+import AppBtn from "../appBtns/appBtn.vue";
+import Close from "../_icons/close.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
@@ -75,6 +86,10 @@ counterStore.$subscribe(
   },
   { detached: true }
 );
+
+function closeModal() {
+  settingsStore.showSettingsModal = false;
+}
 
 function saveSettings() {
   // console.log("clicked to save bnt");

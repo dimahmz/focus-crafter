@@ -25,9 +25,22 @@ module.exports = {
           alignItems: "center",
           justifyContent: "center",
         },
+        ".flex-center-between": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        },
+        ".flex-column": {
+          display: "flex",
+          flexDirection: "column",
+        },
+
         ".absolute-full-screen": {
-          position: "absolute",
+          position: "fixed",
           inset: "0px",
+          zIndex: "100",
+          width: "100vw",
+          height: "100vh",
         },
       });
     }),

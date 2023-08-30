@@ -1,17 +1,8 @@
 // class that manages  cookies
 export default class Cookies {
   // add a new cookie
-  static setCookie(name, value, days) {
-    let cookieValue;
-    if (days == 0) {
-      cookieValue = encodeURIComponent(value);
-    } else {
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + days);
-      cookieValue =
-        encodeURIComponent(value) + "; expires=" + expirationDate.toUTCString();
-    }
-
+  static setCookie(name, value, seconds) {
+    const cookieValue = encodeURIComponent(value) + "; max-age=" + seconds;
     document.cookie = name + "=" + cookieValue + "; path=/; SameSite=Lax";
   }
   // remove a cookie
