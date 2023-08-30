@@ -1,6 +1,6 @@
 <template lang="pug">
-AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
-  .bg-primary.p-8
+AppModal(modalStoreSet="showSettingsModal")
+  .bg-primary.p-8.max-w-lg.mx-auto.mt-12.mb-8
     .flex.justify-between.mb-6
         h1 Settings
         span.cursor-pointer(@click='closeModal')

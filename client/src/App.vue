@@ -1,7 +1,5 @@
 <template lang="pug">
-main
-  p(v-if="userStore.state.isPageLoading") loading ........
-  router-view(v-else)
+router-view
 </template>
 
 <script setup>

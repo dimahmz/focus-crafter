@@ -28,3 +28,8 @@ defineProps({
   color: { type: String, default: "black" },
 });
 </script>
+<style scoped>
+/* svg path{
+   @apply 
+} */
+</style>
