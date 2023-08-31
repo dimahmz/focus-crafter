@@ -1,21 +1,21 @@
 <template lang="pug">
 .task(
   @click.self='tasksStore.selectTask(ndx)'
-  :class='{selectedTask: newTask.isSelected, finishedTask : newTask.isFinished}')
+  :class='{selectedTask: task.isSelected, finishedTask : task.isFinished}')
   .select-icons
     clock-circle-outlined(
-      v-if="newTask.isSelected & timerStore.TimerIsCounting")    
+      v-if="task.isSelected & timerStore.isTimerCounting")    
     check-circle-outlined(
-      v-else-if="newTask.isFinished"
-      @click="()=>{newTask.isFinished=false}")
+      v-else-if="task.isFinished"
+      @click="()=>{task.isFinished=false}")
     minus-circle-outlined(
       v-else 
-      @click="()=>{newTask.isFinished=true}")
+      @click="()=>{task.isFinished=true}")
   h1(
-    @click='tasksStore.selectTask(ndx)') {{ newTask.title }}
+    @click='tasksStore.selectTask(ndx)') {{ task.title }}
   span(
     @click='tasksStore.selectTask(ndx)'
-    ) {{newTask.finishedPromdoros}}/{{newTask.estimatedPromodoros}}
+    ) {{task.completedPomodoros}}/{{task.estimatedPomodoros}}
   a-dropdown
     .dots-icon
       more-outlined
@@ -29,13 +29,11 @@
           span(@click="displayNotes(true)") task note
 .task-note(
   v-show="showNotes")
-  p {{newTask.notes}}
+  p {{task.notes}}
   Compress(@click="displayNotes(false)")
 
-EditTask(
-  v-show="tasksStore.tasks[ndx].showEditModal" 
-  :thisTask="newTask" 
-  :ndx="ndx")       
+AppModal(v-if="settingsStore.showEditTaskModal" modalStoreSet="showEditTaskModal")
+  AddNewTask(:Task="task" :ndx="ndx" updateTask=true)  
 </template>
 
 <script setup>
@@ -46,6 +44,7 @@ import Selected from "../_icons/selected.vue";
 import Unselect from "../_icons/unselect.vue";
 import AddNewTask from "./addNewTask.vue";
 import EditTask from "./EditTask.vue";
+import AppModal from "../appModal.vue";
 
 import {
   ClockCircleOutlined,
@@ -64,7 +63,7 @@ const timerStore = useCounterStore();
 const tasksStore = useTasksStore();
 
 const props = defineProps({
-  newTask: { type: Object, required: true },
+  task: { type: Object, required: true },
   ndx: { type: Number, required: true },
 });
 
@@ -79,9 +78,7 @@ function diplayOptions() {
   tasksStore.tasks[props.ndx].displayOptions = true;
 }
 function displayEditTask() {
-  tasksStore.editTaskModal = true;
-  tasksStore.hideAll();
-  tasksStore.tasks[props.ndx].showEditModal = true;
+  settingsStore.showEditTaskModal = true;
 }
 </script>
 

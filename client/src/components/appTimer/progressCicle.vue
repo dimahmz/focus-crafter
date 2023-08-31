@@ -1,7 +1,7 @@
 <template>
   <div class="m-0 p-0 relative">
     <p
-      class="text-5xl font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      class="text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     >
       {{ counter }}
     </p>

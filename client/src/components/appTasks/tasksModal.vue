@@ -9,13 +9,14 @@ AppModal(modalStoreSet="showTasksModal")
       Task(
         v-for="(task , i) in tasksStore.tasks" 
         :key="i"
-        :newTask="task" 
+        :task="task" 
         :ndx="i"
       ) 
     .add-icon(v-show="!tasksStore.addNewTaskModal && !tasksStore.editTaskModal")
-      plus-circle-filled(@click="()=> tasksStore.addNewTaskModal=true")
-    AppBtn(@click="saveTasks()" label="ok")
-AppModal(v-show="tasksStore.editTaskModal" modalStoreSet="addNewTaskModa" class="z-[300]")
+      plus-circle-filled(@click="showNewTaskModal")
+    .flex.justify-end
+      AppBtn(@click="closeModal" label="ok")
+AppModal(v-if="settingsStore.showAddNewTaskModal && settingsStore.showTasksModal" modalStoreSet="showAddNewTaskModal" class="z-[300]")
   AddNewTask
 </template>
 
@@ -57,8 +58,9 @@ function closeModal() {
   settingsStore.showTasksModal = false;
 }
 
-function saveTasks() {
-  settingsStore.showTasksModal = false;
+function showNewTaskModal() {
+  settingsStore.showAddNewTaskModal = true;
+  // settingsStore.showTasksModal = false;
 }
 </script>
 

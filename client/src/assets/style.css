@@ -1,15 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* google fonts  */
+
 @layer base {
   :root {
+    /* colors */
     --color-primary: 115deg 34% 87%;
     --color-secondary: 0deg 0% 100%;
     --color-tertiary: 191deg 100% 27%;
     --color-quaternary: 182deg 28% 73%;
     --color-modal-bg: 0 0 0;
+
+    /* fonts */
+    font-family: "Inter, sans-serif";
   }
+
   body {
     background-color: hsl(var(--color-primary));
   }

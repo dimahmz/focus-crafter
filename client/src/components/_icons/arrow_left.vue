@@ -5,6 +5,7 @@
     viewBox="0 0 26 30"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    :class="colors_classes"
   >
     <path
       d="M3.14111 15H22.6411"
@@ -25,11 +26,6 @@
 <script setup>
 import { defineProps } from "vue";
 defineProps({
-  color: { type: String, default: "black" },
+  colors_classes: { type: String, default: "fill-black" },
 });
 </script>
-<style scoped>
-/* svg path{
-   @apply 
-} */
-</style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-TimerHeader.mt-12.mb-10
+TimerHeader.mt-12.mb-10.text-primary
 TimerBody.mb-10
 TimerFooter
 AppNavigationBtns.mt-32.w-full

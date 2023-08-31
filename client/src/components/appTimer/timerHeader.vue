@@ -1,5 +1,5 @@
 <template lang="pug">
-.grid.place-items-center
+.grid.place-items-center.font-primary.font-mui.text-base
   .btns-conatiner
     button.btn(:class="{ activeTimer: timer.startingPromodoroTimer }" @click="timer.goToPromodoro()") Pomodoro
     button.btn(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") Short break

@@ -11,10 +11,11 @@ module.exports = {
         tertiary: "hsl(var(--color-tertiary) / <alpha-value>)",
         quaternary: "hsl(var(--color-quaternary) / <alpha-value>)",
         modal: "rgba(var(--color-modal-bg) , 0.45)",
-        blue: "#00738C",
-        darkBlue: "#81B0B2",
-        pink: "#D6EAD4",
       },
+    },
+    fontFamily: {
+      primary: "Inter, sans-serif",
+      secondary: "Poppins, sans-serif",
     },
   },
   plugins: [

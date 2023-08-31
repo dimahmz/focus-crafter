@@ -49,9 +49,9 @@ export const useTasksStore = defineStore("tasks", () => {
   // get completed rounds of pomodoros of a selected task
   const workingOnTaskPomodoros = computed(function () {
     if (selectedTaskNdx.value < 0 || tasks.length == 0) return "";
-    return `${
-      tasks[selectedTaskNdx.value].finishedPromdoros
-    } / ${settingStore.state.rounds}`;
+    return `${tasks[selectedTaskNdx.value].completedPomodoros} / ${
+      settingStore.state.rounds
+    }`;
   });
 
   // get the total minutes left to work on in a selected task
@@ -59,7 +59,7 @@ export const useTasksStore = defineStore("tasks", () => {
     if (selectedTaskNdx.value < 0 || tasks.length == 0) return "";
     return (
       settingStore.state.promodoro_npt *
-      tasks[selectedTaskNdx.value].finishedPromdoros
+      tasks[selectedTaskNdx.value].completedPomodoros
     );
   });
 

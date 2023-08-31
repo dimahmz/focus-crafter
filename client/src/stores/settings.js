@@ -30,7 +30,10 @@ export const useSettingsStore = defineStore("settings", () => {
   // this state is related to only the fron-end
   const _state = reactive({
     showSettingsModal: false,
-    showTasksModal: true,
+    showTasksModal: false,
+    showAddNewTaskModal: false,
+    showEditTaskModal: false,
+
     alarmSound: [
       {
         text: "Bell",

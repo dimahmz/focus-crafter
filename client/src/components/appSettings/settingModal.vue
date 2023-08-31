@@ -1,8 +1,8 @@
 <template lang="pug">
-AppModal(modalStoreSet="showSettingsModal")
-  .bg-primary.p-8.max-w-lg.mx-auto.mt-12.mb-8
-    .flex.justify-between.mb-6
-        h1 Settings
+AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
+  .bg-primary.p-8.max-w-lg.mx-auto.max-h-full.overflow-y-auto.rounded-lg
+    .flex.justify-between.mb-10.mx-10.items-center
+        h1.font-secondary.font-semibold.text-2xl Settings
         span.cursor-pointer(@click='closeModal')
           Close      
     .flex.justify-between.space-x-3
@@ -37,8 +37,7 @@ AppModal(modalStoreSet="showSettingsModal")
                 storeSet="alarmVolume"
                 @change="chnageAlarmVolume")
       .flex.justify-end.mt-12
-        //- @click="saveSettings()"
-        AppBtn(label="save") 
+        AppBtn(label="save" @click="saveSettings()") 
 </template>
 
 <script setup>
@@ -55,7 +54,7 @@ import Close from "../_icons/close.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 
 const counterStore = useCounterStore();
 const settingsStore = useSettingsStore();
@@ -66,12 +65,17 @@ onMounted(() => {
   audio_elem = document.createElement("audio");
   audio_elem.src = settingsStore.state.selectedAlarm;
   audio_elem.volume = settingsStore.state.alarmVolume / 100;
+  // remove scroll bahavoiour
+  document.body.style.overflow = "hidden";
 });
 
-function chnageAlarmVolume() {
-  audio_elem.volume = settingsStore.state.alarmVolume / 100;
-  audio_elem.play();
-}
+onUnmounted(() => {
+  document.body.style.overflow = "auto";
+}),
+  function chnageAlarmVolume() {
+    audio_elem.volume = settingsStore.state.alarmVolume / 100;
+    audio_elem.play();
+  };
 
 function changeAlarmSound() {
   audio_elem.src = settingsStore.state.selectedAlarm;
