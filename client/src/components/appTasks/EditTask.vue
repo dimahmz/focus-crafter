@@ -60,9 +60,6 @@ function savechangedTask() {
 .promodoros {
   @apply flex justify-center space-x-6;
 }
-.task {
-  @apply flex p-2 justify-between bg-blue text-white;
-}
 .edit-task-footer {
   @apply flex justify-between;
 }
