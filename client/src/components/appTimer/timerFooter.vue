@@ -8,7 +8,7 @@ section
       .btn-box.bg-tertiary.bg-quaternary(@click="timerStore.restartTimer()")
         restart(w=16 h=16 colors_classes="fill-tertiary")
       .btn-box.bg-tertiary(@click="timerStore.pauseOrResumeTimer()")
-        startBtn(v-if="timerStore.pauseTimer" w=27 h=27 colors_classes="fill-secondary")
+        startBtn(v-if="timerStore.pauseTimer" colors_classes="fill-secondary")
         pause(v-else w=27 h=27 colors_classes="fill-secondary")
       .btn-box.bg-tertiary.bg-quaternary(@click="changeTimer()")
         Next(w=16 h=16 colors_classes="fill-tertiary")
@@ -59,6 +59,6 @@ function changeTimer() {
 
 <style scoped>
 .btn-box {
-  @apply rounded-2xl flex-center p-4 cursor-pointer;
+  @apply rounded-2xl flex-center p-5 cursor-pointer;
 }
 </style>

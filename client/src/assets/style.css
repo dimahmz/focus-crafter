@@ -22,17 +22,16 @@
   body {
     background-color: hsl(var(--color-primary));
   }
-  /* @media (prefers-color-scheme: dark) {
+  @media (prefers-color-scheme: dark) {
     :root {
       --color-primary: 192deg 26% 7%;
       --color-secondary: 0deg 0% 0%;
       --color-tertiary: 191deg 100% 27%;
       --color-quaternary: 212deg 19% 29%;
-    } 
+    }
   }
-  */
 
-  :root[data-theme="dark-mode"] {
+  :root[class="dark"] {
     --color-primary: 192deg 26% 7%;
     --color-secondary: 0deg 0% 0%;
     --color-tertiary: 191deg 100% 27%;

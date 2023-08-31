@@ -16,10 +16,24 @@
 const props = defineProps({
   colors_classes: { default: "fill-white" },
   h: {
+    type: String,
     default: "29",
   },
   w: {
+    type: String,
     default: "29",
   },
 });
 </script>
+<style scoped>
+svg {
+  width: v-bind(w);
+  height: v-bind(h);
+  margin: 0;
+  padding: 0;
+}
+path {
+  margin: 0;
+  padding: 0;
+}
+</style>
