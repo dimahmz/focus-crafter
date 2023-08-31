@@ -10,7 +10,18 @@ export const useTasksStore = defineStore("tasks", () => {
   const userStore = useUserStore();
 
   //state
-  const tasks = reactive([]);
+  const tasks = reactive([
+    {
+      completedPomodoros: 3,
+      displayOptions: false,
+      estimatedPomodoros: 4,
+      isFinished: false,
+      notes: "some notes",
+      isSelected: false,
+      showEditModal: false,
+      title: "my first task",
+    },
+  ]);
   // taskObj
   // {
   // displayOptions:false
