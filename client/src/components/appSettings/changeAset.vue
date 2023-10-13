@@ -27,7 +27,7 @@ function activateSet() {
 }
 
 .toggle-switch {
-  @apply bg-secondary;
+  @apply bg-app-secondary;
   display: inline-block;
   border-radius: 16px;
   width: 50px;
@@ -41,7 +41,7 @@ function activateSet() {
   content: "";
 }
 .toggle-switch:before {
-  @apply bg-quaternary;
+  @apply bg-app-quaternary;
   display: block;
   border-radius: 50%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
@@ -53,11 +53,11 @@ function activateSet() {
   transition: left 0.25s;
 }
 .toggle-checkbox:checked + .toggle-switch {
-  @apply bg-tertiary;
+  @apply bg-app-tertiary;
 }
 .toggle-checkbox:checked + .toggle-switch:before {
   left: 27px;
-  @apply bg-secondary;
+  @apply bg-app-secondary;
 }
 
 .toggle-checkbox {

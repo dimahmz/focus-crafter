@@ -22,12 +22,12 @@ const settingsStore = useSettingsStore();
   @apply border-red-900;
 }
 .ant-selector-focused {
-  @apply border-quaternary;
+  @apply border-app-quaternary;
 }
 .ant-select-item-option-active {
-  @apply bg-quaternary;
+  @apply bg-app-quaternary;
 }
 .ant-select-item-option-selected {
-  @apply bg-quaternary;
+  @apply bg-app-quaternary;
 }
 </style>

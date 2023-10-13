@@ -13,7 +13,6 @@
 
 <script setup>
 import { UserOutlined } from "@ant-design/icons-vue";
-
 import Setting from "./_icons/setting.vue";
 import Info from "./_icons/info.vue";
 import Home from "./_icons/home.vue";
@@ -35,7 +34,7 @@ const userStore = useUserStore();
   /* @apply; */
 }
 .icons-container {
-  @apply w-full max-w-xs flex justify-between items-center bg-secondary rounded-xl px-3 py-4;
+  @apply w-full max-w-xs flex justify-between items-center bg-app-secondary rounded-xl px-3 py-4;
 }
 .icons-container * {
   @apply cursor-pointer;

@@ -11,7 +11,7 @@ h1.title Give us your feedback!
   a-textarea(placeholder="Feedback..." :rows="5")
   .flex.justify-end
     AppBtn(label="send" @click="sendFeedback")
-.h-16.bg-tertiary
+.h-16.bg-app-tertiary
 </template>
 
 <script setup>
@@ -23,7 +23,7 @@ function sendFeedback() {
 
 <style scoped>
 .title {
-  @apply text-center text-tertiary font-semibold text-xl my-8;
+  @apply text-center text-app-tertiary font-semibold text-xl my-8;
 }
 .text {
   @apply max-w-2xl mx-6 sm:mx-auto text-left text-lg  text-[#87898E];

@@ -1,17 +1,17 @@
 <template lang="pug">
 section
   .flex-center(v-if="!timerStore.isTimerCounting")
-    .btn-box.bg-tertiary(@click="start()")
-      startBtn(w=23 h=23 colors_classes="fill-secondary")
+    .btn-box.bg-app-tertiary(@click="start()")
+      startBtn(w=24 h=29 colors_classes="fill-app-secondary")
   .flex-center(v-else)
     .flex.gap-x-5.items-center
-      .btn-box.bg-tertiary.bg-quaternary(@click="timerStore.restartTimer()")
-        restart(w=16 h=16 colors_classes="fill-tertiary")
-      .btn-box.bg-tertiary(@click="timerStore.pauseOrResumeTimer()")
-        startBtn(v-if="timerStore.pauseTimer" colors_classes="fill-secondary")
-        pause(v-else w=27 h=27 colors_classes="fill-secondary")
-      .btn-box.bg-tertiary.bg-quaternary(@click="changeTimer()")
-        Next(w=16 h=16 colors_classes="fill-tertiary")
+      .btn-box.bg-app-tertiary.bg-app-quaternary(@click="timerStore.restartTimer()")
+        restart(w=16 h=16 colors_classes="fill-app-tertiary")
+      .btn-box.bg-app-tertiary(@click="timerStore.pauseOrResumeTimer()")
+        startBtn(v-if="timerStore.pauseTimer" colors_classes="fill-app-secondary" w=24 h=29 )
+        pause(v-else w=24 h=29 colors_classes="fill-app-secondary")
+      .btn-box.bg-app-tertiary.bg-app-quaternary(@click="changeTimer()")
+        Next(w=16 h=16 colors_classes="fill-app-tertiary")
   WorkingOnTask(v-if="tasksStore.selectedTaskNdx >= 0").mt-8
 </template>
 

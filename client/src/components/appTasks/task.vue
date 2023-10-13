@@ -84,13 +84,13 @@ function displayEditTask() {
 
 <style scoped>
 .task {
-  @apply flex p-2 justify-between bg-quaternary text-white cursor-pointer relative;
+  @apply flex p-2 justify-between bg-app-quaternary  text-white cursor-pointer relative;
 }
 .task h1 {
   @apply text-white;
 }
 .selectedTask {
-  @apply bg-tertiary;
+  @apply bg-app-tertiary;
 }
 .finishedTask {
   @apply line-through;

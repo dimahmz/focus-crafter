@@ -4,20 +4,25 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
-    extend: {
+    extend:{
+        screens:{
+          'xs':'400px'
+        },
       colors: {
-        primary: "hsl(var(--color-primary) / <alpha-value>)",
-        secondary: "hsl(var(--color-secondary) / <alpha-value>)",
-        tertiary: "hsl(var(--color-tertiary) / <alpha-value>)",
-        quaternary: "hsl(var(--color-quaternary) / <alpha-value>)",
-        modal: "rgba(var(--color-modal-bg) , 0.45)",
+        'app': {
+          primary: "hsl(var(--color-app-primary) / <alpha-value>)",
+          secondary: "hsl(var(--color-app-secondary) / <alpha-value>)",
+          tertiary: "hsl(var(--color-app-tertiary) / <alpha-value>)",
+          quaternary: "hsl(var(--color-app-quaternary) / <alpha-value>)",
+          modal: "rgba(var(--color-modal-bg) , 0.45)",
+        },
+      },
+      fontFamily: {
+        primary: "Inter, sans-serif",
+        secondary: "Poppins, sans-serif",
       },
     },
-    fontFamily: {
-      primary: "Inter, sans-serif",
-      secondary: "Poppins, sans-serif",
     },
-  },
   plugins: [
     plugin(function ({ addUtilities }) {
       addUtilities({

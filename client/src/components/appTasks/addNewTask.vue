@@ -1,5 +1,5 @@
 <template lang="pug">
-.bg-secondary.py-4.px-3.relative.mt-20.m-auto(class="max-w-[400px]")
+.bg-app-secondary.py-4.px-3.relative.mt-20.m-auto(class="max-w-[400px]")
   .flex-column.space-y-4
     .flex-center-between
       span.cursor-pointer(@click='closeNewTaskModal')

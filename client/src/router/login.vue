@@ -1,78 +1,50 @@
-<template>
-  <div class="container">
-    <div v-if="errorMsg">
-      <p>{{ errorMsg }}</p>
-    </div>
-    <div class="form">
-      <a-form
-        :model="formState"
-        name="normal_login"
-        class="login-form"
-        @finish="onFinish"
-        @finishFailed="onFinishFailed"
-      >
-        <a-form-item
-          label="Username"
-          name="name"
-          :rules="[{ required: true, message: 'Please input your username!' }]"
-        >
-          <a-input v-model:value="formState.name">
-            <template #prefix>
-              <UserOutlined class="site-form-item-icon" />
-            </template>
-          </a-input>
-        </a-form-item>
-
-        <a-form-item
-          label="Password"
-          name="password"
-          :rules="[{ required: true, message: 'Please input your password!' }]"
-        >
-          <a-input-password v-model:value="formState.password">
-            <template #prefix>
-              <LockOutlined class="site-form-item-icon" />
-            </template>
-          </a-input-password>
-        </a-form-item>
-
-        <a-form-item>
-          <a-form-item name="remember" no-style>
-            <a-checkbox v-model:checked="formState.rememberUser"
-              >Remember me</a-checkbox
-            >
-          </a-form-item>
-          <a class="login-form-forgot" href="">Forgot password</a>
-        </a-form-item>
-
-        <a-form-item>
-          <a-button
-            :disabled="disabled"
-            type="primary"
-            html-type="submit"
-            class="login-form-button"
-          >
-            Log in
-          </a-button>
-          Or
-          <router-link to="/signup">register now!</router-link>
-        </a-form-item>
-      </a-form>
-    </div>
-  </div>
-  <appModal v-if="errorModal">
-    <h1></h1>
-  </appModal>
+<template lang="pug">
+main(class="max-w-[1500px] flex")
+  section.w-full(class="hidden md:flex justify-between items-center text-white")
+    img(src="startLogo.png", alt="Vortex focus")
+  section.w-full.h-screen.px-8.py-10.bg-white
+    header.w-full.text-center.flec-column
+      div(class="flex md:justify-end")
+        router-link(:to="{name : 'home'}")
+          img.w-16(src="logo.png")
+      div
+        h1 Good Afternoon
+        p Focus on being productive instead of busy.
+    v-form
+    h2 Sing In
+      v-text-field(
+        label="name"
+        placeholder="enter name"
+        variant="underlined"
+        v-model='formState.name'
+      )
+      v-text-field(
+        label="password"
+        :append-icon="formState.visible ? 'mdi-eye' : 'mdi-eye-off'" 
+        :type="formState.visible ? 'text' : 'password'"
+        placeholder="Enter your password"
+        variant="underlined"
+        v-model='formState.password'
+        @click:append="formState.visible = !formState.visible"
+      )
+      v-checkbox(value="q" label="remeber password" hide-details)
+      AppBtn(label="LOGIN")    
+      AppBtn.mb-12(label="CREATE AN ACCOUNT")
+        router-link(:to="{name : 'signup'}")
+      p Forgot password? &nbsp;
+        router-link(:to="{name : 'home'}").text-teriary.font-bold Reset here
+      p Don't HAve an account?
 </template>
 <script setup>
 import { reactive, computed, ref } from "vue";
-import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useUserStore } from "../stores/user";
-import AppModal from "../components/appModal.vue";
+import AppBtn from "../components/appBtns/appBtn.vue";
 
 const formState = reactive({
   name: "best",
   password: "best12345",
   rememberUser: true,
+  visible: false,
 });
 
 const errorMsg = ref(false);
@@ -97,20 +69,4 @@ const disabled = computed(() => {
   return !(formState.name && formState.password);
 });
 </script>
-<style scoped>
-.container {
-  @apply h-screen grid place-items-center;
-}
-.form {
-  max-width: 800px;
-}
-#components-form-demo-normal-login .login-form {
-  max-width: 300px;
-}
-#components-form-demo-normal-login .login-form-forgot {
-  float: right;
-}
-#components-form-demo-normal-login .login-form-button {
-  width: 100%;
-}
-</style>
+<style scoped></style>

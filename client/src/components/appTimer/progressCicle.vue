@@ -77,11 +77,11 @@ svg {
 svg > circle {
 }
 circle:first-child {
-  @apply stroke-secondary;
+  @apply stroke-app-secondary;
 }
 
 circle:nth-child(2) {
-  @apply stroke-tertiary;
+  @apply stroke-app-tertiary;
 }
 
 text {

@@ -17,23 +17,23 @@ const props = defineProps({
 
 <style>
 .ant-slider-rail {
-  @apply bg-secondary;
+  @apply bg-app-secondary;
 }
 .ant-slider-handle:focus {
-  @apply border-quaternary;
+  @apply border-app-quaternary;
   box-shadow: none;
 }
 .ant-slider-rail:hover {
-  @apply bg-secondary !important;
+  @apply bg-app-secondary !important;
 }
 .ant-slider-rail:hover {
-  @apply bg-secondary;
+  @apply bg-app-secondary;
 }
 .ant-slider-handle {
-  @apply bg-tertiary border-2 border-secondary w-4 h-4;
+  @apply bg-app-tertiary border-2 border-app-secondary w-4 h-4;
 }
 .ant-slider-track {
-  @apply bg-tertiary;
+  @apply bg-app-tertiary;
 }
 .ant-slider-track:hover .ant-slider-track:focus {
   background-color: none;

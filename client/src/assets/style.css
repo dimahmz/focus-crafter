@@ -9,32 +9,32 @@
 @layer base {
   :root {
     /* colors */
-    --color-primary: 115deg 34% 87%;
-    --color-secondary: 0deg 0% 100%;
-    --color-tertiary: 191deg 100% 27%;
-    --color-quaternary: 182deg 28% 73%;
-    --color-modal-bg: 0 0 0;
+    --color-app-primary: 115deg 34% 87%;
+    --color-app-secondary: 0deg 0% 100%;
+    --color-app-tertiary: 191deg 100% 27%;
+    --color-app-quaternary: 182deg 28% 73%;
+    --color-app-modal-bg: 0 0 0;
 
     /* fonts */
-    font-family: "Inter, sans-serif";
+    font-family: "Poppins";
   }
 
   body {
-    background-color: hsl(var(--color-primary));
+    background-color: hsl(var(--color-app-primary));
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-primary: 192deg 26% 7%;
-      --color-secondary: 0deg 0% 0%;
-      --color-tertiary: 191deg 100% 27%;
-      --color-quaternary: 212deg 19% 29%;
+      --color-app-primary: 192deg 26% 7% !important;
+      --color-app-secondary: 0deg 0% 0% !important;
+      --color-app-tertiary: 191deg 100% 27% !important;
+      --color-app-quaternary: 212deg 19% 29% !important;
     }
   }
 
   :root[class="dark"] {
-    --color-primary: 192deg 26% 7%;
-    --color-secondary: 0deg 0% 0%;
-    --color-tertiary: 191deg 100% 27%;
-    --color-quaternary: 212deg 19% 29%;
+    --color-app-primary: 192deg 26% 7%;
+    --color-app-secondary: 0deg 0% 0%;
+    --color-app-tertiary: 191deg 100% 27%;
+    --color-app-quaternary: 212deg 19% 29%;
   }
 }

@@ -2,7 +2,7 @@
 .flex.flex-col.justify-center.space-y-2
   p.text-center {{ nptLabel }}
   .custom-number-input.h-10.w-32
-    .flex.flex-row.w-full.rounded-2xl.relative.mt-1.bg-secondary
+    .flex.flex-row.w-full.rounded-2xl.relative.mt-1.bg-app-secondary
       button.h-full.w-20.cursor-pointer.outline-none(@click="decrement")
         span.m-auto.text-2xl.font-semibold &minus;
       input.outline-none.text-center.w-full.font-semibold.text-md.flex.items-center.outline-none(type='number' class='focus:outline-none md:text-basecursor-default' v-model="settingsStore.state[storeSet]" min="1")

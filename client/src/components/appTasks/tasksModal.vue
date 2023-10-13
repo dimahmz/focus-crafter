@@ -1,6 +1,6 @@
 <template lang="pug">
 AppModal(modalStoreSet="showTasksModal")
-  .bg-secondary.py-4.px-3.relative.mt-20.m-auto(class="max-w-[400px]")
+  .bg-app-secondary.py-4.px-3.relative.mt-20.m-auto(class="max-w-[400px]")
     .flex-center-between
       .text-center Tasks
       span.cursor-pointer(@click='closeModal')

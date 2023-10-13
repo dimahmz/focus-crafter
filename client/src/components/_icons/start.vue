@@ -21,19 +21,7 @@ const props = defineProps({
   },
   w: {
     type: String,
-    default: "29",
+    default: "24",
   },
 });
 </script>
-<style scoped>
-svg {
-  width: v-bind(w);
-  height: v-bind(h);
-  margin: 0;
-  padding: 0;
-}
-path {
-  margin: 0;
-  padding: 0;
-}
-</style>

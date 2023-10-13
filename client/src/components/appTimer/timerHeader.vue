@@ -16,12 +16,12 @@ const timer = useCounterStore();
 
 <style scoped>
 .btns-conatiner {
-  @apply w-full max-w-md justify-between flex gap-x-3 px-2 py-1 rounded-3xl bg-secondary;
+  @apply w-full max-w-md justify-between flex gap-x-3 px-2 py-1 rounded-3xl bg-app-secondary;
 }
 .btn {
-  @apply px-4 py-3 rounded-3xl text-tertiary;
+  @apply px-4 py-3 rounded-3xl text-app-tertiary;
 }
 .activeTimer {
-  @apply bg-tertiary text-secondary;
+  @apply bg-app-tertiary text-app-secondary;
 }
 </style>

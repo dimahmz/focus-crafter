@@ -25,7 +25,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("/src/router/login.vue"),
+    component: () => import("/src/router/Login/index.vue"),
     meta: {
       requiresAuth: false,
       ifNotAuthenticated: true,
