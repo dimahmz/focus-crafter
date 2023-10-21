@@ -10,11 +10,11 @@ import { useUserStore } from "./stores/user";
 const timerStore = useCounterStore();
 const userStore = useUserStore();
 
-// sync the app
-onBeforeMount(() => {
-  const syncing = inject("syncStores");
-  syncing();
-});
+// // sync the app
+// onBeforeMount(() => {
+//   const syncing = inject("syncStores");
+//   syncing();
+// });
 
 onMounted(() => {
   //add a listner to to catch the user confirmation before leaving the page

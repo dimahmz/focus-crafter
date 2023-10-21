@@ -61,7 +61,11 @@ const router = createRouter({
 
 // routes protections
 router.beforeEach(async (to, from, next) => {
-  const isLoggedIn = useUserStore().isUserLoggedIn();
+  const user = useUserStore();
+
+  const isLoggedIn = user.state.loggedIn;
+
+  console.log(isLoggedIn);
   // redirect to login page when navigating into protected routes
   if (to.meta.requiresAuth && !isLoggedIn) {
     next({ name: "login" });

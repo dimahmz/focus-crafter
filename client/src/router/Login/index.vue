@@ -6,6 +6,10 @@ import LoginHeader from "./Header.vue";
 import LeftSection from "./welcomeSection.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required } from "@vuelidate/validators";
+import SnackBar from "../../components/snackBar.vue";
+import ServerError from "ant-design-vue/es/result/serverError";
+
+const user = useUserStore();
 
 const initialState = {
   name: "",
@@ -28,28 +32,26 @@ const v$ = useVuelidate(rules, state);
 async function submit() {
   const isStateValid = await v$.value.$validate();
   if (!isStateValid) {
-    true;
+    return;
   }
-  // const user = useUserStore();
-  // const response = await user.loginUser(
-  //   { name: formState.name, password: formState.password },
-  //   formState.rememberUser
-  // );
-  // if (response?.success == false) {
-  //   if (response.errolevel == 3) {
-  //     modalMsg.title = response.title;
-  //     modalMsg.description = reponse.description;
-  //   } else errorMsg.value = response.description;
-  // }
+  state.loading = true;
+  await user.loginUser(
+    { name: state.name, password: state.password },
+    state.rememberUser
+  );
+  state.loading = false;
+
+  if (!user.state.serverResponse.success) user.state.openSnackbar = true;
 }
 </script>
 
 <template lang="pug">
 main(class="h-screen flex")
   LeftSection(class="w-11/12 hidden md:flex justify-center items-center")
-  section.w-full.px-8.py-6.bg-white
+  section.relative.w-full.px-8.py-6.bg-white
+    SnackBar
     LoginHeader
-    form(@click="submit")
+    form
       div.flex-column.space-y-4.max-w-lg
         v-text-field(
           v-model='state.name' 
@@ -73,7 +75,7 @@ main(class="h-screen flex")
       .flex-column.space-y-4
         v-checkbox( v-model="state.rememberUser" label="remeber password" hide-details)
         div(class="flex flex-col space-y-7 xs:flex-row xs:space-y-0 xs:space-x-10  items-center")
-          v-btn.login-btn(:loading="state.loading" :ripple="false" @click="v$.$validate") LOGIN
+          v-btn.login-btn(:loading="state.loading" :ripple="false" @click="submit") LOGIN
           v-btn.signup-btn(:ripple="false") CREATE AN ACCOUNT
             router-link(:to="{name : 'signup'}")
         p Forgot password? &nbsp;

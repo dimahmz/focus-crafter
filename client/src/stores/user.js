@@ -5,6 +5,7 @@ import { useTasksStore } from "../stores/tasks";
 import axios from "../plugins/axiosConfig";
 import Cookies from "../utils/appCookies";
 import router from "../router/routes";
+import _ from "loadsh";
 
 export const useUserStore = defineStore("user", () => {
   const state = reactive({
@@ -16,7 +17,19 @@ export const useUserStore = defineStore("user", () => {
     resetPassModal: false,
     messageModal: false,
     popupImg: false,
-    serverResponse: {},
+    openSnackbar: false,
+    serverResponse: {
+      success: true,
+      title: "",
+      description: "",
+      errorLevel: 0,
+    },
+    serverResponseError: {
+      success: false,
+      title: "A server error has occurred",
+      description: "Couldn't get response, please try agaian later",
+      errorLevel: 4,
+    },
   });
 
   // state for changes
@@ -54,14 +67,7 @@ export const useUserStore = defineStore("user", () => {
         url: "auth",
         data: { name, password },
       });
-      // remember the user
-      if (rememberMe) {
-        localStorage.setItem("authenticated", true);
-        sessionStorage.removeItem("authenticated");
-      } else {
-        sessionStorage.setItem("authenticated", true);
-        localStorage.removeItem("authenticated");
-      }
+
       const days = rememberMe ? 100 : 0;
       const user = response.data.payload.user;
       // get the token from the response and store it in the cookies
@@ -72,10 +78,12 @@ export const useUserStore = defineStore("user", () => {
       );
       // synchronize the stores with th the database
       syncAllTheStoresWithDB(user);
+
       // redirect to home page
       router.push({ name: "home" });
     } catch (e) {
-      return e.response.data;
+      if (e?.response?.data) _.assign(state.serverResponse, e.response.data);
+      else state.serverResponse = { ...state.serverResponseError };
     }
   }
 
@@ -126,22 +134,11 @@ export const useUserStore = defineStore("user", () => {
       return e.response.data;
     }
   }
-
-  function isUserLoggedIn() {
-    return (
-      state.loggedIn ||
-      JSON.parse(sessionStorage.getItem("authenticated")) ||
-      JSON.parse(localStorage.getItem("authenticated"))
-    );
-  }
-
   // log out the user
   async function logOutUser() {
     Cookies.removeCookie("x_auth_token");
     state.loggedIn = false;
     state.serverResponse = {};
-    localStorage.removeItem("authenticated");
-    sessionStorage.removeItem("authenticated");
     router.push({ name: "home" });
   }
 
@@ -154,6 +151,5 @@ export const useUserStore = defineStore("user", () => {
     loginUser,
     changePassword,
     changeUserProfile,
-    isUserLoggedIn,
   };
 });

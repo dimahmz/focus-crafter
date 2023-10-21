@@ -1,7 +1,8 @@
 // class that manages  cookies
 export default class Cookies {
   // add a new cookie
-  static setCookie(name, value, seconds) {
+  static setCookie(name, value, days) {
+    const seconds = days * 60 * 60 * 24;
     const cookieValue = encodeURIComponent(value) + "; max-age=" + seconds;
     document.cookie = name + "=" + cookieValue + "; path=/; SameSite=Lax";
   }

@@ -23,15 +23,21 @@ const vuetify = createVuetify({
 
 const app = createApp(App);
 
-app.use(createPinia());
+async function createApplication() {
+  app.use(createPinia());
 
-app.use(Antd);
+  app.use(router);
 
-app.use(vuetify);
+  const response = await syncStores();
 
-// privide a function that fetch the user
-app.provide("syncStores", syncStores);
+  app.use(Antd);
 
-app.use(router);
+  app.use(vuetify);
 
-app.mount("#app");
+  // privide a function that fetch the user
+  app.provide("syncStores", syncStores);
+
+  app.mount("#app");
+}
+
+createApplication();
