@@ -16,7 +16,7 @@ const routes = [
   {
     path: "/signup",
     name: "signup",
-    component: () => import("/src/router/signup.vue"),
+    component: () => import("/src/router/SignUp/index.vue"),
     meta: {
       requiresAuth: false,
       ifNotAuthenticated: true,

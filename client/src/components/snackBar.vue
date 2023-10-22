@@ -5,6 +5,7 @@ const user = useUserStore();
 <template>
   <div class="text-center">
     <v-snackbar v-model="user.state.openSnackbar" multi-line>
+      {{ user.state.serverResponse.title }} <br />
       {{ user.state.serverResponse.description }}
       <template v-slot:actions>
         <v-btn

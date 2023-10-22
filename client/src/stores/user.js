@@ -18,6 +18,7 @@ export const useUserStore = defineStore("user", () => {
     messageModal: false,
     popupImg: false,
     openSnackbar: false,
+    openRegistrationModal: false,
     serverResponse: {
       success: true,
       title: "",
@@ -67,7 +68,6 @@ export const useUserStore = defineStore("user", () => {
         url: "auth",
         data: { name, password },
       });
-
       const days = rememberMe ? 100 : 0;
       const user = response.data.payload.user;
       // get the token from the response and store it in the cookies
@@ -84,6 +84,27 @@ export const useUserStore = defineStore("user", () => {
     } catch (e) {
       if (e?.response?.data) _.assign(state.serverResponse, e.response.data);
       else state.serverResponse = { ...state.serverResponseError };
+    }
+  }
+
+  async function registerUser(user) {
+    console.log(user);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "signup",
+        data: user,
+      });
+
+      await _.assign(state.serverResponse, response.data);
+      state.openRegistrationModal = true;
+    } catch (e) {
+      if (e?.response?.data) {
+        _.assign(state.serverResponse, e.response.data);
+        state.openSnackbar = true;
+      } else {
+        state.serverResponse = { ...state.serverResponseError };
+      }
     }
   }
 
@@ -148,6 +169,7 @@ export const useUserStore = defineStore("user", () => {
     syncAllTheStoresWithDB,
     changeUserName,
     logOutUser,
+    registerUser,
     loginUser,
     changePassword,
     changeUserProfile,

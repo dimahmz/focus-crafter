@@ -2,8 +2,8 @@
 import { reactive, computed, ref } from "vue";
 import { useUserStore } from "../../stores/user";
 import AppBtn from "../../components/appBtns/appBtn.vue";
-import LoginHeader from "./Header.vue";
-import LeftSection from "./welcomeSection.vue";
+import AuthHeader from "../../components/Header.vue";
+import LeftSection from "../../components/welcomeSection.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required } from "@vuelidate/validators";
 import SnackBar from "../../components/snackBar.vue";
@@ -50,7 +50,7 @@ main(class="h-screen flex")
   LeftSection(class="w-11/12 hidden md:flex justify-center items-center")
   section.relative.w-full.px-8.py-6.bg-white
     SnackBar
-    LoginHeader
+    AuthHeader
     form
       div.flex-column.space-y-4.max-w-lg
         v-text-field(
@@ -76,8 +76,8 @@ main(class="h-screen flex")
         v-checkbox( v-model="state.rememberUser" label="remeber password" hide-details)
         div(class="flex flex-col space-y-7 xs:flex-row xs:space-y-0 xs:space-x-10  items-center")
           v-btn.login-btn(:loading="state.loading" :ripple="false" @click="submit") LOGIN
-          v-btn.signup-btn(:ripple="false") CREATE AN ACCOUNT
-            router-link(:to="{name : 'signup'}")
+          router-link(:to="{name : 'signup'}")
+            v-btn.signup-btn(:ripple="false") CREATE AN ACCOUNT
         p Forgot password? &nbsp;
           router-link(:to="{name : 'home'}")(class="text-[#00738c]").text-teriary.font-bold Reset here
 </template>
