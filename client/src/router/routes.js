@@ -42,7 +42,7 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: () => import("/src/router/about.vue"),
+    component: () => import("/src/router/About/index.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -65,7 +65,6 @@ router.beforeEach(async (to, from, next) => {
 
   const isLoggedIn = user.state.loggedIn;
 
-  console.log(isLoggedIn);
   // redirect to login page when navigating into protected routes
   if (to.meta.requiresAuth && !isLoggedIn) {
     next({ name: "login" });

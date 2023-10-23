@@ -15,6 +15,8 @@ const logger = require("./middleware/logger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 
+const feedBack = require("./routes/feedBack");
+
 const cookieParser = require("cookie-parser");
 
 // configurations
@@ -51,6 +53,7 @@ app.use("/editUser", editUser);
 app.use("/editSettings", editSettings);
 app.use("/editTasks", editTasks);
 app.use("/userData", userData);
+app.use("/feed-back", feedBack);
 
 // handlling express errors
 app.use((err, req, res, next) => {
