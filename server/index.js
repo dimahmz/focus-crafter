@@ -10,10 +10,8 @@ const editUser = require("./routes/editUser");
 const editSettings = require("./routes/editSettings");
 const editTasks = require("./routes/editTasks");
 const userData = require("./routes/userData");
-// const logger = require("./startup/logging");
 const logger = require("./middleware/logger");
 const notFound = require("./middleware/notFound");
-const errorHandler = require("./middleware/errorHandler");
 const cors = require("cors");
 
 const feedBack = require("./routes/feedBack");
@@ -44,7 +42,7 @@ if (!process.env.pro_focus_jwtKey) {
 
 // send a static html
 app.get("/", async (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile("index.html");
 });
 
 // app routes
@@ -96,7 +94,12 @@ if (process.env.NODE_ENV == "development") {
   localIP();
 }
 
-app.listen(port, () => console.log(`network ${process.env.app_domain_name}`));
+app.listen(port, () => {
+  if (process.env.NODE_ENV == "development") {
+    console.log(`network ${process.env.app_domain_name}`);
+  }
+  console.log("app is running");
+});
 
 // projest base directory
 global.__basedir = __dirname;
