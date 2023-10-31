@@ -42,7 +42,7 @@ if (!process.env.pro_focus_jwtKey) {
 
 // send a static html
 app.get("/", async (req, res) => {
-  res.sendFile("index.html");
+  res.sendFile(`${__dirname}/index.html`);
 });
 
 // app routes
