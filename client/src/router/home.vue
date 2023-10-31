@@ -1,8 +1,9 @@
 <template lang="pug">
-TimerHeader.mt-12.mb-10.text-primary
-TimerBody.mb-10
-TimerFooter
-AppNavigationBtns.mt-32.w-full
+TimerHeader.mt-8.mb-50.text-primary
+TimerBody
+TimerFooter.my-4
+.absolute.bottom-3.w-full
+  AppNavigationBtns.mt-8.w-full
 SettingsModal(v-if="settingsStore.showSettingsModal")
 TasksModal(v-if="settingsStore.showTasksModal")
 </template>
@@ -36,7 +37,7 @@ const tasksStore = useTasksStore();
 const timerStore = useCounterStore();
 
 //latest changes
-
+// stored in the local storage
 // timerStore.$patch(JSON.parse(sessionStorage.getItem("user")));
 // tasksStore.$patch(JSON.parse(sessionStorage.getItem("tasks")));
 // settingsStore.$patch( JSON.parse(sessionStorage.getItem("settings")) );
@@ -50,4 +51,3 @@ const timerStore = useCounterStore();
 //  sessionStorage.setItem(mutation.storeId, JSON.stringify(state));
 // }
 </script>
-<style scoped></style>

@@ -15,6 +15,6 @@
 <script setup>
 import { defineProps } from "vue";
 defineProps({
-  color: { type: String, default: "#BCC7D2" },
+  color: { type: String },
 });
 </script>

@@ -5,10 +5,8 @@
     Calendar(@click='()=>settingsStore.showTasksModal=true')
     router-link( :to="{ name: 'about' }")
       Info
-    router-link( v-if="userStore.state.loggedIn" :to="{ name: 'profile' }")
-      user-outlined
-    router-link( v-else :to="{ name: 'login' }")
-      user-outlined      
+    router-link(:to="userStore.state.loggedIn ? { name: 'profile' } : { name: 'login' }")
+      Profile
 </template>
 
 <script setup>
@@ -17,6 +15,7 @@ import Setting from "./_icons/setting.vue";
 import Info from "./_icons/info.vue";
 import Home from "./_icons/home.vue";
 import Calendar from "./_icons/calendar.vue";
+import Profile from "./_icons/profile.vue";
 
 import { useCounterStore } from "@/stores/timer";
 import { useTasksStore } from "@/stores/tasks";
@@ -36,6 +35,10 @@ const userStore = useUserStore();
 .icons-container {
   @apply w-full max-w-xs flex justify-between items-center bg-app-secondary rounded-xl px-3 py-4;
 }
+.icons-container svg {
+  @apply stroke-app-tertiary fill-black;
+}
+
 .icons-container * {
   @apply cursor-pointer;
 }

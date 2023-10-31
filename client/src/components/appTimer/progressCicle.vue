@@ -1,10 +1,12 @@
 <template>
   <div class="m-0 p-0 relative">
-    <p
-      class="text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    >
-      {{ counter }}
-    </p>
+    <div class="w-full flex-center">
+      <p
+        class="text-center tracking-[3px] text-4xl sm:text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      >
+        {{ counter }}
+      </p>
+    </div>
     <svg
       ref="svg"
       viewBox="-25 -25 250 250"
@@ -18,7 +20,6 @@
         cx="100"
         cy="100"
         fill="transparent"
-        stroke-width="16px"
         stroke-dasharray="565.48px"
         stroke-dashoffset="0"
       ></circle>
@@ -27,7 +28,6 @@
         r="90"
         cx="100"
         cy="100"
-        stroke-width="16px"
         stroke-linecap="round"
         fill="transparent"
         stroke-dasharray="628"
@@ -72,9 +72,10 @@ watch(props, () => {
 
 <style scoped>
 svg {
-  @apply w-96 h-96 relative;
+  @apply relative w-64 sm:w-96 h-64 sm:h-96;
 }
 svg > circle {
+  @apply stroke-[12px] sm:stroke-[15px];
 }
 circle:first-child {
   @apply stroke-app-secondary;
@@ -85,6 +86,6 @@ circle:nth-child(2) {
 }
 
 text {
-  @apply text-black text-2xl font-bold;
+  @apply text-black text-4xl font-bold;
 }
 </style>

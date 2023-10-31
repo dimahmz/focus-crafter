@@ -2,16 +2,16 @@
 section
   .flex-center(v-if="!timerStore.isTimerCounting")
     .btn-box.bg-app-tertiary(@click="start()")
-      startBtn(w=24 h=29 colors_classes="fill-app-secondary")
+      startBtn
   .flex-center(v-else)
     .flex.gap-x-5.items-center
       .btn-box.bg-app-tertiary.bg-app-quaternary(@click="timerStore.restartTimer()")
-        restart(w=16 h=16 colors_classes="fill-app-tertiary")
+        restart(colors_classes="fill-app-tertiary")
       .btn-box.bg-app-tertiary(@click="timerStore.pauseOrResumeTimer()")
-        startBtn(v-if="timerStore.pauseTimer" colors_classes="fill-app-secondary" w=24 h=29 )
-        pause(v-else w=24 h=29 colors_classes="fill-app-secondary")
+        startBtn(v-if="timerStore.pauseTimer")
+        pause(v-else )
       .btn-box.bg-app-tertiary.bg-app-quaternary(@click="changeTimer()")
-        Next(w=16 h=16 colors_classes="fill-app-tertiary")
+        Next(colors_classes="fill-app-tertiary")
   WorkingOnTask(v-if="tasksStore.selectedTaskNdx >= 0").mt-8
 </template>
 
@@ -59,6 +59,9 @@ function changeTimer() {
 
 <style scoped>
 .btn-box {
-  @apply rounded-2xl flex-center p-5 cursor-pointer;
+  @apply rounded-xl p-3 sm:p-4 cursor-pointer;
+}
+svg {
+  @apply h-4 sm:h-5 w-4 sm:w-5;
 }
 </style>
