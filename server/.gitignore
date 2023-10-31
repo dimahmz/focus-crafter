@@ -15,7 +15,6 @@ node_modules
 .vscode/*
 !.vscode/extensions.json
 
-index.html
 static/images/profiles_imgs/*
 *.rest
 *.local*

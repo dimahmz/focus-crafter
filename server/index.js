@@ -14,6 +14,7 @@ const userData = require("./routes/userData");
 const logger = require("./middleware/logger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
+const cors = require("cors");
 
 const feedBack = require("./routes/feedBack");
 
@@ -24,6 +25,9 @@ const localIP = require("./startup/privateIP");
 
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+// cors
+app.use(cors());
 
 // parse incoming data
 app.use(Express.json());
