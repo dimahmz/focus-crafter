@@ -80,15 +80,15 @@ async function changeUserName() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .profile-header {
   @apply mt-4 mb-10 text-center;
 }
 .upload-img {
   @apply cursor-pointer;
-}
-.upload-img:hover {
-  @apply underline;
+  &:hover {
+    @apply underline;
+  }
 }
 .timerBtns {
   @apply mb-16;

@@ -70,21 +70,19 @@ watch(props, () => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 svg {
   @apply relative w-64 sm:w-96 h-64 sm:h-96;
+  & > circle {
+    @apply stroke-[12px] sm:stroke-[15px];
+  }
+  circle:first-child {
+    @apply stroke-app-secondary;
+  }
+  circle:nth-child(2) {
+    @apply stroke-app-tertiary;
+  }
 }
-svg > circle {
-  @apply stroke-[12px] sm:stroke-[15px];
-}
-circle:first-child {
-  @apply stroke-app-secondary;
-}
-
-circle:nth-child(2) {
-  @apply stroke-app-tertiary;
-}
-
 text {
   @apply text-black text-4xl font-bold;
 }

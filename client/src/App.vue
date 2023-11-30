@@ -10,7 +10,7 @@ import { useUserStore } from "./stores/user";
 const timerStore = useCounterStore();
 const userStore = useUserStore();
 
-// // sync the app
+// sync the app
 // onBeforeMount(() => {
 //   const syncing = inject("syncStores");
 //   syncing();
@@ -42,4 +42,3 @@ watch(timerStore, () => {
     document.title = timerStore.getCurrentTimerValue;
 });
 </script>
-<style scoped></style>

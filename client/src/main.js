@@ -6,7 +6,6 @@ import Antd from "ant-design-vue";
 import syncStores from "./plugins/syncStores";
 
 import "./assets/main.css";
-import "./assets/style.css";
 
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";

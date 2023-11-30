@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [vue()],
   resolve: {
@@ -11,13 +12,9 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  // server: {
-  //   proxy: {
-  //     "/api": {
-  //       target,
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, ""),
-  //     },
-  //   },
+  // build: {
+  //   assetsInlineLimit: 0,
+  //   cssCodeSplit: false,
+
   // },
 });
