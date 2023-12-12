@@ -1,21 +1,16 @@
 <template lang="pug">
-.navigation-bar
+.fixed.bottom-0.w-full.px-4
   .icons-container(v-if="!timer.focusMode")
-    Setting(@click='()=>settingsStore.showSettingsModal=true')
-    Calendar(@click='()=>settingsStore.showTasksModal=true')
+    v-icon(icon="mdi-cog" @click='()=>settingsStore.showSettingsModal=true')
+    v-icon(icon="mdi-calendar-check" @click='()=>settingsStore.showTasksModal=true')
     router-link( :to="{ name: 'about' }")
-      Info
+      v-icon(icon="mdi-information")
     router-link(:to="userStore.state.loggedIn ? { name: 'profile' } : { name: 'login' }")
-      Profile
+      v-icon(icon="mdi-account")
 </template>
 
 <script setup>
 import { UserOutlined } from "@ant-design/icons-vue";
-import Setting from "./_icons/setting.vue";
-import Info from "./_icons/info.vue";
-import Home from "./_icons/home.vue";
-import Calendar from "./_icons/calendar.vue";
-import Profile from "./_icons/profile.vue";
 
 import { useCounterStore } from "@/stores/timer";
 import { useTasksStore } from "@/stores/tasks";
@@ -28,10 +23,8 @@ const userStore = useUserStore();
 </script>
 
 <style lang="scss" scoped>
-.navigation-bar {
-}
 .icons-container {
-  @apply w-full max-w-xs mx-auto flex justify-between items-center bg-app-secondary rounded-xl px-3 py-4;
+  @apply w-full max-w-xs mx-auto flex justify-between items-center bg-app-secondary rounded-t-3xl py-4 px-6;
   @apply md:flex-column;
 }
 .icons-container svg {

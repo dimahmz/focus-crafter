@@ -1,5 +1,5 @@
 <template lang="pug">
-.flex.justify-center
+.flex-center.h-full
   .wrapper(v-if="timerStore.startingPromodoroTimer")
     TimerProgressCicle(:counter="timerStore.getPromodoroCounter" :timing="timerStore.promodoro" :timerNpt="settingsStore.state.promodoro_npt")
   .wrapper(v-else-if="timerStore.startingShortBreakTimer") 
@@ -16,5 +16,3 @@ import { useCounterStore } from "@/stores/timer";
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 </script>
-
-<style scoped></style>

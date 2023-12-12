@@ -2,7 +2,7 @@
   <div class="m-0 p-0 relative">
     <div class="w-full flex-center">
       <p
-        class="text-center tracking-[3px] text-4xl sm:text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        class="text-center tracking-[3px] text-4xl md:text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       >
         {{ counter }}
       </p>
@@ -72,9 +72,9 @@ watch(props, () => {
 
 <style scoped lang="scss">
 svg {
-  @apply relative w-64 sm:w-96 h-64 sm:h-96;
+  @apply relative w-64 md:w-96 h-64 md:h-96;
   & > circle {
-    @apply stroke-[12px] sm:stroke-[15px];
+    @apply stroke-[12px] md:stroke-[15px];
   }
   circle:first-child {
     @apply stroke-app-secondary;

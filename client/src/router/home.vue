@@ -1,21 +1,20 @@
 <template lang="pug">
-TimerHeader.mt-8.mb-50.text-primary
-TimerBody
-TimerFooter.my-4
-.absolute.bottom-3.w-full
-  AppNavigationBtns.mt-8.w-full
+TimerHeader.mt-6.mb-50.text-primary
+TimerBody.mt-1
+TimerFooter.my-1
+AppNavigationBtns
 SettingsModal(v-if="settingsStore.showSettingsModal")
 TasksModal(v-if="settingsStore.showTasksModal")
 </template>
 
 <script setup>
-import TimerBody from "../components/appTimer/timerBody.vue";
-import TimerFooter from "../components/appTimer/timerFooter.vue";
-import TimerHeader from "../components/appTimer/timerHeader.vue";
+import TimerBody from "@/components/appTimer/timerBody.vue";
+import TimerFooter from "@/components/appTimer/timerFooter.vue";
+import TimerHeader from "@/components/appTimer/timerHeader.vue";
 
 import SettingsModal from "@/components/appSettings/settingModal.vue";
 import TasksModal from "@/components/appTasks/tasksModal.vue";
-import AppNavigationBtns from "../components/appNavigationBtns.vue";
+import AppNavigationBtns from "../components/navigationBar/index.vue";
 
 import { inject } from "vue";
 

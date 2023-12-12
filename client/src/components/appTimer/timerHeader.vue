@@ -1,9 +1,9 @@
 <template lang="pug">
-.grid.place-items-center.font-primary.text-base.font-semibold
-  div.btns-container(class="text-[13px] sm:text-[18px]")
-    button.btn(:class="{ activeTimer: timer.startingPromodoroTimer }" @click="timer.goToPromodoro()") Pomodoro
-    button.btn(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") Short break
-    button.btn(:class="{ activeTimer: timer.startingLongBreakTimer }" @click="timer.getAlongBreak()") Long break
+.px-4.grid.place-items-center.font-primary
+  div.btns-container
+    button(:class="{ activeTimer: timer.startingPromodoroTimer }" @click="timer.goToPromodoro()") Pomodoro
+    button(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") Short break
+    button(:class="{ activeTimer: timer.startingLongBreakTimer }" @click="timer.getAlongBreak()") Long break
 </template>
 
 <script setup>
@@ -16,12 +16,13 @@ const timer = useCounterStore();
 
 <style scoped>
 .btns-container {
-  @apply w-full max-w-[300px] sm:max-w-[400px] justify-between flex gap-x-1 p-1 sm:p-1.5 rounded-3xl bg-app-secondary;
-}
-.btn {
-  @apply px-2 py-3 sm:py-4 sm:px-3 rounded-3xl text-app-tertiary;
-}
-.activeTimer {
-  @apply bg-app-tertiary text-app-secondary;
+  @apply w-full max-w-[300px] md:max-w-[400px] justify-between flex gap-x-1 p-1.5 md:p-2 rounded-3xl bg-app-secondary;
+  @apply text-[11px] md:text-[15px] font-semibold;
+  button {
+    @apply px-1 py-2 md:py-3 md:px-2 rounded-3xl text-app-tertiary;
+  }
+  .activeTimer {
+    @apply bg-app-tertiary text-app-secondary;
+  }
 }
 </style>
