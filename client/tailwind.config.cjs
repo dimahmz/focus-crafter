@@ -15,6 +15,8 @@ module.exports = {
           tertiary: "hsl(var(--color-app-tertiary) / <alpha-value>)",
           quaternary: "hsl(var(--color-app-quaternary) / <alpha-value>)",
           modal: "rgba(var(--color-modal-bg) , 0.45)",
+          title: "#000",
+          parag:"#3B4857"
         },
       },
       fontFamily: {

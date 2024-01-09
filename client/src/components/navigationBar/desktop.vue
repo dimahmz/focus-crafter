@@ -1,16 +1,17 @@
 <template lang="pug">
 .navigation-bar
-  .icons-container(v-if="!timer.focusMode")
-    AddTask(@click='()=>settingsStore.showTasksModal=true')
+  .icons-container
+    AddTaskBtn
     v-icon(icon="mdi-cog" @click='()=>settingsStore.showSettingsModal=true')
     router-link( :to="{ name: 'about' }")
       v-icon(icon="mdi-information")
     router-link(:to="userStore.state.loggedIn ? { name: 'profile' } : { name: 'login' }")
       v-icon(icon="mdi-account")
-  </template>
+</template>
 
 <script setup>
-import AddTask from "../appBtns/addTask.vue";
+import AddTask from "@/components/appTasks/addTask.vue";
+import AddTaskBtn from "@/components/appBtns/addTask.vue";
 
 import { useCounterStore } from "@/stores/timer";
 import { useSettingsStore } from "@/stores/settings";

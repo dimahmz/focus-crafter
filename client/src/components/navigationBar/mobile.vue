@@ -2,7 +2,7 @@
 .fixed.bottom-0.w-full.px-4
   .icons-container(v-if="!timer.focusMode")
     v-icon(icon="mdi-cog" @click='()=>settingsStore.showSettingsModal=true')
-    v-icon(icon="mdi-calendar-check" @click='()=>settingsStore.showTasksModal=true')
+    v-icon(icon="mdi-calendar-check" @click="()=>taskListMobile=true")
     router-link( :to="{ name: 'about' }")
       v-icon(icon="mdi-information")
     router-link(:to="userStore.state.loggedIn ? { name: 'profile' } : { name: 'login' }")
@@ -12,11 +12,14 @@
 <script setup>
 import { UserOutlined } from "@ant-design/icons-vue";
 
+import AddTask from "@/components/appTasks/addTask.vue";
 import { useCounterStore } from "@/stores/timer";
 import { useTasksStore } from "@/stores/tasks";
 import { useSettingsStore } from "@/stores/settings";
 import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
 
+const { addNewTaskModal, taskListMobile } = storeToRefs(useTasksStore());
 const timer = useCounterStore();
 const settingsStore = useSettingsStore();
 const userStore = useUserStore();

@@ -1,8 +1,11 @@
 <template lang="pug">
 header.w-full.text-center.flex-column
-  div.img(class="mb-0 mt-0 flex justify-center md:flex md:justify-end")
+  .flex-center-between.mb-8
     router-link(:to="{name : 'home'}")
-      img.w-14.mt-0(src="/logo.png")
+      v-icon(icon="mdi-home" size="x-large").text-app-tertiary
+    div.img-container(class="mb-0 mt-0 flex justify-center")
+      router-link(:to="{name : 'home'}")
+        img.w-14.mt-0(src="/logo.png")
   div.flex-column.space-y-2
     h1(class="text-[#0c1A10]").text-2xl.font-semibold Good Afternoon
     p(class="text-[#595959]") Focus on being productive instead of busy.
@@ -10,7 +13,7 @@ header.w-full.text-center.flex-column
 </template>
 
 <style scoped>
-.img {
-  @apply flex justify-center mb-6 md:flex md:!justify-end md:mb-3;
+.img-container {
+  @apply flex justify-center mb-6 md:hidden;
 }
 </style>

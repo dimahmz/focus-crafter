@@ -1,6 +1,6 @@
 <template lang="pug">
 div(id="login-welcome")
-  img(class="block w-[300px]" src="/startLogo.png" alt="Vortex focus")
+  img(class="block w-[300px]" src="/welcome_logo.png" alt="focus crafter")  
 </template>
 <style scoped>
 #login-welcome {

@@ -3,43 +3,19 @@ import { computed, reactive, ref, toRef } from "vue";
 import { useSettingsStore } from "./settings";
 import { useUserStore } from "./user";
 import axios from "../plugins/axiosConfig";
+import _axios from "@/api/index";
 
 export const useTasksStore = defineStore("tasks", () => {
   // other stores
   const settingStore = useSettingsStore();
   const userStore = useUserStore();
-
   //state
-  const tasks = reactive([
-    {
-      completedPomodoros: 3,
-      displayOptions: false,
-      estimatedPomodoros: 4,
-      isFinished: false,
-      notes: "some notes",
-      isSelected: false,
-      showEditModal: false,
-      title: "my first task",
-    },
-  ]);
-  // taskObj
-  // {
-  // displayOptions:false
-  // estimatedPromodoros:4
-  // finishedPromdoros:0
-  // isFinished:false
-  // isSelected:false
-  // notes:" test"
-  // showEditModal:false
-  // title:"test"
-  // addNewTaskModal:false
-  // editTaskModal:false
-  // selectedTaskNdx:-1
-  // }
+  const tasks = reactive([]);
 
   // properties used ony in the client side
   const selectedTaskNdx = ref(-1);
   const addNewTaskModal = ref(false);
+  const taskListMobile = ref(false);
   const editTaskModal = ref(false);
 
   /* ----Getters---- */
@@ -79,49 +55,32 @@ export const useTasksStore = defineStore("tasks", () => {
   //CRUD operations
 
   // Add Task
-  function addTask(task) {
-    // add it to DB
-    UpdateTaskInDB(task, true, false, null);
-    task.showEditModal = false;
-    task.displayOptions = false;
+  async function addTask(task) {
+    const response = await axios.post("/editTasks/createTask", { task });
     tasks.push(task);
+    return response;
   }
-
-  // select a Task
+  // Delete Task
+  async function deleteTask(ndx) {
+    tasks.splice(ndx, 1);
+    if (ndx == selectedTaskNdx.value) selectedTaskNdx.value = -1;
+    axios.delete("/editTasks/deleteTask", {
+      data: {
+        taskIndex: ndx,
+      },
+    });
+  }
+  // select Task
   function selectTask(ndx) {
     selectedTaskNdx.value = ndx;
     tasks.forEach((task) => (task.isSelected = false));
     tasks[ndx].isSelected = true;
-    // @update the selected task in the database
-  }
-
-  // Update a Task
-  function editTask(
-    ndx,
-    { title, notes, estimatedPromodoros, finishedPromdoros }
-  ) {
-    tasks[ndx].title = title;
-    tasks[ndx].notes = notes;
-    tasks[ndx].estimatedPromodoros = estimatedPromodoros;
-    tasks[ndx].finishedPromdoros = finishedPromdoros;
-    tasks[ndx].showEditModal = false;
-    // update it in DB
-    UpdateTaskInDB(tasks[ndx], false, true, ndx);
-  }
-
-  // Delete Task
-  function deleteTask(ndx) {
-    if (ndx == selectedTaskNdx.value) selectedTaskNdx.value = -1;
-    tasks.splice(ndx, 1);
-    // update it in DB
-    UpdateTaskInDB(null, false, false, ndx);
   }
 
   // sync tasks settings with the Database
   function syncTasksWithDB($tasks) {
     $tasks.forEach((task) => {
       if (task) {
-        task.displayOptions = task.showEditModal = false;
         tasks.push(task);
       }
       // @todo
@@ -133,9 +92,8 @@ export const useTasksStore = defineStore("tasks", () => {
   function updateSelectedTask() {
     const i = selectedTaskNdx.value;
     if (i < 0 || tasks.length == 0) return;
-    tasks[i].finishedPromdoros++;
-    const isFinished =
-      tasks[i].finishedPromdoros >= tasks[i].estimatedPromodoros;
+    tasks[i].finishedPomdoros++;
+    const isFinished = tasks[i].finishedPomdoros >= tasks[i].estimatedPomodoros;
     tasks[i].isFinished = isFinished;
   }
 
@@ -147,46 +105,10 @@ export const useTasksStore = defineStore("tasks", () => {
     });
   }
 
-  // Update or Add or delete a task in the DataBase
-  function UpdateTaskInDB($task, addIt, updateIt, taskIndex) {
-    if (userStore.state.loggedIn) {
-      // Delete a task
-      if (!(addIt || updateIt)) {
-        // Data object is required in axios' delete method
-        axios.delete("/editTasks/deleteTask", {
-          data: {
-            taskIndex: taskIndex,
-          },
-        });
-        return;
-      }
-      const task = {
-        title: $task.title,
-        notes: $task.notes,
-        estimatedPromodoros: $task.estimatedPromodoros,
-        finishedPromdoros: $task.finishedPromdoros,
-        isFinished: $task.isFinished,
-      };
-      // add Task
-      if (addIt) {
-        axios.post("/editTasks/createTask", {
-          task,
-        });
-      }
-      // update Task
-      else {
-        axios.put("/editTasks/updateTask", {
-          task,
-          taskIndex,
-        });
-        return;
-      }
-    }
-  }
-
   return {
     tasks,
     addNewTaskModal,
+    taskListMobile,
     editTaskModal,
     selectedTaskNdx,
     numberOfTasks,
@@ -194,12 +116,10 @@ export const useTasksStore = defineStore("tasks", () => {
     workingOnTaskPomodoros,
     tasktotalMinutes,
     addTask,
-    editTask,
     deleteTask,
     selectTask,
     updateSelectedTask,
     syncTasksWithDB,
     hideAll,
-    UpdateTaskInDB,
   };
 });

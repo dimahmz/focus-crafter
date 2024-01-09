@@ -1,22 +1,31 @@
 <template lang="pug">
-router-view
+LoadingPage(v-if="checkAuthLoading")
+router-view(v-else)
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, onBeforeMount, watch, inject } from "vue";
+import { onBeforeUnmount, onMounted, watch, inject, ref } from "vue";
 import { useCounterStore } from "@/stores/timer";
-import { useUserStore } from "./stores/user";
+import Router from "@/router/routes";
+import LoadingPage from "@/views/loading.vue";
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
 
+const user = useUserStore();
+const { checkAuthLoading } = storeToRefs(useUserStore());
 const timerStore = useCounterStore();
-const userStore = useUserStore();
 
-// sync the app
-// onBeforeMount(() => {
-//   const syncing = inject("syncStores");
-//   syncing();
-// });
+Router.beforeResolve(async (to, from, next) => {
+  const isLoggedIn = user.state.loggedIn;
+  // redirect to login page when navigating into protected routes
+  if (to.meta.requiresAuth && !isLoggedIn) next({ name: "login" });
+  // protected pages that are accessible only for unauthenticated users
+  else if (to.meta.ifNotAuthenticated && isLoggedIn) next({ name: "home" });
+  else next();
+});
 
 onMounted(() => {
+  inject("syncStores");
   //add a listner to to catch the user confirmation before leaving the page
   window.addEventListener("beforeunload", confirmExit);
 });
@@ -30,7 +39,6 @@ const confirmExit = (event) => {
   timerStore.pauseOrResumeTimer();
   // just leave the page if the timer is not working or unstopped in a session
   if (!timerStore.isTimerCounting) return false;
-
   event.preventDefault();
   event.returnValue = "";
   timerStore.pauseOrResumeTimer();

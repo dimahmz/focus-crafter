@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "../stores/user";
-import Cookies from "../utils/appCookies";
-import { inject } from "vue";
-import syncStores from "../plugins/syncStores";
+import { useUserStore } from "@/stores/user";
 
 const routes = [
   {
@@ -60,48 +57,21 @@ const router = createRouter({
 });
 
 // routes protections
-router.beforeEach(async (to, from, next) => {
-  const user = useUserStore();
+// export const routesProtection = router.beforeEach(async (to, from, next) => {
+//   const user = useUserStore();
 
-  const isLoggedIn = user.state.loggedIn;
+//   const isLoggedIn = user.state.loggedIn;
 
-  // redirect to login page when navigating into protected routes
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    next({ name: "login" });
-  }
-  // protected pages that are accessible only for unauthenticated users
-  else if (to.meta.ifNotAuthenticated && isLoggedIn) {
-    next({ name: "home" });
-  } else {
-    next();
-  }
-});
+//   // redirect to login page when navigating into protected routes
+//   if (to.meta.requiresAuth && !isLoggedIn) {
+//     next({ name: "login" });
+//   }
+//   // protected pages that are accessible only for unauthenticated users
+//   else if (to.meta.ifNotAuthenticated && isLoggedIn) {
+//     next({ name: "home" });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
-
-// Now the app has started!
-function lazyLoadView(AsyncView) {
-  const AsyncHandler = () => ({
-    component: AsyncView,
-    // A component to use while the component is loading.
-    loading: require("./Loading.vue").default,
-    // A fallback component in case the timeout is exceeded
-    // when loading the component.
-    error: require("./Timeout.vue").default,
-    // Delay before showing the loading component.
-    // Default: 200 (milliseconds).
-    delay: 400,
-    // Time before giving up trying to load the component.
-    // Default: Infinity (milliseconds).
-    timeout: 10000,
-  });
-
-  return Promise.resolve({
-    functional: true,
-    render(h, { data, children }) {
-      // Transparently pass any props or children
-      // to the view component.
-      return h(AsyncHandler, data, children);
-    },
-  });
-}

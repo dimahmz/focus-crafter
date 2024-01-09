@@ -2,13 +2,14 @@ import { defineStore } from "pinia";
 import { reactive } from "vue";
 import { useSettingsStore } from "../stores/settings";
 import { useTasksStore } from "../stores/tasks";
-import axios from "../plugins/axiosConfig";
-import Cookies from "../utils/appCookies";
+import axios from "@/plugins/axiosConfig";
+import Cookies from "js-cookie";
 import router from "../router/routes";
 import _ from "loadsh";
 
 export const useUserStore = defineStore("user", () => {
   const state = reactive({
+    checkAuthLoading: false,
     loggedIn: false,
     rememberMe: false,
     name: "john",
@@ -49,7 +50,7 @@ export const useUserStore = defineStore("user", () => {
     if (data.settings) useSettingsStore().syncSettingsWithDB(data.settings);
     // sync with the tasks store
 
-    if (data.task) useTasksStore().syncTasksWithDB(data.task);
+    if (data.tasks) useTasksStore().syncTasksWithDB(data.tasks);
     // sync the user store
     state.name = data.name;
     state.email = data.email;
@@ -71,11 +72,9 @@ export const useUserStore = defineStore("user", () => {
       const days = rememberMe ? 100 : 0;
       const user = response.data.payload.user;
       // get the token from the response and store it in the cookies
-      Cookies.setCookie(
-        "x_auth_token",
-        response.data.payload.x_auth_token,
-        days
-      );
+      Cookies.set("x_auth_token", response.data.payload.x_auth_token, {
+        expires: days,
+      });
       // synchronize the stores with th the database
       syncAllTheStoresWithDB(user);
 
@@ -88,7 +87,6 @@ export const useUserStore = defineStore("user", () => {
   }
 
   async function registerUser(user) {
-    console.log(user);
     try {
       const response = await axios({
         method: "post",
@@ -157,7 +155,7 @@ export const useUserStore = defineStore("user", () => {
   }
   // log out the user
   async function logOutUser() {
-    Cookies.removeCookie("x_auth_token");
+    Cookies.remove("x_auth_token");
     state.loggedIn = false;
     state.serverResponse = {};
     router.push({ name: "home" });

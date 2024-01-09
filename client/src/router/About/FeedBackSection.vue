@@ -49,8 +49,8 @@ section.my-16
     form(@submit="sendFeedBack").flex-column.space-y-4
       h1.font-seconadry.text-xl.font-semibold Give us your feedback!
       p(class="text-[#87898E]") Let us know how we can improve this app 
-      v-text-field(v-if="!user.state.loggedIn" type="email" label="Your email")
-      v-textarea(v-model="state.feedBack" required label="Your feed-back")
+      v-text-field(v-if="!user.state.loggedIn" type="email" variant="outlined" label="Your email")
+      v-textarea(v-model="state.feedBack" required label="Your feed-back"  variant="outlined")
       .flex-center
-        v-btn.w-full(max-width="200" :loading="state.loading" :ripple="false" type="submit") send
+        v-btn.w-full(max-width="200" :loading="state.loading" :ripple="false" variant="tonal" type="submit") send
 </template>

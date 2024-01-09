@@ -72,7 +72,7 @@ watch(props, () => {
 
 <style scoped lang="scss">
 svg {
-  @apply relative w-64 md:w-96 h-64 md:h-96;
+  @apply relative w-72 md:w-96 h-72 md:h-96;
   & > circle {
     @apply stroke-[12px] md:stroke-[15px];
   }

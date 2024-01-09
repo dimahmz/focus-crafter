@@ -112,7 +112,7 @@ main(class="h-screen flex")
         )
         .flex.justify-between.pt-7
           p Already have an account? &nbsp;
-            router-link(:to="{name : 'login'}")(class="text-[#00738c]").text-teriary.font-bold Sign in here          
+            router-link(:to="{name : 'login'}" class="text-[#00738c]").text-teriary.font-bold Sign in here          
           v-btn.login-btn.uppercase(:loading="state.loading" :ripple="false" @click="submit") Sign up
 </template>
 

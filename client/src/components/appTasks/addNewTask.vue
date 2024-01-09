@@ -3,13 +3,13 @@
   .flex-column.space-y-4
     .flex-center-between
       span.cursor-pointer(@click='closeNewTaskModal')
-        LeftArrow 
+        v-icon(icon="mdi-arrow-left")
       .text-center Tasks
       span.cursor-pointer(@click='closeModal')
-        Close
+        v-icon(icon="mdi-close-circle")
     .task-header
       a-input( v-model:value="newTaskTitle" placeholder="Task's title" id="npt")
-    .flex.space-x-16
+    .flex.space-x-16  
       div
         h1 Pomodoros 
         a-input-number(v-model:value="estimatedPomo" :min="1")
@@ -28,13 +28,11 @@
 </template>
 
 <script setup>
-import Close from "../_icons/close.vue";
-import LeftArrow from "../_icons/arrow_left.vue";
-import { useTasksStore } from "../../stores/tasks";
-import { useSettingsStore } from "../../stores/settings";
+import { useTasksStore } from "@/stores/tasks";
+import { useSettingsStore } from "@/stores/settings";
 import { ref, onMounted } from "vue";
-import AppBtn from "../appBtns/appBtn.vue";
-import AppNpt from "../appBtns/appNpt.vue";
+import AppBtn from "@/components/appBtns/appBtn.vue";
+import AppNpt from "@/components/appBtns/appNpt.vue";
 
 const tasksStore = useTasksStore();
 const settingsStore = useSettingsStore();

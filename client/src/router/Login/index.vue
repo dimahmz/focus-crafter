@@ -15,7 +15,7 @@ const initialState = {
   name: "",
   password: "",
   rememberUser: null,
-  visible: true,
+  visible: false,
 };
 
 const state = reactive({
@@ -78,8 +78,6 @@ main(class="h-screen flex")
           v-btn.login-btn(:loading="state.loading" :ripple="false" @click="submit") LOGIN
           router-link(:to="{name : 'signup'}")
             v-btn.signup-btn(:ripple="false") CREATE AN ACCOUNT
-        p Forgot password? &nbsp;
-          router-link(:to="{name : 'home'}")(class="text-[#00738c]").text-teriary.font-bold Reset here
 </template>
 
 <style scoped>
