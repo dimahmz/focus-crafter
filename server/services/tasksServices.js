@@ -2,6 +2,7 @@ const Joi = require("joi");
 const AppError = require("../helpers/appErrors");
 const Responses = require("../helpers/responses");
 const { User } = require("../models/user");
+const { log } = require("winston");
 
 module.exports = class TasksServices {
   // update a Task
@@ -37,7 +38,7 @@ module.exports = class TasksServices {
     if (!user)
       throw new AppError("user nor found", 500, Responses.userNotFound());
 
-    user.task.push($task);
+    user.tasks.push($task);
 
     user.save();
   }
@@ -49,9 +50,9 @@ module.exports = class TasksServices {
     if (!user)
       throw new AppError("user nor found", 500, Responses.userNotFound());
 
-    if (!user.task[taskIndex]) taskIsNotFound();
+    if (!user.tasks[taskIndex]) taskIsNotFound();
 
-    user.task.splice(taskIndex, 1);
+    user.tasks.splice(taskIndex, 1);
 
     user.save();
   }
@@ -83,11 +84,9 @@ function validate(task) {
   }
   const schema = Joi.object({
     title: Joi.string().required(),
-    notes: Joi.string().required(),
-    estimatedPromodoros: Joi.number().required(),
-    finishedPromdoros: Joi.number().required(),
+    estimatedPomodoros: Joi.number().required(),
+    finishedPomdoros: Joi.number().required(),
     isSelected: Joi.boolean().required(),
-    isFinished: Joi.boolean().required(),
   });
 
   return schema.validate(task);

@@ -5,23 +5,15 @@ const taskSchema = mongoose.Schema({
     type: String,
     default: "a task",
   },
-  notes: {
-    type: String,
-    default: "a task's notes",
-  },
-  estimatedPromodoros: {
+  estimatedPomodoros: {
     type: Number,
     default: 4,
   },
-  finishedPromdoros: {
+  finishedPomodoros: {
     type: Number,
-    default: 4,
+    default: 0,
   },
   isSelected: {
-    type: Boolean,
-    default: false,
-  },
-  isFinished: {
     type: Boolean,
     default: false,
   },

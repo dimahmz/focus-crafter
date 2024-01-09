@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
     default: () => crypto.randomBytes(20).toString("hex"),
   },
 
-  task: [taskSchema],
+  tasks: [taskSchema],
 
   settings: settingsSchema,
 });
