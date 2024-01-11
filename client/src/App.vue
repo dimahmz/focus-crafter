@@ -4,7 +4,7 @@ router-view(v-else)
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, watch, inject, ref } from "vue";
+import { onBeforeUnmount, onMounted, watch, inject } from "vue";
 import { useCounterStore } from "@/stores/timer";
 import Router from "@/router/routes";
 import LoadingPage from "@/views/loading.vue";

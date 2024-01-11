@@ -10,6 +10,7 @@ export const useCounterStore = defineStore(
   {
     state: () => {
       return {
+        sessionPomodoros: 0,
         pauseTimer: false,
         needToChange: false,
         startAlarm: false,
@@ -90,6 +91,7 @@ export const useCounterStore = defineStore(
           // update finished promodoros
           if (this.promodoro <= 0 || !this.startingPromodoroTimer) {
             this.finishedPromodoros++;
+            this.sessionPomodoros++;
             settingsstore.state.finishedPomodoros++;
             TasksStore.updateSelectedTask();
 

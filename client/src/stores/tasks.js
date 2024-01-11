@@ -92,7 +92,7 @@ export const useTasksStore = defineStore("tasks", () => {
   function updateSelectedTask() {
     const i = selectedTaskNdx.value;
     if (i < 0 || tasks.length == 0) return;
-    tasks[i].finishedPomdoros++;
+    tasks[i].finishedPomodoros++;
     const isFinished = tasks[i].finishedPomdoros >= tasks[i].estimatedPomodoros;
     tasks[i].isFinished = isFinished;
   }

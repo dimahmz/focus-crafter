@@ -1,6 +1,6 @@
 <template lang="pug">
-//- @click.self='tasksStore.selectTask(ndx)'
 .task(
+  @click='tasksStore.selectTask(ndx)'
   :class='{selectedTask: task.isSelected, finishedTask : task.isFinished}')
   .flex.justify-between.mb-2
     .text-app-title.font-semibold 
@@ -8,10 +8,12 @@
         v-icon(v-if="task.isSelected" icon="mdi-record-circle-outline")
         v-icon(v-else icon="mdi-circle-outline")
       span {{ task.title }}
+  .flex.justify-between.px-2
     span {{task.finishedPomodoros}} / {{task.estimatedPomodoros}}
-  .text-app-parag.my-1 Spent time : 1h : 30 min
-  .flex.justify-end
     v-icon(icon="mdi-delete" @click='tasksStore.deleteTask(ndx)')
+  .text-center(v-if="task.finishedPomodoros>= task.estimatedPomodoros")
+    v-icon(icon="mdi-check") 
+    span Completed
 </template>
 
 <script setup>

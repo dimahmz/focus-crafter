@@ -10,22 +10,18 @@ section
       .btn-box.bg-app-tertiary(@click="timerStore.pauseOrResumeTimer()")
         startBtn(v-if="timerStore.pauseTimer")
         pause(v-else )
-      .btn-box.bg-app-tertiary.bg-app-quaternary(@click="changeTimer()")
-        Next(colors_classes="fill-app-tertiary")
-  WorkingOnTask(v-if="tasksStore.selectedTaskNdx >= 0").mt-8
+      .btn-box.bg-app-tertiary.bg-app-quaternary
+        ConfirmModal
 </template>
 
 <script setup>
-import WorkingOnTask from "../appTasks/workingOnTask.vue";
 import startBtn from "../_icons/start.vue";
 import restart from "../_icons/restart.vue";
 import pause from "../_icons/pause.vue";
 import Next from "../_icons/next.vue";
-import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
-import { Modal } from "ant-design-vue";
-import { createVNode } from "vue";
 import { useCounterStore } from "@/stores/timer";
 import { useTasksStore } from "@/stores/tasks";
+import ConfirmModal from "./confirmChange.vue";
 
 const tasksStore = useTasksStore();
 const timerStore = useCounterStore();
@@ -39,22 +35,6 @@ function start() {
 }
 
 // change the timer
-function changeTimer() {
-  timerStore.changeToAnewPhase();
-  Modal.confirm({
-    title: "Confirm",
-    icon: createVNode(ExclamationCircleOutlined),
-    content: "are u sure?",
-    okText: "yes",
-    cancelText: "no",
-    onOk() {
-      timerStore.needBreakConfirm(true);
-    },
-    onCancel() {
-      timerStore.needBreakConfirm(false);
-    },
-  });
-}
 </script>
 
 <style scoped>

@@ -18,9 +18,6 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
         ChangeAset(
             label="Auto start breaks"
             storeSet="autoStartBreaks")
-        ChangeAset(
-            label="Dark mode when running"
-            storeSet="focusedMode")
       Line
       SetNpt(label="Rounds before long break")
         template(#aNpt)
@@ -37,7 +34,7 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
                 storeSet="alarmVolume"
                 @change="chnageAlarmVolume")
       .flex.justify-end.mt-12
-        AppBtn(label="save" @click="saveSettings()") 
+        v-btn(text="save" @click="saveSettings()") 
 </template>
 
 <script setup>
