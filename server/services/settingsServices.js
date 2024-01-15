@@ -10,12 +10,9 @@ module.exports = class SettingsServices {
       throw new AppError("user not found!", 500, Responses.userNotFound());
     }
 
-    //  stores the documents as javascript object
-    for (const prop in user.settings) {
-      if (newSettings.hasOwnProperty(prop)) {
-        user.settings[prop] = newSettings[prop];
-      }
-    }
-    user.save();
+    await User.updateOne(
+      { _id: userId },
+      { $set: { settings: { ...newSettings } } }
+    );
   }
 };

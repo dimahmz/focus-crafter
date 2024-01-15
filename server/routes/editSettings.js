@@ -3,25 +3,11 @@ const router = express.Router();
 const auth = require("../middleware/authenticated");
 const SettingsServices = require("../services/settingsServices");
 const Responses = require("../helpers/responses");
-const Joi = require("joi");
 
 router.put("/", auth, async (req, res) => {
-  const updateSettings = req.body.updateSettings;
-
-  const { error } = validate(updateSettings);
-  if (error)
-    return res
-      .status(401)
-      .send(
-        Responses.create(
-          false,
-          "settings object error",
-          error.details[0].message,
-          1
-        )
-      );
+  const settingsUpdate = req.body.settingsUpdate;
   try {
-    await SettingsServices.changeSettings(req.user._id, updateSettings);
+    await SettingsServices.changeSettings(req.user._id, settingsUpdate);
     res
       .status(200)
       .send(Responses.create(true, "settings has been updated!", ""));
@@ -31,10 +17,4 @@ router.put("/", auth, async (req, res) => {
   }
 });
 
-// settings object should not be empty
-function validate(settings) {
-  const schema = Joi.object().min(1).required();
-
-  return schema.validate(settings);
-}
 module.exports = router;

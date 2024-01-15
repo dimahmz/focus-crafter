@@ -24,6 +24,16 @@ router.delete("/deleteTask", auth, async (req, res) => {
   }
 });
 
+router.put("/selectTask", auth, async (req, res) => {
+  try {
+    await TasksServices.selectTask(req.user._id, req.body.taskIndex);
+    res.status(200).send(Responses.create(true, "Task has been selected!"));
+  } catch (e) {
+    if (e?.customeError) return res.status(e.statusCode).send(e.errorResponse);
+    return res.status(500).send(Responses.serverError(e.message));
+  }
+});
+
 router.put("/updateTask", auth, async (req, res) => {
   try {
     await TasksServices.updateTask(

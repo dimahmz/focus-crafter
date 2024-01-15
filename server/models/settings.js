@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const settingsSchema = new mongoose.Schema({
-  promodoro_npt: {
+  pomodoro_npt: {
     type: Number,
     default: 35,
   },
@@ -26,7 +26,7 @@ const settingsSchema = new mongoose.Schema({
     default: false,
   },
 
-  autoStartPromodoros: {
+  autoStartPomodoros: {
     type: Boolean,
     default: false,
   },

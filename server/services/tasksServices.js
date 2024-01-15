@@ -6,29 +6,19 @@ const { log } = require("winston");
 
 module.exports = class TasksServices {
   // update a Task
-  static async updateTask(userId, taskIndex, task) {
-    const { error } = validate(task);
 
-    if (error) clientBadRequest(error.details[0].message);
-
+  static async selectTask(userId, taskIndex) {
     const user = await User.findById(userId);
 
     if (!user)
       throw new AppError("user nor found", 500, Responses.userNotFound());
+    if (!user.tasks[taskIndex]) taskIsNotFound();
 
-    if (!user.task[taskIndex]) taskIsNotFound();
-
-    user.task[taskIndex] = task;
-
-    // is it neccessary
+    user.tasks.forEach((task) => {
+      task.isSelected = false;
+    });
+    user.tasks[taskIndex].isSelected = true;
     user.save();
-    // if the user was selected this task,validate therfore the others need to get unselected
-    if (user.task[taskIndex].isSelected == true) {
-      user.task.forEach((task, i) => {
-        if (i != taskIndex) task.isSelected == false;
-      });
-      user.save();
-    }
   }
 
   // create a Task
