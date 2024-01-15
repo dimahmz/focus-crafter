@@ -14,5 +14,13 @@
     "payload": null,
     "errorLevel": 3,
     "apiError": {}
+  },
+  "successResponse": {
+    "success": true,
+    "title": "",
+    "description": "",
+    "payload": null,
+    "errorLevel": 1,
+    "apiError": {}
   }
 }

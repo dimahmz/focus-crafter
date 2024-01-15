@@ -1,6 +1,6 @@
 <template lang="pug">
 a-select(
-  v-model:value="settingsStore.state.selectedAlarm"
+  v-model:value="settingsStore.state.timer.selectedAlarm"
   style="width: 120px")
   a-select-option(
     v-for="option in settingsStore._state.alarmSound" 

@@ -1,7 +1,7 @@
 <template lang="pug">
 .px-4.grid.place-items-center.font-primary
   div.btns-container
-    button(:class="{ activeTimer: timer.startingPromodoroTimer }" @click="timer.goToPromodoro()") Pomodoro
+    button(:class="{ activeTimer: timer.startingPomodoroTimer }" @click="timer.goToPomodoro()") Pomodoro
     button(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") Short break
     button(:class="{ activeTimer: timer.startingLongBreakTimer }" @click="timer.getAlongBreak()") Long break
 </template>

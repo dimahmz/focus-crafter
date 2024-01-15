@@ -1,11 +1,11 @@
 <template lang="pug">
 .flex-center.h-full
-  .wrapper(v-if="timerStore.startingPromodoroTimer")
-    TimerProgressCicle(:counter="timerStore.getPromodoroCounter" :timing="timerStore.promodoro" :timerNpt="settingsStore.state.promodoro_npt")
+  .wrapper(v-if="timerStore.startingPomodoroTimer")
+    TimerProgressCicle(:counter="timerStore.getPomodoroCounter" :timing="timerStore.pomodoro" :timerNpt="settingsStore.state.timer.pomodoro_npt")
   .wrapper(v-else-if="timerStore.startingShortBreakTimer") 
-    TimerProgressCicle(:counter="timerStore.getShortBreakCounter" :timing="timerStore.shortBreak" :timerNpt="settingsStore.state.shortBreak_npt")
+    TimerProgressCicle(:counter="timerStore.getShortBreakCounter" :timing="timerStore.shortBreak" :timerNpt="settingsStore.state.timer.shortBreak_npt")
   .wrapper(v-else-if="timerStore.startingLongBreakTimer")
-    TimerProgressCicle(:counter="timerStore.getLongBreakCounter" :timing="timerStore.longBreak" :timerNpt="settingsStore.state.longBreak_npt")
+    TimerProgressCicle(:counter="timerStore.getLongBreakCounter" :timing="timerStore.longBreak" :timerNpt="settingsStore.state.timer.longBreak_npt")
 </template>
 
 <script setup>

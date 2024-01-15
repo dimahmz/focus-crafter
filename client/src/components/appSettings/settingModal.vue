@@ -6,22 +6,22 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
         span.cursor-pointer(@click='closeModal')
           Close      
     .flex.justify-between.space-x-3
-      AppNpt(nptLabel="Pomodoro"   storeSet="promodoro_npt")
+      AppNpt(nptLabel="Pomodoro"   storeSet="pomodoro_npt")
       AppNpt(nptLabel="Short break" storeSet="shortBreak_npt")
       AppNpt(nptLabel="Long break" storeSet="longBreak_npt")
     .px-4
       Line
       .flex-column.space-y-3      
         ChangeAset(
-            label="Auto start Promodors"
-            storeSet="autoStartPromodoros")
+            label="Auto start Pomodors"
+            storeSet="autoStartPomodoros")
         ChangeAset(
             label="Auto start breaks"
             storeSet="autoStartBreaks")
       Line
       SetNpt(label="Rounds before long break")
         template(#aNpt)
-          AppNpt(:nptValue="settingsStore.rounds"
+          AppNpt(:nptValue="settingsStore.state.timer.rounds"
           storeSet="rounds")
       Line
       .flex-column.space-y-4
@@ -30,11 +30,11 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
             AppSelectInput(@change="changeAlarmSound")
         SetNpt(label="Volume")
           template(#aNpt)
-              AppRangeNpt(:nptValue="settingsStore.alarmVolume"
+              AppRangeNpt(:nptValue="settingsStore.state.timer.alarmVolume"
                 storeSet="alarmVolume"
                 @change="chnageAlarmVolume")
       .flex.justify-end.mt-12
-        v-btn(text="save" @click="saveSettings()") 
+        v-btn(text="save" :loading="loadingBtn" @click="saveSettings()") 
 </template>
 
 <script setup>
@@ -51,17 +51,18 @@ import Close from "../_icons/close.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const counterStore = useCounterStore();
 const settingsStore = useSettingsStore();
 
 let audio_elem;
+const loadingBtn = ref(false);
 
 onMounted(() => {
   audio_elem = document.createElement("audio");
-  audio_elem.src = settingsStore.state.selectedAlarm;
-  audio_elem.volume = settingsStore.state.alarmVolume / 100;
+  audio_elem.src = settingsStore.state.timer.selectedAlarm;
+  audio_elem.volume = settingsStore.state.timer.alarmVolume / 100;
   // remove scroll bahavoiour
   document.body.style.overflow = "hidden";
 });
@@ -70,12 +71,12 @@ onUnmounted(() => {
   document.body.style.overflow = "auto";
 }),
   function chnageAlarmVolume() {
-    audio_elem.volume = settingsStore.state.alarmVolume / 100;
+    audio_elem.volume = settingsStore.state.timer.alarmVolume / 100;
     audio_elem.play();
   };
 
 function changeAlarmSound() {
-  audio_elem.src = settingsStore.state.selectedAlarm;
+  audio_elem.src = settingsStore.state.timer.selectedAlarm;
   audio_elem.play();
 }
 counterStore.$subscribe(
@@ -92,9 +93,10 @@ function closeModal() {
   settingsStore.showSettingsModal = false;
 }
 
-function saveSettings() {
-  // console.log("clicked to save bnt");
+async function saveSettings() {
+  loadingBtn.value = true;
+  await settingsStore.saveToDataBase();
+  loadingBtn.value = false;
   settingsStore.showSettingsModal = false;
-  settingsStore.saveToDataBase();
 }
 </script>

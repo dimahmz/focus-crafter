@@ -2,7 +2,7 @@
 .flex.justify-between
   h2 {{label}}
   label(class="toggle")
-    input(class="toggle-checkbox" type="checkbox" :checked="settingsStore.state[storeSet]" @click="activateSet")
+    input(class="toggle-checkbox" type="checkbox" :checked="settingsStore.state.timer[storeSet]" @click="activateSet")
     div(class="toggle-switch")
 </template>
 
@@ -16,7 +16,8 @@ const props = defineProps({
 });
 
 function activateSet() {
-  settingsStore.state[props.storeSet] = !settingsStore.state[props.storeSet];
+  settingsStore.state.timer[props.storeSet] =
+    !settingsStore.state.timer[props.storeSet];
 }
 </script>
 

@@ -4,6 +4,7 @@ import { useSettingsStore } from "./settings";
 import { useUserStore } from "./user";
 import axios from "../plugins/axiosConfig";
 import _axios from "@/api/index";
+import { successResponse } from "@/content/errors";
 
 export const useTasksStore = defineStore("tasks", () => {
   // other stores
@@ -37,7 +38,7 @@ export const useTasksStore = defineStore("tasks", () => {
   const workingOnTaskPomodoros = computed(function () {
     if (selectedTaskNdx.value < 0 || tasks.length == 0) return "";
     return `${tasks[selectedTaskNdx.value].completedPomodoros} / ${
-      settingStore.state.rounds
+      settingStore.state.timer.rounds
     }`;
   });
 
@@ -45,7 +46,7 @@ export const useTasksStore = defineStore("tasks", () => {
   const tasktotalMinutes = computed(() => {
     if (selectedTaskNdx.value < 0 || tasks.length == 0) return "";
     return (
-      settingStore.state.promodoro_npt *
+      settingStore.state.timer.pomodoro_npt *
       tasks[selectedTaskNdx.value].completedPomodoros
     );
   });
@@ -56,7 +57,9 @@ export const useTasksStore = defineStore("tasks", () => {
 
   // Add Task
   async function addTask(task) {
-    const response = await axios.post("/editTasks/createTask", { task });
+    let response = successResponse;
+    if (userStore.loggedIn)
+      response = await axios.post("/editTasks/createTask", { task });
     tasks.push(task);
     return response;
   }
@@ -64,11 +67,12 @@ export const useTasksStore = defineStore("tasks", () => {
   async function deleteTask(ndx) {
     tasks.splice(ndx, 1);
     if (ndx == selectedTaskNdx.value) selectedTaskNdx.value = -1;
-    axios.delete("/editTasks/deleteTask", {
-      data: {
-        taskIndex: ndx,
-      },
-    });
+    if (userStore.loggedIn)
+      axios.delete("/editTasks/deleteTask", {
+        data: {
+          taskIndex: ndx,
+        },
+      });
   }
   // select Task
   function selectTask(ndx) {

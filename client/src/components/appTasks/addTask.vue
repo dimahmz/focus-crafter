@@ -1,37 +1,56 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useTasksStore } from "@/stores/tasks";
 import { storeToRefs } from "pinia";
+import { useVuelidate } from "@vuelidate/core";
+import { maxLength, required, numeric } from "@vuelidate/validators";
+
 const { addNewTaskModal } = storeToRefs(useTasksStore());
 
 const loading = ref(false),
-  open = ref(false);
+  openSnack = ref(false);
 
 const TasksStore = useTasksStore();
 
+const initialState = {};
+
+const state = reactive({
+  title: "",
+  estimatedPomodoros: 4,
+});
+
+const rules = {
+  title: { required, maxLength: maxLength(50) },
+  estimatedPomodoros: { required, numeric },
+};
+const v$ = useVuelidate(rules, state);
+
 async function addNewTask(e) {
   e.preventDefault();
+  const isStateValid = await v$.value.$validate();
+  if (!isStateValid) {
+    return;
+  }
 
-  const form = e.target;
   const task = {
-    title: form["title"].value,
-    estimatedPomodoros: form["estimatedPomodoros"].value,
+    title: state.title,
+    estimatedPomodoros: state.estimatedPomodoros,
     finishedPomodoros: 0,
     isSelected: false,
   };
   loading.value = true;
   const resp = await TasksStore.addTask(task);
   if (resp.success) {
-    form["title"].value = "";
-    form["estimatedPomodoros"].value = 4;
-    open.value = true;
+    openSnack.value = true;
+    // this is not working
+    v$.value.$reset();
   }
   loading.value = false;
 }
 </script>
 
 <template lang="pug">
-v-snackbar(v-model="open" color="blue-grey") Task has been added!
+v-snackbar(v-model="openSnack" color="blue-grey") Task has been added!
   template(v-slot:actions)
     v-btn(color="pink" variant="text" @click="open = false") Close
 v-dialog(v-model='addNewTaskModal' width='400px')
@@ -39,10 +58,21 @@ v-dialog(v-model='addNewTaskModal' width='400px')
     v-card(title="Add task")
       .card-body
         .text-npt-container
-          v-text-field(variant="outlined" name="title" placeholder="e.g : Reading a book" label="Task name" required)
+          v-text-field(
+            variant="outlined"
+            v-model="state.title"
+            :error-messages='v$.title.$errors.map(e => e.$message)' 
+            placeholder="e.g : Reading a book" label="Task name"
+          )
         .number-npt-container
           label Rounds
-          v-text-field(type="number" min="1" variant="outlined" name="estimatedPomodoros" :defaultvalue="4" )
+          v-text-field(
+            type="number"
+            v-model="state.estimatedPomodoros" 
+            min="1" variant="outlined" 
+            name="estimatedPomodoros"
+            :error-messages='v$.estimatedPomodoros.$errors.map(e => e.$message)' 
+          )
       v-card-actions
         v-btn( variant="tonal" @click='addNewTaskModal = false') Cancel
         v-btn.create-btn( variant="tonal" type="submit" :loading="loading") Create

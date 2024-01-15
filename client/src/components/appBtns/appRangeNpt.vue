@@ -1,7 +1,7 @@
 <template lang="pug">
 .change-volume-container
   label(for='MusicVolume') {{nptLabel}}
-  a-slider#MusicVolume(v-model:value="settingsStore.state[storeSet]" @afterChange="()=>$emit('change')")
+  a-slider#MusicVolume(v-model:value="settingsStore.state.timer[storeSet]" @afterChange="()=>$emit('change')")
 </template>
 
 <script setup>

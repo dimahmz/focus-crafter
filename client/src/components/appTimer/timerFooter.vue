@@ -28,7 +28,7 @@ const timerStore = useCounterStore();
 
 //start the timer
 function start() {
-  if (timerStore.startingPromodoroTimer) timerStore.startPromodoroTimer();
+  if (timerStore.startingPomodoroTimer) timerStore.startPomodoroTimer();
   else if (timerStore.startingShortBreakTimer)
     timerStore.startShortBreakTimer();
   else timerStore.startLongBreakTimer();

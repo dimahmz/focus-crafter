@@ -1,5 +1,5 @@
 <template lang="pug">
-LoadingPage(v-if="checkAuthLoading")
+LoadingPage(v-if="user.state.checkAuthLoading")
 router-view(v-else)
 </template>
 
@@ -12,7 +12,7 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 
 const user = useUserStore();
-const { checkAuthLoading } = storeToRefs(useUserStore());
+
 const timerStore = useCounterStore();
 
 Router.beforeResolve(async (to, from, next) => {
@@ -26,6 +26,7 @@ Router.beforeResolve(async (to, from, next) => {
 
 onMounted(() => {
   inject("syncStores");
+
   //add a listner to to catch the user confirmation before leaving the page
   window.addEventListener("beforeunload", confirmExit);
 });
