@@ -9,10 +9,10 @@ router.get("/", auth, async (req, res) => {
     const user = await User.findById(req.user._id).select(
       "-password -verifivation_token"
     );
-
-    res.send(Responses.create(true, "", "", 0, { user }));
+    const response = Responses.create(true, "", "", 0, { user });
+    res.send(response);
   } catch (e) {
-    return res.status(500).json(Responses.serverError(e.message));
+    res.status(500).send(Responses.serverError(e.message));
   }
 });
 

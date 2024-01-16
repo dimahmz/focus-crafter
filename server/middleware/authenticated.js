@@ -25,7 +25,7 @@ module.exports = async function (req, res, next) {
     // the user clould not be found
     // TODO is there a case where this can happen?
     if (!user)
-      res
+      return res
         .status(401)
         .send(
           Responses.create(
@@ -39,7 +39,7 @@ module.exports = async function (req, res, next) {
     next();
   } catch (error) {
     logger.error(error.message);
-    res
+    return res
       .status(401)
       .send(
         Responses.create(
