@@ -58,7 +58,7 @@ export const useTasksStore = defineStore("tasks", () => {
   // Add Task
   async function addTask(task) {
     let response = successResponse;
-    if (userStore.loggedIn)
+    if (userStore.state.loggedIn)
       response = await axios.post("/editTasks/createTask", { task });
     tasks.push(task);
     return response;
@@ -67,7 +67,7 @@ export const useTasksStore = defineStore("tasks", () => {
   async function deleteTask(ndx) {
     tasks.splice(ndx, 1);
     if (ndx == selectedTaskNdx.value) selectedTaskNdx.value = -1;
-    if (userStore.loggedIn)
+    if (userStore.state.loggedIn)
       axios.delete("/editTasks/deleteTask", {
         data: {
           taskIndex: ndx,
@@ -79,11 +79,17 @@ export const useTasksStore = defineStore("tasks", () => {
     selectedTaskNdx.value = ndx;
     tasks.forEach((task) => (task.isSelected = false));
     tasks[ndx].isSelected = true;
+    if (userStore.state.loggedIn) {
+      axios.put("/editTasks/selectTask", {
+        taskIndex: ndx,
+      });
+    }
   }
 
   // sync tasks settings with the Database
   function syncTasksWithDB($tasks) {
-    $tasks.forEach((task) => {
+    $tasks.forEach((task, i) => {
+      if (task.isSelected) selectedTaskNdx.value = i;
       if (task) {
         tasks.push(task);
       }
@@ -93,12 +99,16 @@ export const useTasksStore = defineStore("tasks", () => {
   }
 
   //updates the selected tasks when a pomodoro session has been completed
-  function updateSelectedTask() {
+  function incrementTaskPomodro() {
     const i = selectedTaskNdx.value;
     if (i < 0 || tasks.length == 0) return;
     tasks[i].finishedPomodoros++;
-    const isFinished = tasks[i].finishedPomdoros >= tasks[i].estimatedPomodoros;
-    tasks[i].isFinished = isFinished;
+    if (userStore.state.loggedIn) {
+      axios.put("/editTasks/updateTask", {
+        taskIndex: i,
+        task: tasks[i],
+      });
+    }
   }
 
   // hide all modals
@@ -122,7 +132,7 @@ export const useTasksStore = defineStore("tasks", () => {
     addTask,
     deleteTask,
     selectTask,
-    updateSelectedTask,
+    incrementTaskPomodro,
     syncTasksWithDB,
     hideAll,
   };

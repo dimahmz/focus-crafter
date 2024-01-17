@@ -1,7 +1,7 @@
 <template lang="pug">
-TimerHeader.mt-6.mb-50.text-primary
+TimerHeader.mt-4.text-primary
 TimerBody.timer-body
-.text-center.mb-8
+.text-center.mb-5.-mt-4
   .text-xl.font-bold # {{ timerStore.sessionPomodoros }}
 TimerFooter.my-1
 AppNavigationBtns
@@ -20,7 +20,7 @@ import MobileTasksModal from "@/components/appTasks/mobile/tasksList.vue";
 import AddTaskModal from "@/components/appTasks/addTask.vue";
 
 import SettingsModal from "@/components/appSettings/settingModal.vue";
-import AppNavigationBtns from "../components/navigationBar/index.vue";
+import AppNavigationBtns from "@/components/navigationBar/index.vue";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
@@ -31,6 +31,6 @@ const timerStore = useCounterStore();
 
 <style lang="scss" scoped>
 .timer-body {
-  @apply mt-10 sm:mt-8 md:mt-1;
+  // @apply;
 }
 </style>

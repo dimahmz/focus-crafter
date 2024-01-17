@@ -7,9 +7,8 @@ router-view(v-else)
 import { onBeforeUnmount, onMounted, watch, inject } from "vue";
 import { useCounterStore } from "@/stores/timer";
 import Router from "@/router/routes";
-import LoadingPage from "@/views/loading.vue";
+import LoadingPage from "@/views/Others/loading.vue";
 import { useUserStore } from "@/stores/user";
-import { storeToRefs } from "pinia";
 
 const user = useUserStore();
 

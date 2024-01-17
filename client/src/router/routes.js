@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "@/stores/user";
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import("/src/router/home.vue"),
+    component: () => import("@/views/Home/index.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -13,7 +12,7 @@ const routes = [
   {
     path: "/signup",
     name: "signup",
-    component: () => import("/src/router/SignUp/index.vue"),
+    component: () => import("@/views/Signup/index.vue"),
     meta: {
       requiresAuth: false,
       ifNotAuthenticated: true,
@@ -22,7 +21,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("/src/router/Login/index.vue"),
+    component: () => import("@/views/Login/index.vue"),
     meta: {
       requiresAuth: false,
       ifNotAuthenticated: true,
@@ -31,7 +30,7 @@ const routes = [
   {
     path: "/me",
     name: "profile",
-    component: () => import("/src/router/me.vue"),
+    component: () => import("@/views/profile/index.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -39,7 +38,7 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: () => import("/src/router/About/index.vue"),
+    component: () => import("@/views/About/index.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -47,7 +46,7 @@ const routes = [
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: () => import("/src/router/notfound.vue"),
+    component: () => import("@/views/Others/notfound.vue"),
   },
 ];
 
@@ -55,23 +54,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-// routes protections
-// export const routesProtection = router.beforeEach(async (to, from, next) => {
-//   const user = useUserStore();
-
-//   const isLoggedIn = user.state.loggedIn;
-
-//   // redirect to login page when navigating into protected routes
-//   if (to.meta.requiresAuth && !isLoggedIn) {
-//     next({ name: "login" });
-//   }
-//   // protected pages that are accessible only for unauthenticated users
-//   else if (to.meta.ifNotAuthenticated && isLoggedIn) {
-//     next({ name: "home" });
-//   } else {
-//     next();
-//   }
-// });
 
 export default router;

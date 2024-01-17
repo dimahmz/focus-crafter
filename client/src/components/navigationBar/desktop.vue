@@ -2,11 +2,11 @@
 .navigation-bar
   .icons-container
     AddTaskBtn
-    v-icon(icon="mdi-cog" @click='()=>settingsStore.showSettingsModal=true')
+    v-icon(icon="mdi-cog" size="large" @click='()=>settingsStore.showSettingsModal=true')
     router-link( :to="{ name: 'about' }")
-      v-icon(icon="mdi-information")
+      v-icon(icon="mdi-information" size="large")
     router-link(:to="userStore.state.loggedIn ? { name: 'profile' } : { name: 'login' }")
-      v-icon(icon="mdi-account")
+      v-icon(icon="mdi-account" size="large")
 </template>
 
 <script setup>

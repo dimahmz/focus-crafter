@@ -4,7 +4,13 @@ const user = useUserStore();
 </script>
 <template>
   <div class="text-center">
-    <v-snackbar v-model="user.state.openSnackbar" multi-line>
+    <v-snackbar
+      v-model="user.state.openSnackbar"
+      multi-line
+      location="top"
+      style="margin-top: 30px"
+      :timeout="-1"
+    >
       {{ user.state.serverResponse.title }} <br />
       {{ user.state.serverResponse.description }}
       <template v-slot:actions>

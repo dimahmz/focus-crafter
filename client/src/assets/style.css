@@ -22,19 +22,19 @@
   body {
     background-color: hsl(var(--color-app-primary));
   }
-  @media (prefers-color-scheme: dark) {
+  /* @media (prefers-color-scheme: dark) {
     :root {
       --color-app-primary: 192deg 26% 7% !important;
       --color-app-secondary: 0deg 0% 0% !important;
       --color-app-tertiary: 191deg 100% 27% !important;
       --color-app-quaternary: 212deg 19% 29% !important;
-    }
-  }
-
+    } 
+   } */
+  /* 
   :root[class="dark"] {
     --color-app-primary: 192deg 26% 7%;
     --color-app-secondary: 0deg 0% 0%;
     --color-app-tertiary: 191deg 100% 27%;
     --color-app-quaternary: 212deg 19% 29%;
-  }
+  } */
 }

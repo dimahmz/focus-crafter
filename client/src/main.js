@@ -2,14 +2,12 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import router from "/src/router/routes";
 import App from "./App.vue";
-import Antd from "ant-design-vue";
 import syncStores from "./plugins/syncStores";
 
 import "./assets/main.css";
 
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
-// import "ant-design-vue/dist/antd.css";
 
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
@@ -26,10 +24,6 @@ async function createApplication() {
   app.use(createPinia());
 
   app.use(router);
-
-  const response = await syncStores();
-
-  app.use(Antd);
 
   app.use(vuetify);
 

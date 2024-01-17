@@ -1,5 +1,6 @@
 <template lang="pug">
-Next(@click='openConfirm' colors_classes='fill-app-tertiary')
+.btn-box.bg-app-tertiary.bg-app-quaternary(@click='openConfirm')
+  Next(colors_classes='fill-app-tertiary')
 v-dialog(width='500' v-model='open')
   v-card
     v-alert(type='info' title='Confirm Change' text='Are you sure you want to change the timer' variant='tonal')
@@ -35,6 +36,10 @@ function confirmChange() {
 .v-alert {
   @apply text-black;
 }
+.btn-box {
+  @apply rounded-xl p-3 sm:p-4 cursor-pointer;
+}
+
 .close-btn {
   /* @apply bg-app-tertiary text-white; */
 }

@@ -16,13 +16,7 @@
 import { defineProps } from "vue";
 defineProps({
   colors_classes: { type: String, default: "fill-white" },
-  h: { type: String, default: "26" },
-  w: { type: String, default: "26" },
+  h: { type: String, default: "21" },
+  w: { type: String, default: "21" },
 });
 </script>
-
-<style scoped>
-/* svg > path {
-  @apply v-bind(color);
-} */
-</style>

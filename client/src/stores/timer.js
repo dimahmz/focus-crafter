@@ -53,8 +53,7 @@ export const useCounterStore = defineStore("counter", {
   actions: {
     startPomodoroTimer() {
       const settingsStore = useSettingsStore();
-      const TasksStore = useTasksStore();
-      if (settingsStore.state.timer.focusMode) this.focusMode = true;
+      const tasksStore = useTasksStore();
       this.isTimerCounting = this.startingPomodoroTimer = true;
       this.timerWorkingIs = "pomodoro";
       // clear all the intervals in this window session to avoid conflicts
@@ -75,21 +74,16 @@ export const useCounterStore = defineStore("counter", {
 
         this.pomodoro--;
 
-        // notify the user in the last n minutes
-        if (
-          settingsStore.state.timer.allowNotification &&
-          this.pomodoro === settingsStore.state.timer.notifyTime * 60
-        )
-          if (this.pomodoro == 2)
-            // start the alart
-            this.startAlarm = true;
+        if (this.pomodoro == 3)
+          // start the alart
+          this.startAlarm = true;
 
         // update finished pomodoros
         if (this.pomodoro <= 0 || !this.startingPomodoroTimer) {
           this.finishedPomodoros++;
           this.sessionPomodoros++;
           settingsStore.state.timer.finishedPomodoros++;
-          TasksStore.updateSelectedTask();
+          tasksStore.incrementTaskPomodro();
 
           // decide which break the timer should invoke
           // the number of rounds is configured in the settings

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, nextTick } from "vue";
 import { useTasksStore } from "@/stores/tasks";
 import { storeToRefs } from "pinia";
 import { useVuelidate } from "@vuelidate/core";
@@ -8,13 +8,16 @@ import { maxLength, required, numeric } from "@vuelidate/validators";
 const { addNewTaskModal } = storeToRefs(useTasksStore());
 
 const loading = ref(false),
-  openSnack = ref(false);
+  openAlert = ref(false);
 
 const TasksStore = useTasksStore();
 
-const initialState = {};
+const initialState = {
+  title: "",
+  estimatedPomodoros: 4,
+};
 
-const state = reactive({
+let state = reactive({
   title: "",
   estimatedPomodoros: 4,
 });
@@ -41,21 +44,25 @@ async function addNewTask(e) {
   loading.value = true;
   const resp = await TasksStore.addTask(task);
   if (resp.success) {
-    openSnack.value = true;
-    // this is not working
-    v$.value.$reset();
+    openAlert.value = true;
+    state = {
+      ...initialState,
+    };
+    // not working
+    // await nextTick();
+    // v$.value.$reset();
+    loading.value = false;
   }
-  loading.value = false;
 }
 </script>
 
 <template lang="pug">
-v-snackbar(v-model="openSnack" color="blue-grey") Task has been added!
-  template(v-slot:actions)
-    v-btn(color="pink" variant="text" @click="open = false") Close
 v-dialog(v-model='addNewTaskModal' width='400px')
   form(@submit="addNewTask")
     v-card(title="Add task")
+      v-alert(v-model="openAlert" type="success" closable close-label="Close Alert" 
+        title="Task has been added"
+      )
       .card-body
         .text-npt-container
           v-text-field(

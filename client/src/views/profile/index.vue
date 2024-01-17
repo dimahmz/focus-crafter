@@ -1,8 +1,10 @@
 <template lang="pug">
 div.flex-center
   section.max-w-4xl.w-full(class="sm:px-7 sm:py-5")
-    ProfileHeader
-    p.text-center.mt-40.mb-5 About you
+    .flex-justify-between
+      RouterLink(:to="{ name : 'home' }" )
+        v-icon(icon="mdi-home")
+      p.text-center.mt-10.mb-5 About you
     .flex-center
       .max-w-xl.w-full.border-2.border-gray-400.rounded.px-3.py-5.mx-10
         div(ref="modifyNameSection")      
@@ -20,31 +22,24 @@ div.flex-center
         br
         input.m-4.cursor-not-allowed(ref="emailNpt" v-model="userInfos.email" readonly title="you can't change this email")
         br
-        label Password
-        br
-        input.m-4(ref="emailNpt" value="*****************" @click='()=> user.state.resetPassModal=true')
-footer.bg-indigo-900.w-full.h-10.mb-4
+.flex.justify-center.space-x-5
+  v-btn(prepend-icon="mdi-log-out" @click="()=>user.logOutUser()") Log out
 //- Modals
-.modal-background(v-if="user.state.resetPassModal" @click.self='()=>{ user.state.resetPassModal=false; hideOverFlow();}')
-  PasswordModal
 .modal-background(v-if="user.state.messageModal" @click.self='()=> {user.state.messageModal=false; hideOverFlow()}')
   MsgModal
-.modal-background(v-if="user.state.popupImg" @click.self='()=> {user.state.popupImg=false; hideOverFlow()}')
-  img.w-full.max-w-xs.max-h-96(:src="user.state.imagePath" alt="profile image")
 </template>
 
 <script setup>
-import PasswordModal from "../components/profile/passwordModal.vue";
-import MsgModal from "../components/profile/msgModal.vue";
+import MsgModal from "@/components/profile/msgModal.vue";
 
-import LeftArrow from "../components/_icons/arrow_left.vue";
-import Home from "../components/_icons/home.vue";
-import Close from "../components/_icons/close.vue";
-import Check from "../components/_icons/check.vue";
-import ProfileHeader from "../components/profile/header.vue";
+import LeftArrow from "@/components/_icons/arrow_left.vue";
+import Home from "@/components/_icons/home.vue";
+import Close from "@/components/_icons/close.vue";
+import Check from "@/components/_icons/check.vue";
+import ProfileHeader from "@/components/profile/header.vue";
 
 import { ref } from "vue";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "@/stores/user";
 
 const userInfos = useUserStore()._state;
 const user = useUserStore();

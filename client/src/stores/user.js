@@ -69,7 +69,7 @@ export const useUserStore = defineStore("user", () => {
         url: "auth",
         data: { name, password },
       });
-      const days = rememberMe ? 100 : 0;
+      const days = rememberMe ? 365 : 0;
       const user = response.data.payload.user;
       // get the token from the response and store it in the cookies
       Cookies.set("x_auth_token", response.data.payload.x_auth_token, {

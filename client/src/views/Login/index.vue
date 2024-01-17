@@ -1,20 +1,19 @@
 <script setup>
 import { reactive, computed, ref } from "vue";
-import { useUserStore } from "../../stores/user";
-import AppBtn from "../../components/appBtns/appBtn.vue";
-import AuthHeader from "../../components/Header.vue";
-import LeftSection from "../../components/welcomeSection.vue";
+import { useUserStore } from "@/stores/user";
+import AppBtn from "@/components/appBtns/appBtn.vue";
+import AuthHeader from "@/components/Header.vue";
+import LeftSection from "@/components/welcomeSection.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required } from "@vuelidate/validators";
-import SnackBar from "../../components/snackBar.vue";
-import ServerError from "ant-design-vue/es/result/serverError";
+import SnackBar from "@/components/snackBar.vue";
 
 const user = useUserStore();
 
 const initialState = {
   name: "",
   password: "",
-  rememberUser: null,
+  rememberUser: true,
   visible: false,
 };
 

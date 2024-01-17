@@ -1,6 +1,6 @@
 <template lang="pug">
 .task(
-  @click.self='tasksStore.selectTask(ndx)'
+  @click='selectTask'
   :class='{selectedTask: task.isSelected, finishedTask : task.isFinished}')
   .flex.justify-between.mb-2
     .text-app-title.font-semibold 
@@ -10,7 +10,8 @@
       span {{ task.title }}
   .flex.justify-between.px-2
     span {{task.finishedPomodoros}} / {{task.estimatedPomodoros}}
-    v-icon(icon="mdi-delete" @click.self='tasksStore.deleteTask(ndx)')
+    span(ref="deleteBtn" class="p-0.5" @click.stop="tasksStore.deleteTask(ndx)")
+      DeleteIcon(ref="deleteTaslIcon")
   .text-center(v-if="task.finishedPomodoros>= task.estimatedPomodoros")
     v-icon(icon="mdi-check") 
     span Completed
@@ -21,22 +22,21 @@ import { ref } from "vue";
 import { useTasksStore } from "@/stores/tasks";
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";
-
+import DeleteIcon from "@/components/_icons/delete.vue";
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 const tasksStore = useTasksStore();
+
+const deleteBtn = ref("");
+const deleteTaslIcon = ref("");
 
 const props = defineProps({
   task: { type: Object, required: true },
   ndx: { type: Number, required: true },
 });
 
-function diplayOptions() {
-  tasksStore.hideAll();
-  tasksStore.tasks[props.ndx].displayOptions = true;
-}
-function displayEditTask() {
-  settingsStore.showEditTaskModal = true;
+function selectTask(e) {
+  tasksStore.selectTask(props.ndx);
 }
 </script>
 

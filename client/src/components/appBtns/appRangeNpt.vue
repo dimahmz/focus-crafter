@@ -1,7 +1,6 @@
 <template lang="pug">
 .change-volume-container
-  label(for='MusicVolume') {{nptLabel}}
-  a-slider#MusicVolume(v-model:value="settingsStore.state.timer[storeSet]" @afterChange="()=>$emit('change')")
+  v-slider(v-model="settingsStore.state.timer[storeSet]" :min="0" :max="1")
 </template>
 
 <script setup>
@@ -15,30 +14,11 @@ const props = defineProps({
 });
 </script>
 
-<style>
-.ant-slider-rail {
-  @apply bg-app-secondary;
-}
-.ant-slider-handle:focus {
-  @apply border-app-quaternary;
-  box-shadow: none;
-}
-.ant-slider-rail:hover {
-  @apply bg-app-secondary !important;
-}
-.ant-slider-rail:hover {
-  @apply bg-app-secondary;
-}
-.ant-slider-handle {
-  @apply bg-app-tertiary border-2 border-app-secondary w-4 h-4;
-}
-.ant-slider-track {
-  @apply bg-app-tertiary;
-}
-.ant-slider-track:hover .ant-slider-track:focus {
-  background-color: none;
-}
-.ant-slider {
-  @apply w-28;
+<style scoped lang="scss">
+.change-volume-container {
+  @apply w-full;
+  .v-slider {
+    @apply w-40;
+  }
 }
 </style>

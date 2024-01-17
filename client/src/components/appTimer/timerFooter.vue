@@ -10,8 +10,7 @@ section
       .btn-box.bg-app-tertiary(@click="timerStore.pauseOrResumeTimer()")
         startBtn(v-if="timerStore.pauseTimer")
         pause(v-else )
-      .btn-box.bg-app-tertiary.bg-app-quaternary
-        ConfirmModal
+      ConfirmModal
 </template>
 
 <script setup>

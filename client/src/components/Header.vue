@@ -1,6 +1,6 @@
 <template lang="pug">
 header.w-full.text-center.flex-column
-  .flex-center-between.mb-8
+  .flex-center-between.mb-5
     router-link(:to="{name : 'home'}")
       v-icon(icon="mdi-home" size="x-large").text-app-tertiary
     div.img-container(class="mb-0 mt-0 flex justify-center")
@@ -14,6 +14,6 @@ header.w-full.text-center.flex-column
 
 <style scoped>
 .img-container {
-  @apply flex justify-center mb-6 md:hidden;
+  @apply flex justify-center mb-5 md:hidden;
 }
 </style>

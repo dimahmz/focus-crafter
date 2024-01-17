@@ -1,11 +1,11 @@
 <script setup>
 import { computed, reactive, ref, watch } from "vue";
-import { useUserStore } from "../../stores/user";
-import AppBtn from "../../components/appBtns/appBtn.vue";
-import AuthHeader from "../../components/Header.vue";
-import LeftSection from "../../components/welcomeSection.vue";
+import { useUserStore } from "@/stores/user";
+import AppBtn from "@/components/appBtns/appBtn.vue";
+import AuthHeader from "@/components/Header.vue";
+import LeftSection from "@/components/welcomeSection.vue";
 import ResponseModal from "./responseModal.vue";
-import SnackBar from "../../components/snackBar.vue";
+import SnackBar from "@/components/snackBar.vue";
 import { useVuelidate } from "@vuelidate/core";
 import {
   minLength,
@@ -63,12 +63,12 @@ async function submit() {
 <template lang="pug">
 main(class="h-screen flex")
   LeftSection(class="w-11/12 hidden md:flex justify-center items-center")
-  section.relative.w-full.px-8.pt-3.pb-6.bg-white
+  section.relative.w-full.px-8.pt-2.pb-4.bg-white
     ResponseModal
     SnackBar
     AuthHeader
     form.mx-auto
-      div.flex-column.space-y-2.max-w-lg
+      div.flex-column.space-y-1.max-w-lg
         v-text-field(
           v-model='state.name' 
           :error-messages='v$.name.$errors.map(e => e.$message)' 
@@ -110,17 +110,17 @@ main(class="h-screen flex")
           @click:append="state.visible = !state.visible"
           variant="underlined"
         )
-        .flex.justify-between.pt-7
+        .flex.justify-between.pt-1
           p Already have an account? &nbsp;
             router-link(:to="{name : 'login'}" class="text-[#00738c]").text-teriary.font-bold Sign in here          
-          v-btn.login-btn.uppercase(:loading="state.loading" :ripple="false" @click="submit") Sign up
+          v-btn.login-btn.uppercase.p-2(:loading="state.loading" :ripple="false" @click="submit") Sign up
 </template>
 
 <style scoped>
 .login-btn {
-  @apply bg-[#373737] text-white h-11 px-5 md:px-10;
+  @apply bg-[#373737] text-white h-10 px-5 md:px-10;
 }
 .signup-btn {
-  @apply bg-[#00738c] text-white  h-11 px-5 md:px-10;
+  @apply bg-[#00738c] text-white  h-9 px-5 md:px-10;
 }
 </style>
