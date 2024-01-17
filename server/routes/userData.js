@@ -7,7 +7,7 @@ const Responses = require("../helpers/responses");
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select(
-      "-password -verifivation_token"
+      "-password -verifivation_token -tasks._id"
     );
     const response = Responses.create(true, "", "", 0, { user });
     res.send(response);

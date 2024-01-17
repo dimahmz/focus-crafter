@@ -42,6 +42,7 @@ router.post("/", async (req, res, next) => {
         )
       );
   } catch (e) {
+    console.log(e);
     if (e?.customeError) return res.status(e.statusCode).send(e.errorResponse);
     return res.status(500).send(Responses.serverError(e.message));
   }

@@ -44,6 +44,7 @@ router.put("/updateTask", auth, async (req, res) => {
     res.status(200).send(Responses.create(true, "Task has been edited!"));
   } catch (e) {
     if (e?.customeError) return res.status(e.statusCode).send(e.errorResponse);
+    console.error(e);
     return res.status(500).send(Responses.serverError(e.message));
   }
 });

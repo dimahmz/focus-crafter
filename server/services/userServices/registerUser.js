@@ -7,18 +7,12 @@ const { confirmEmail } = require("../../helpers/emailMessages");
 require("dotenv").config();
 
 async function registerAnewUser($user) {
-  const default_path = `${__basedir}/static/images/profiles_imgs/default-avatar.jpg`;
   const user = new User({
     name: $user.name,
     email: $user.email,
     password: $user.password,
     settings: {},
     tasks: [],
-    img: {
-      size: 12123,
-      path: default_path,
-      contentType: "image/png",
-    },
   });
 
   // hashing the password

@@ -8,4 +8,10 @@ router.post("/", auth, async (req, res) => {
   res.send(user);
 });
 
+// @TODO
+// add token to the blacklist
+router.post("/logout", auth, async (req, res) => {
+  res.send("ok");
+});
+
 module.exports = router;

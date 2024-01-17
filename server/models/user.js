@@ -22,13 +22,6 @@ const userSchema = new mongoose.Schema({
     trim: true,
     unique: true,
   },
-  new_email: {
-    type: String,
-    minlength: 14,
-    maxlength: 255,
-    trim: true,
-    unique: true,
-  },
   password: {
     type: String,
     minlength: 8,
@@ -58,9 +51,17 @@ const userSchema = new mongoose.Schema({
 
 // generate a token to be used in the cliet-side
 userSchema.methods.generateToken = function () {
+  const expiresIn = 365 * 24 * 3600;
   return jwt.sign(
-    { _id: this._id, name: this.name, email: this.email },
-    process.env.pro_focus_jwtKey
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+    },
+    process.env.pro_focus_jwtKey,
+    {
+      expiresIn,
+    }
   );
 };
 

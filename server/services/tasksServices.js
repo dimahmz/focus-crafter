@@ -7,6 +7,30 @@ const { log } = require("winston");
 module.exports = class TasksServices {
   // update a Task
 
+  static async updateTask(userId, taskIndex, task) {
+    const { error } = validate(task);
+    if (error)
+      throw new AppError(
+        "Invalid input error",
+        400,
+        Responses.create(
+          false,
+          "Invalid input error",
+          error.details[0].message,
+          1
+        )
+      );
+
+    const user = await User.findById(userId);
+
+    if (!user)
+      throw new AppError("user nor found", 500, Responses.userNotFound());
+    if (!user.tasks[taskIndex]) taskIsNotFound();
+
+    user.tasks[taskIndex] = task;
+    user.save();
+  }
+
   static async selectTask(userId, taskIndex) {
     const user = await User.findById(userId);
 
@@ -75,7 +99,7 @@ function validate(task) {
   const schema = Joi.object({
     title: Joi.string().required(),
     estimatedPomodoros: Joi.number().required(),
-    finishedPomdoros: Joi.number().required(),
+    finishedPomodoros: Joi.number().required(),
     isSelected: Joi.boolean().required(),
   });
 

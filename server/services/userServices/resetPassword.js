@@ -12,7 +12,6 @@ async function resetPassword(user_id, reset_token, passwords) {
   // verify token
   const isTokenExist = await verifyPasswordResetToken(user_id, reset_token);
 
-  console.log(isTokenExist);
   if (!isTokenExist) invalidLinkError();
 
   // verify passwords
