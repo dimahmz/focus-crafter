@@ -1,5 +1,5 @@
 <template lang="pug">
-.btn-box.bg-app-tertiary.bg-app-quaternary(@click='openConfirm')
+.btn-box.bg-app-tertiary.bg-app-quaternary.cursor-pointer(@click='openConfirm')
   Next(colors_classes='fill-app-tertiary')
 v-dialog(width='500' v-model='open')
   v-card
@@ -40,9 +40,6 @@ function confirmChange() {
   @apply rounded-xl p-3 sm:p-4 cursor-pointer;
 }
 
-.close-btn {
-  /* @apply bg-app-tertiary text-white; */
-}
 .confirm-btn {
   @apply bg-app-tertiary text-white;
 }

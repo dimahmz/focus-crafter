@@ -27,6 +27,9 @@ require("dotenv").config();
 // cors
 app.use(cors());
 
+// default engine
+app.set("view engine", "pug");
+
 // parse incoming data
 app.use(Express.json());
 
@@ -71,7 +74,7 @@ app.use(Express.static("/"));
 app.use(notFound);
 
 // connecting to the database
-const mongoDbUri = `mongodb+srv://proFocusDB:${process.env.db_password}@atlascluster.t8zzfhk.mongodb.net/?retryWrites=true&w=majority`;
+const mongoDbUri = `mongodb+srv://${process.env.db_user_name}:${process.env.db_password}@atlascluster.t8zzfhk.mongodb.net/${process.env.db_name}?retryWrites=true&w=majority`;
 
 const connectionParams = {
   // useCreateIndex: true,

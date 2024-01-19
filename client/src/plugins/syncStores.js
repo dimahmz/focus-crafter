@@ -3,7 +3,6 @@ import { useUserStore } from "@/stores/user";
 
 export default async () => {
   const user = useUserStore();
-
   axios
     .get(`/userData`)
     .then((res) => {

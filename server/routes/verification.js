@@ -5,53 +5,56 @@ const logger = require("../middleware/logger");
 const Responses = require("../helpers/responses");
 
 router.get("/verify/newUser/:user_id/:verification_token", async (req, res) => {
-  let user = await User.findById(req.params.user_id).select(
+  const id = req.params.user_id;
+  const user = await User.findById(id).select(
     "name verified_account verifivation_token"
   );
-  if (!user)
-    res.status(500).send("user nor found", 500, Responses.userNotFound());
+  if (!user) {
+    const response = Responses.create(
+      false,
+      "invalid actication link",
+      "your link is either expired or invalid",
+      2
+    );
 
-  if (user.verifivation_token != req.params.verification_token)
-    return res
-      .status(401)
-      .send(
-        Responses.create(
-          false,
-          "invalid actication link",
-          "your link is either expired or invalid",
-          2
-        )
-      );
-  if (user.verified_account)
-    return res
-      .status(409)
-      .send(
-        Responses.create(
-          false,
-          "You're account is already verified",
-          "you can log in to your account",
-          1
-        )
-      );
+    return res.render("verification/activate", response);
+  }
+  if (user.verifivation_token != req.params.verification_token) {
+    const response = Responses.create(
+      false,
+      "invalid actication link",
+      "your link is either expired or invalid",
+      2
+    );
+    return res.render("verification/activate", response);
+  }
+  if (user.verified_account) {
+    const response = Responses.create(
+      false,
+      "You're account is already verified",
+      "you can log in to your account",
+      1
+    );
+    return res.render("verification/activate", response);
+  }
 
   try {
     user = await User.findByIdAndUpdate(req.params.user_id, {
       verified_account: true,
     });
-
-    res
-      .status(200)
-      .send(
-        Responses.create(
-          true,
-          "You're account has been verified successfully",
-          `hi ${user.name}, you have successfully verified your account! `,
-          0
-        )
-      );
+    const response = Responses.create(
+      false,
+      "You're account has been verified successfully",
+      `hi ${user.name}, you have successfully verified your account! `,
+      0
+    );
+    return res.render("verification/activate", response);
   } catch (e) {
-    if (e?.customeError) return res.status(e.statusCode).send(e.errorResponse);
-    return res.status(500).send(Responses.serverError(e.message));
+    if (e?.customeError) {
+      return res.render("verification/activate", e.errorResponse);
+    }
+    const response = Responses.serverError(e.message);
+    res.render("verification/activate", response);
   }
 });
 

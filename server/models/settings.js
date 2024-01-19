@@ -42,8 +42,8 @@ const settingsSchema = new mongoose.Schema({
   },
 
   alarmVolume: {
-    type: Number,
-    default: 50,
+    default: "0.5",
+    type: String,
   },
 
   rounds: {

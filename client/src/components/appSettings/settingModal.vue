@@ -32,8 +32,8 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
           template(#aNpt)
               AppRangeNpt(:nptValue="settingsStore.state.timer.alarmVolume"
                 storeSet="alarmVolume")
-      .flex.justify-end.mt-12
-        v-btn(text="save" :loading="loadingBtn" @click="saveSettings()") 
+      .save-btn-container
+        v-btn(text="save" size="large"  :loading="loadingBtn" @click="saveSettings()") 
 </template>
 
 <script setup>
@@ -67,3 +67,12 @@ async function saveSettings() {
   settingsStore.showSettingsModal = false;
 }
 </script>
+
+<style lang="scss">
+.save-btn-container {
+  @apply flex justify-center mt-12;
+  .v-btn {
+    @apply px-8;
+  }
+}
+</style>

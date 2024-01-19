@@ -15,7 +15,6 @@
   </svg>
 </template>
 <script setup>
-import { defineProps } from "vue";
 defineProps({
   colors_classes: { type: String },
   h: { type: String, default: "26" },

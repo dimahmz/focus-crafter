@@ -14,17 +14,17 @@ router.post("/", async (req, res, next) => {
       );
 
   // existed email or password
-  const user_email = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.body.email });
 
-  if (user_email)
-    return res
+  if (user)
+    res
       .status(409)
       .send(Responses.create(false, "email is already existed", "", 1));
 
-  const user_name = await User.findOne({ name: req.body.name });
+  user = await User.findOne({ name: req.body.name });
 
-  if (user_name)
-    return res
+  if (user)
+    res
       .status(409)
       .send(Responses.create(false, "name is already existed", "", 1));
 

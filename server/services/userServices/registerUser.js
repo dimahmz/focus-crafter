@@ -11,6 +11,7 @@ async function registerAnewUser($user) {
     name: $user.name,
     email: $user.email,
     password: $user.password,
+    img: {},
     settings: {},
     tasks: [],
   });

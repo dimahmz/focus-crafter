@@ -1,8 +1,8 @@
 <template>
-  <div class="m-0 p-0 relative">
+  <div class="m-0 p-0 w-full relative">
     <div class="w-full flex-center">
       <p
-        class="text-center tracking-[3px] text-4xl md:text-6xl font-secondary font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        class="text-center w-full tracking-[4px] text-4xl md:text-6xl font-secondary p-1 font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       >
         {{ counter }}
       </p>

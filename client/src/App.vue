@@ -24,7 +24,9 @@ Router.beforeResolve(async (to, from, next) => {
 });
 
 onMounted(() => {
-  inject("syncStores");
+  console.log("xt");
+  const sync = inject("syncStores");
+  sync();
 
   //add a listner to to catch the user confirmation before leaving the page
   window.addEventListener("beforeunload", confirmExit);

@@ -1,6 +1,6 @@
 <template lang="pug">
 .change-volume-container
-  v-slider(v-model="settingsStore.state.timer[storeSet]" :min="0" :max="1")
+  v-slider(v-model="settingsStore.state.timer[storeSet]" :min="0" :max="1" size="x-small")
 </template>
 
 <script setup>

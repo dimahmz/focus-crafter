@@ -13,7 +13,6 @@
   </svg>
 </template>
 <script setup>
-import { defineProps } from "vue";
 defineProps({
   colors_classes: { type: String, default: "fill-white" },
   h: { type: String, default: "26" },

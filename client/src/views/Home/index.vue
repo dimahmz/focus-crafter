@@ -9,6 +9,7 @@ TasksDrawer(class="hidden md:block")
 MobileTasksModal(class="md:hidden")
 SettingsModal(v-if="settingsStore.showSettingsModal")
 AddTaskModal
+AlarmAudio
 </template>
 
 <script setup>
@@ -18,6 +19,7 @@ import TimerHeader from "@/components/appTimer/timerHeader.vue";
 import TasksDrawer from "@/components/appTasks/desktop/index.vue";
 import MobileTasksModal from "@/components/appTasks/mobile/tasksList.vue";
 import AddTaskModal from "@/components/appTasks/addTask.vue";
+import AlarmAudio from "@/components/appTimer/AlarmAudio.vue";
 
 import SettingsModal from "@/components/appSettings/settingModal.vue";
 import AppNavigationBtns from "@/components/navigationBar/index.vue";

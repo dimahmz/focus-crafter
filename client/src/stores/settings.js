@@ -21,7 +21,7 @@ export const useSettingsStore = defineStore("settings", () => {
       autoStartPomodoros: false,
       notifyTime: 5,
       rounds: 4,
-      alarmVolume: 50,
+      alarmVolume: 0.5,
       selectedAlarm: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
       finishedPomodoros: 0,
     },
