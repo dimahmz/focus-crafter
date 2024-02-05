@@ -28,8 +28,6 @@ const userStore = useUserStore();
 </script>
 
 <style lang="scss" scoped>
-.navigation-bar {
-}
 .icons-container {
   @apply w-full max-w-xs mx-auto flex justify-between items-center bg-app-secondary rounded-xl px-3 py-4;
   @apply md:flex-column;

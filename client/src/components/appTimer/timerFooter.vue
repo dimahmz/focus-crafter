@@ -38,7 +38,7 @@ function start() {
 
 <style scoped>
 .btn-box {
-  @apply rounded-xl p-3 sm:p-4 cursor-pointer;
+  @apply rounded-xl p-3 sm:p-4 cursor-pointer z-40;
 }
 svg {
   @apply h-4 sm:h-5 w-4 sm:w-5;

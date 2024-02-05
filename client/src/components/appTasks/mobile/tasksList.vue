@@ -1,19 +1,15 @@
 <template lang="pug">
 v-dialog(v-model='taskListMobile' width='400px')
-  .text-xl(v-if="tasksStore.tasks.length==0") There is no task
-  .tasks-container.py-4.relative.flex-column.space-y-5
-    Task(
-      v-for="(task , i) in tasksStore.tasks" 
-      :key="i"
-      :task="task" 
-      :ndx="i"
-    )
-    .btn-container
-      AddTaskBtn
+  v-card.px-4.py-4
+    .text-xl.text-center(v-if="tasksStore.tasks.length==0") There is no task
+    .tasks-container.py-4.relative.flex-column.space-y-5
+      Task(v-for="(task , i) in tasksStore.tasks" :key="i" :task="task" :ndx="i")
+      .btn-container
+        AddTaskBtn
 </template>
 
 <script setup>
-import Task from "./task.vue";
+import Task from "../task.vue";
 import ModalHeader from "@/components/appSettings/modalHeader.vue";
 import AppBtn from "@/components/appBtns/appBtn.vue";
 import AddTaskBtn from "@/components/appBtns/addTask.vue";

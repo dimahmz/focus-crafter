@@ -1,5 +1,5 @@
 <template lang="pug">
-TimerHeader.mt-4.text-primary
+TimerHeader(class="relative z-50").mt-4.text-primary
 TimerBody.timer-body
 .text-center.mb-5.-mt-4
   .text-xl.font-bold # {{ timerStore.sessionPomodoros }}
@@ -30,9 +30,3 @@ import { useCounterStore } from "@/stores/timer";
 const settingsStore = useSettingsStore();
 const timerStore = useCounterStore();
 </script>
-
-<style lang="scss" scoped>
-.timer-body {
-  // @apply;
-}
-</style>

@@ -3,7 +3,7 @@ AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
   .bg-app-primary.p-8.max-w-lg.mx-auto.max-h-full.overflow-y-auto.rounded-lg
     .flex.justify-between.mb-10.mx-10.items-center
         h1.font-secondary.font-semibold.text-2xl Settings
-        span.cursor-pointer(@click='closeModal').bg-app-secondary.rounded-full.p-1
+        span.close-modal-btn(@click='closeModal')
           v-icon(icon="mdi-close-circle")
     .flex.justify-between.space-x-3
       AppNpt(nptLabel="Pomodoro"   storeSet="pomodoro_npt")
@@ -69,6 +69,9 @@ async function saveSettings() {
 </script>
 
 <style lang="scss">
+.close-modal-btn {
+  @apply cursor-pointer p-0.5 bg-white rounded-full grid justify-items-center;
+}
 .save-btn-container {
   @apply flex justify-center mt-12;
   .v-btn {

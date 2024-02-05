@@ -1,3 +1,31 @@
+<template lang="pug">
+v-dialog(v-model='addNewTaskModal' width='400px')
+  form(@submit="addNewTask")
+    v-card(title="Add task")
+      v-alert(v-model="openAlert" type="success" closable close-label="Close Alert" 
+        title="Task has been added"
+      )
+      .card-body
+        .text-npt-container
+          v-text-field(
+            variant="outlined"
+            v-model="state.title"
+            :error-messages='v$.title.$errors.map(e => e.$message)' 
+            placeholder="e.g : Reading a book" label="Task name"
+          )
+        .number-npt-container
+          label Rounds
+          v-text-field(
+            type="number"
+            v-model="state.estimatedPomodoros" 
+            min="1" variant="outlined" 
+            name="estimatedPomodoros"
+            :error-messages='v$.estimatedPomodoros.$errors.map(e => e.$message)' 
+          )
+      v-card-actions
+        v-btn( variant="tonal" @click='addNewTaskModal = false') Cancel
+        v-btn.create-btn( variant="tonal" type="submit" :loading="loading") Create
+</template>
 <script setup>
 import { ref, reactive, nextTick } from "vue";
 import { useTasksStore } from "@/stores/tasks";
@@ -55,35 +83,6 @@ async function addNewTask(e) {
   }
 }
 </script>
-
-<template lang="pug">
-v-dialog(v-model='addNewTaskModal' width='400px')
-  form(@submit="addNewTask")
-    v-card(title="Add task")
-      v-alert(v-model="openAlert" type="success" closable close-label="Close Alert" 
-        title="Task has been added"
-      )
-      .card-body
-        .text-npt-container
-          v-text-field(
-            variant="outlined"
-            v-model="state.title"
-            :error-messages='v$.title.$errors.map(e => e.$message)' 
-            placeholder="e.g : Reading a book" label="Task name"
-          )
-        .number-npt-container
-          label Rounds
-          v-text-field(
-            type="number"
-            v-model="state.estimatedPomodoros" 
-            min="1" variant="outlined" 
-            name="estimatedPomodoros"
-            :error-messages='v$.estimatedPomodoros.$errors.map(e => e.$message)' 
-          )
-      v-card-actions
-        v-btn( variant="tonal" @click='addNewTaskModal = false') Cancel
-        v-btn.create-btn( variant="tonal" type="submit" :loading="loading") Create
-</template>
 
 <style lang="scss" scoped>
 .v-dialog {

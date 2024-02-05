@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import Task from "./task.vue";
+import Task from "../task.vue";
 import ModalHeader from "@/components/appSettings/modalHeader.vue";
 import AppBtn from "@/components/appBtns/appBtn.vue";
 import AddTask from "@/components/appTasks/addTask.vue";
