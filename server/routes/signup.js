@@ -12,25 +12,24 @@ router.post("/", async (req, res, next) => {
       .send(
         Responses.create(false, "invalid inputs", error.details[0].message, 1)
       );
-
   // existed email or password
   let user = await User.findOne({ email: req.body.email });
 
   if (user)
-    res
+    return res
       .status(409)
       .send(Responses.create(false, "email is already existed", "", 1));
 
   user = await User.findOne({ name: req.body.name });
 
   if (user)
-    res
+    return res
       .status(409)
       .send(Responses.create(false, "name is already existed", "", 1));
 
   try {
     const response = await registerAnewUser(req.body);
-    res
+    return res
       .status(200)
       .send(
         Responses.create(
@@ -42,7 +41,6 @@ router.post("/", async (req, res, next) => {
         )
       );
   } catch (e) {
-    console.log(e);
     if (e?.customeError) return res.status(e.statusCode).send(e.errorResponse);
     return res.status(500).send(Responses.serverError(e.message));
   }

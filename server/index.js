@@ -68,7 +68,7 @@ app.use((err, req, res, next) => {
 });
 
 // serve static files
-app.use(Express.static("/"));
+app.use(Express.static("static"));
 
 // unavailable routes
 app.use(notFound);

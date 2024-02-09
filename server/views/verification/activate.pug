@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title Activating the account
+    link(rel='stylesheet', href='/styles/index.css')
+  style.
+    .styled-button {
+      border: none;
+      padding: 15px 40px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #3772FF;
+    }
+    .styled-button a {
+      text-decoration : none ;
+      color: #fff;
+    }
+    .styled-button:hover {
+      background-color: #0056b3;
+    }
+    .styled-button:active {
+      background-color: #0056b3;
+    }
+
+    h2.page-title{
+      color : #05A660;
+    }
+    p{
+      font-size: 25px;
+    }
+  body
+    center
+      h2.page-title #{title}
+      p #{description}
+      div
+        button.styled-button
+          a(href="https://pro-focus.vercel.app/login") Log In
