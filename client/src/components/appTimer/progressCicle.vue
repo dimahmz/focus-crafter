@@ -1,10 +1,12 @@
 <template>
-  <div class="m-0 p-0 w-full relative">
+  <div class="m-0 p-0 w-full relative progress-circle-container">
     <div class="w-full flex-center">
       <p
-        class="text-center w-full tracking-[4px] text-4xl md:text-6xl font-secondary p-1 font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        class="text-4xl text-center flex-center tracking-[10px] md:text-6xl font-secondary p-1 font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       >
-        {{ counter }}
+        <span class="w-full">
+          {{ counter }}
+        </span>
       </p>
     </div>
     <svg
@@ -20,7 +22,7 @@
         cx="100"
         cy="100"
         fill="transparent"
-        stroke-dasharray="565.48px"
+        stroke-dasharray="565"
         stroke-dashoffset="0"
       ></circle>
       <circle
@@ -71,6 +73,14 @@ watch(props, () => {
 </script>
 
 <style scoped lang="scss">
+.progress-circle-container {
+  div {
+    p {
+      // @apply w-[280px] md:w-[210px];
+    }
+  }
+}
+
 svg {
   @apply w-[340px] md:w-[480px] h-[300px] md:h-[360px];
   & > circle {

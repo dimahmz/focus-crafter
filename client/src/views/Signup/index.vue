@@ -18,14 +18,16 @@ import {
 const user = useUserStore();
 
 const initialState = {
-  name: "wonoh",
-  password: "wonoh1234",
-  email: "wonoh16232@scubalm.com",
-  repeat_password: "wonoh1234",
+  name: "",
+  password: "",
+  email: "",
+  repeat_password: "",
 };
 
 const state = reactive({
   ...initialState,
+  visible_pass: false,
+  visible_confirm_pass: false,
   loading: false,
 });
 
@@ -91,10 +93,10 @@ main(class="h-screen flex")
           label="password"
           :error-messages='v$.password.$errors.map(e => e.$message)'
           @input='v$.password.$touch' @blur='v$.password.$touch'
-          :append-icon="state.visible ? 'mdi-eye' : 'mdi-eye-off'" 
-          :type="state.visible ? 'text' : 'password'"
+          :append-icon="state.visible_pass ? 'mdi-eye' : 'mdi-eye-off'" 
+          :type="state.visible_pass ? 'text' : 'password'"
           placeholder="Enter your password"
-          @click:append="state.visible = !state.visible"
+          @click:append="state.visible_pass = !state.visible_pass"
           variant="underlined"
           dense=""
         )
@@ -104,10 +106,10 @@ main(class="h-screen flex")
           label="confirm password"
           :error-messages='v$.repeat_password.$errors.map(e => e.$message)'
           @input='v$.repeat_password.$touch' @blur='v$.repeat_password.$touch'
-          :append-icon="state.visible ? 'mdi-eye' : 'mdi-eye-off'" 
-          :type="state.visible ? 'text' : 'password'"
+          :append-icon="state.visible_confirm_pass ? 'mdi-eye' : 'mdi-eye-off'" 
+          :type="state.visible_confirm_pass ? 'text' : 'password'"
           placeholder="Enter your password"
-          @click:append="state.visible = !state.visible"
+          @click:append="state.visible_confirm_pass = !state.visible_confirm_pass"
           variant="underlined"
         )
         .flex.justify-between.pt-1
