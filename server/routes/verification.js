@@ -10,21 +10,21 @@ router.get("/verify/newUser/:user_id/:verification_token", async (req, res) => {
 
   const isValidId = mongoose.Types.ObjectId.isValid(user_ID);
 
-  const response = Responses.create(
+  const invalid_link_response = Responses.create(
     false,
     "Invalid activation link",
     "your link is either expired or invalid",
     2
   );
   if (!isValidId) {
-    return res.render("verification/error", response);
+    return res.render("verification/error", invalid_link_response);
   }
   const user = await User.findById(user_ID).select(
-    "name verified_account verifivation_token"
+    "name verified_account verification_token"
   );
   // User doesn't exist
-  if (!user || user.verifivation_token != req.params.verification_token) {
-    return res.render("verification/error", response);
+  if (!user || user.verification_token != req.params.verification_token) {
+    return res.render("verification/error", invalid_link_response);
   }
 
   // Account is already verified
@@ -40,17 +40,21 @@ router.get("/verify/newUser/:user_id/:verification_token", async (req, res) => {
 
   try {
     // acativate the account
-    user = await User.findByIdAndUpdate(user_ID, {
+    await User.findByIdAndUpdate(user_ID, {
       verified_account: true,
     });
     const response = Responses.create(
       false,
-      "You're account has been verified successfully",
-      `hi ${user.name}, you have successfully verified your account!`,
+      "Your account verification has been completed successfully.",
+      `Hey ${user.name}, great news! Your account verification has been successfully completed.
+      You can access your account by clicking the button below.`,
       0
     );
     return res.render("verification/activate", response);
   } catch (e) {
+    if (process.env.NODE_ENV == "development") {
+      console.log(e.message);
+    }
     const response = Responses.serverError(e.message);
     res.render("verification/error", response);
   }

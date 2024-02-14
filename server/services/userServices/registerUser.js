@@ -22,7 +22,7 @@ async function registerAnewUser($user) {
 
   //sending activation link
   const emailData = confirmEmail(
-    `${process.env.app_domain_name}/verification/verify/newUser/${user._id}/${user.verifivation_token}`,
+    `${process.env.app_domain_name}/verification/verify/newUser/${user._id}/${user.verification_token}`,
     user.email
   );
 

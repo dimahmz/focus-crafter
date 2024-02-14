@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
 
-  verifivation_token: {
+  verification_token: {
     type: String,
     required: true,
     default: () => crypto.randomBytes(20).toString("hex"),

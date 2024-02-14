@@ -4,6 +4,7 @@ const confirmEmail = (actionLink, email_receiver) => {
     bodyMessage:
       "Click the button below to confirm your email address and activate your account.",
     actionLink,
+    app_url: process.env.app_domain_name,
     buttonName: "Activate",
     subject: "Account Activation",
     text: "the text of this email",
