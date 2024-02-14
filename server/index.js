@@ -4,6 +4,7 @@ const app = Express();
 const auth = require("./routes/auth");
 const signup = require("./routes/signup");
 const me = require("./routes/me");
+const test = require("./routes/test");
 const reset = require("./routes/forgotpassword");
 const verify = require("./routes/verification");
 const editUser = require("./routes/editUser");
@@ -50,6 +51,7 @@ app.get("/", async (req, res) => {
 
 // app routes
 app.use("/auth", auth);
+app.use("/test", test);
 app.use("/signup", signup);
 app.use("/me", me);
 app.use("/verification", verify);
