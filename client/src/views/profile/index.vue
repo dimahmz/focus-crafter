@@ -1,12 +1,12 @@
 <template lang="pug">
 div.flex-center
-  section.max-w-4xl.w-full(class="sm:px-7 sm:py-5")
-    .flex-justify-between
+  section.max-w-3xl.w-full(class="sm:px-7 sm:py-5")
+    .flex-center.w-full.py-8  
       RouterLink(:to="{ name : 'home' }" )
         v-icon(icon="mdi-home")
-      p.text-center.mt-10.mb-5 About you
     .flex-center
-      .max-w-xl.w-full.border-2.border-gray-400.rounded.px-3.py-5.mx-10
+      .max-w-xl.w-full.border-2.border-gray-400.rounded.px-8.py-5.mx-10
+        p.text-center.my-5 About you
         div(ref="modifyNameSection")      
           label User name 
           br
@@ -17,7 +17,7 @@ div.flex-center
                 Close
               .w-8.h-8.bg-slate-100.flex-center(@click="changeUserName")
                 Check
-          p(v-else class="hover:bg-slate-300" @click="displayNameNpt").p-3.cursor-text {{ userInfos.name  }}
+          p(v-else).p-3.cursor-text {{ userInfos.name  }}
         label Email Address
         br
         input.m-4.cursor-not-allowed(ref="emailNpt" v-model="userInfos.email" readonly title="you can't change this email")

@@ -14,10 +14,6 @@ AboutFooter
 <script setup>
 import AboutFooter from "./AboutFooter.vue";
 import FeedBackSection from "./FeedBackSection.vue";
-
-function sendFeedback() {
-  console.log("sent feedback");
-}
 </script>
 
 <style scoped>

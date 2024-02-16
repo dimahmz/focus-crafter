@@ -4,12 +4,12 @@ import { useUserStore } from "../../stores/user";
 import axios from "../../plugins/axiosConfig";
 import _ from "loadsh";
 import SnackBar from "../../components/snackBar.vue";
+import makeRequest from "../../api";
 
 const user = useUserStore();
 
 const state = reactive({
   email: "",
-  name: "",
   feedBack: "",
   loading: false,
   isFeedBackSent: false,
@@ -21,21 +21,12 @@ async function sendFeedBack(e) {
   if (user.state.loggedIn) {
     state.email = user.state.email;
   }
-  try {
-    await axios.post("/feed-back", {
-      email: state.email,
-      text: state.feedBack,
-    });
-    state.isFeedBackSent = true;
-  } catch (e) {
-    if (e?.response?.data) {
-      _.assign(state.serverResponse, e.response.data);
-    } else {
-      state.serverResponse = { ...user.state.serverResponseError };
-    }
-    user.state.openSnackbar = true;
-  }
+  const response = await makeRequest("/feed-back", "post", {
+    email: state.email,
+    text: state.feedBack,
+  });
   state.loading = false;
+  if (response.success) state.isFeedBackSent = true;
 }
 </script>
 
@@ -49,7 +40,7 @@ section.my-16
     form(@submit="sendFeedBack").flex-column.space-y-4
       h1.font-seconadry.text-xl.font-semibold Give us your feedback!
       p(class="text-[#87898E]") Let us know how we can improve this app 
-      v-text-field(v-if="!user.state.loggedIn" type="email" variant="outlined" label="Your email")
+      v-text-field(v-if="!user.state.loggedIn" v-model="state.email" type="email" variant="outlined" label="Your email")
       v-textarea(v-model="state.feedBack" required label="Your feed-back"  variant="outlined")
       .flex-center
         v-btn.w-full(max-width="200" :loading="state.loading" :ripple="false" variant="tonal" type="submit") send

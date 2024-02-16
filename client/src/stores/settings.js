@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, reactive, watch } from "vue";
-import axios from "../plugins/axiosConfig";
+import makeRequest from "@/api/index";
+import { successResponse } from "@/content/errors";
 
 // stores
 import { useCounterStore } from "./timer";
@@ -69,12 +70,15 @@ export const useSettingsStore = defineStore("settings", () => {
   syncWithTimer();
 
   async function saveToDataBase() {
+    let response = successResponse;
     if (userStore.state.loggedIn) {
       const stateCopy = { ...state.timer };
-      await axios.put("/editSettings", {
+      response = await makeRequest("/editSettings", "put", {
         settingsUpdate: stateCopy,
       });
+      return response;
     }
+    return response;
   }
 
   // sync the settings store with the database

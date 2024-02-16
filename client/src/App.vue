@@ -24,7 +24,6 @@ Router.beforeResolve(async (to, from, next) => {
 });
 
 onMounted(() => {
-  console.log("xt");
   const sync = inject("syncStores");
   sync();
 

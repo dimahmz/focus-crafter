@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 import { reactive } from "vue";
 import { useSettingsStore } from "../stores/settings";
 import { useTasksStore } from "../stores/tasks";
-import axios from "@/plugins/axiosConfig";
+import axios, { addAuthToken } from "@/plugins/axiosConfig";
+import makeRequest from "@/api/index";
+
 import Cookies from "js-cookie";
 import router from "../router/routes";
 import _ from "loadsh";
@@ -63,46 +65,36 @@ export const useUserStore = defineStore("user", () => {
 
   // log in the user
   async function loginUser({ name, password }, rememberMe) {
-    try {
-      const response = await axios({
-        method: "post",
-        url: "auth",
-        data: { name, password },
-      });
-      const days = rememberMe ? 365 : 0;
-      const user = response.data.payload.user;
-      // get the token from the response and store it in the cookies
-      Cookies.set("x_auth_token", response.data.payload.x_auth_token, {
-        expires: days,
-      });
-      // synchronize the stores with th the database
-      syncAllTheStoresWithDB(user);
-
-      // redirect to home page
-      router.push({ name: "home" });
-    } catch (e) {
-      if (e?.response?.data) _.assign(state.serverResponse, e.response.data);
-      else state.serverResponse = { ...state.serverResponseError };
+    const response = await makeRequest("/auth", "post", {
+      name,
+      password,
+    });
+    if (!response.success) {
+      _.assign(state.serverResponse, response);
+      return;
     }
+    const days = rememberMe ? 365 : 0;
+    const user = response.payload.user;
+    // get the token from the response and store it in the cookies
+    Cookies.set("x_auth_token", response.payload.x_auth_token, {
+      expires: days,
+    });
+    addAuthToken(Cookies.get("x_auth_token"));
+    // synchronize the stores with th the database
+    syncAllTheStoresWithDB(user);
+
+    // redirect to home page
+    router.push({ name: "home" });
   }
 
   async function registerUser(user) {
-    try {
-      const response = await axios({
-        method: "post",
-        url: "signup",
-        data: user,
-      });
+    const response = await makeRequest("signup", "post", { ...user });
+    await _.assign(state.serverResponse, response);
 
-      await _.assign(state.serverResponse, response.data);
+    if (response.success) {
       state.openRegistrationModal = true;
-    } catch (e) {
-      if (e?.response?.data) {
-        _.assign(state.serverResponse, e.response.data);
-        state.openSnackbar = true;
-      } else {
-        state.serverResponse = { ...state.serverResponseError };
-      }
+    } else {
+      state.openSnackbar = true;
     }
   }
 

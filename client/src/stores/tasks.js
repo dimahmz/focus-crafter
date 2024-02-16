@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { computed, reactive, ref, toRef } from "vue";
 import { useSettingsStore } from "./settings";
 import { useUserStore } from "./user";
-import axios from "../plugins/axiosConfig";
-import _axios from "@/api/index";
+import makeRequest from "@/api/index";
+import axios from "@/plugins/axiosConfig";
 import { successResponse } from "@/content/errors";
 
 export const useTasksStore = defineStore("tasks", () => {
@@ -58,8 +58,9 @@ export const useTasksStore = defineStore("tasks", () => {
   // Add Task
   async function addTask(task) {
     let response = successResponse;
-    if (userStore.state.loggedIn)
-      response = await axios.post("/editTasks/createTask", { task });
+    if (userStore.state.loggedIn) {
+      response = await makeRequest("/editTasks/createTask", "post", { task });
+    }
     tasks.push(task);
     return response;
   }

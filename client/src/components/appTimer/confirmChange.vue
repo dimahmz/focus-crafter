@@ -1,5 +1,5 @@
 <template lang="pug">
-.btn-box.bg-app-tertiary.bg-app-quaternary.cursor-pointer(@click='openConfirm')
+.btn-container.btn-box.bg-app-tertiary.bg-app-quaternary.cursor-pointer(@click='openConfirm')
   Next(colors_classes='fill-app-tertiary')
 v-dialog(width='500' v-model='open')
   v-card
@@ -18,7 +18,6 @@ const timerStore = useCounterStore();
 const open = ref(false);
 
 function openConfirm() {
-  console.log("change");
   open.value = true;
   timerStore.changeToAnewPhase();
 }
@@ -42,5 +41,8 @@ function confirmChange() {
 
 .confirm-btn {
   @apply bg-app-tertiary text-white;
+}
+.btn-container {
+  @apply relative z-40;
 }
 </style>

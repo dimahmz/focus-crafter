@@ -70,7 +70,9 @@ async function addNewTask(e) {
     isSelected: false,
   };
   loading.value = true;
+
   const resp = await TasksStore.addTask(task);
+  loading.value = false;
   if (resp.success) {
     openAlert.value = true;
     state = {
@@ -79,7 +81,6 @@ async function addNewTask(e) {
     // not working
     // await nextTick();
     // v$.value.$reset();
-    loading.value = false;
   }
 }
 </script>
