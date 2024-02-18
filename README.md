@@ -49,13 +49,13 @@ npm install
 mv .env.example .env
 
 ```
-open the .env file and fill these environment  varaibles
+<h1>open the .env file and fill these environment  varaibles </h1>
 
 
-pro_focus_jwtKey="" // a random string to be used for creating jwt token
-db_password="" // you database password 
-app_email="" // an email address to be used to send email to the user
-app_email_password="" // the email password 
-NODE_ENV="" // node environment 
-PORT="" // port for the app to run on in dev enviroment 
-app_domain_name="" // the server IP address or the url of the api where it's depoyed
+<p> pro_focus_jwtKey="" // a random string to be used for creating jwt token </p>
+<p> db_password="" // you database password < /p> 
+<p> app_email="" // an email address to be used to send email to the user </p> 
+<p>  app_email_password="" // the email password </p> 
+<p>  NODE_ENV="" // node environment </p> 
+<p>  PORT="" // port for the app to run on in dev enviroment  </p> 
+<p>  app_domain_name="" // the server IP address or the url of the api where it's depoyed </p> 
