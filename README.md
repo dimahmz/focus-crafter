@@ -59,3 +59,12 @@ mv .env.example .env
 <p>  NODE_ENV=""  <i> // node environment  </i> </p> 
 <p>  PORT=""  <i> // port for the app to run on in dev enviroment  </i> </p> 
 <p>  app_domain_name=""  <i> // the server IP address or the url of the api where it's depoyed  </i> </p> 
+
+
+#### start the server 
+```sh
+node index.js
+```
+
+
+
