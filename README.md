@@ -17,9 +17,11 @@ The web app is deployed to [focus-crafter.vercel.app](https://focus-crafter.verc
 
 ## Technologies used
 
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOOiKh1Xk5RDZFKPkVXYfi8U-t2cuotiAOR7G_7w_HWXfV02TMnd9wnVM" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/docs/Vue.js_Logo.svg.png" height="50" />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Node.js_logo_2015.svg" height="50" /> 
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOOiKh1Xk5RDZFKPkVXYfi8U-t2cuotiAOR7G_7w_HWXfV02TMnd9wnVM" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" height="50" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://w7.pngwing.com/pngs/595/279/png-transparent-vue-js-javascript-library-angularjs-react-vue-js-template-angle-text.png" height="50" />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Node.js_logo_2015.svg" height="50" /> 
 
-This web app is built with MEVN stack technologies. It contains a client template(VueJS) and a server template(NodeJS, ExpressJS) and a connection between them via an API layer.
+This web app is built with MEVN stack technologies. 
+
+It contains a client template(VueJS) connected to a mongodb via an API layer written in nodejs & expressjs.
 
 ## Project Setup
 
