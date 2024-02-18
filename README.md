@@ -17,13 +17,12 @@ The web app is deployed to [focus-crafter.vercel.app](https://focus-crafter.verc
 
 ## Technologies used
 
-|     `mongodb`      |      <img src="./icons/MongoDB.svg" width="48">       |
-
-|     `express`      |   <img src="./icons/ExpressJS-Dark.svg" width="48">   |
-
-|       `vue`        |     <img src="./icons/VueJS-Dark.svg" width="48">     |
-
-|      `nodejs`      |    <img src="./icons/NodeJS-Dark.svg" width="48">     |
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg"  style="margin-right: 3px;" width="48">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg"  style="margin-right: 3px;" width="48">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg"  style="margin-right: 3px;" width="48">   
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg"  style="margin-right: 3px;" width="48">  
+</div>
 
 
 This web app is built with MEVN stack technologies. 
