@@ -23,8 +23,11 @@ This web app is built with MEVN stack technologies. It contains a client templat
 
 ## Project Setup
 
+### Client Side
 
 ```sh
+cd client
+
 npm install
 ```
 
@@ -35,9 +38,24 @@ npm install
 npm run dev
 ```
 
-### Compile and Minify for Production
+### server side
 
 
 ```sh
-npm run build
+cd server
+
+npm install
+
+mv .env.example .env
+
 ```
+open the .env file and fill these environment  varaibles
+
+
+pro_focus_jwtKey="" // a random string to be used for creating jwt token
+db_password="" // you database password 
+app_email="" // an email address to be used to send email to the user
+app_email_password="" // the email password 
+NODE_ENV="" // node environment 
+PORT="" // port for the app to run on in dev enviroment 
+app_domain_name="" // the server IP address or the url of the api where it's depoyed
