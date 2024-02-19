@@ -1,5 +1,7 @@
 <h1 align="center">
+  <a target="_blank" src="https://focus-crafter.vercel.app">
   <img src="https://focus-crafter.vercel.app/logo.png" alt="Focus-crafter Logo" width="224px"/><br/>
+  </a>
   Focus on being productive instead of budy
 </h1>
 <p align="center">An open source web-app to help you implement the <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">Pomodoro</a> Technique in your daily work routine. 
