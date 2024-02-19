@@ -1,6 +1,6 @@
 <h1 align="center">
-  <a target="_blank" src="https://focus-crafter.vercel.app">
-  <img src="https://focus-crafter.vercel.app/logo.png" alt="Focus-crafter Logo" width="224px"/><br/>
+  <a src="https://focus-crafter.vercel.app">
+  <img  target="_blank"  src="https://focus-crafter.vercel.app/logo.png" alt="Focus-crafter Logo" width="224px"/><br/>
   </a>
   Focus on being productive instead of budy
 </h1>
