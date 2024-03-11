@@ -4,6 +4,9 @@ html
     title Activating the account
     link(rel='stylesheet', href='/styles/index.css')
   style.
+    section{
+      max-width: 700px;
+    }
     .styled-button {
       border: none;
       padding: 15px 40px;
@@ -30,9 +33,9 @@ html
       font-size: 25px;
     }
   body
-    center
-      h2.page-title #{title}
-      p #{description}
-      div
-        button.styled-button
+      center
+        h2.page-title #{title}
+        p #{description}
+        div
           a(href="https://pro-focus.vercel.app/login") Log In
+            button.styled-button

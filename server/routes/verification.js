@@ -45,7 +45,7 @@ router.get("/verify/newUser/:user_id/:verification_token", async (req, res) => {
     });
     const response = Responses.create(
       false,
-      "Your account verification has been completed successfully.",
+      "Account verification successed",
       `Hey ${user.name}, great news! Your account verification has been successfully completed.
       You can access your account by clicking the button below.`,
       0
