@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const settingsSchema = new mongoose.Schema({
   pomodoro_npt: {
     type: Number,
-    default: 35,
+    default: 25,
   },
 
   shortBreak_npt: {
     type: Number,
-    default: 15,
+    default: 5,
   },
 
   longBreak_npt: {
     type: Number,
-    default: 50,
+    default: 30,
   },
 
   longBreakInterval: {

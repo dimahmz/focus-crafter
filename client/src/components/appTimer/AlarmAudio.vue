@@ -29,6 +29,9 @@ watch(changeVolume, (newSound) => {
 });
 
 watch(startAlarm, () => {
-  if (startAlarm) audioElement.value.play();
+  if (startAlarm) {
+    audioElement.value.play();
+    counterStore.startAlarm = false;
+  }
 });
 </script>

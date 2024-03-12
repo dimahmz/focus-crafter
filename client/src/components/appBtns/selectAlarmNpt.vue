@@ -5,6 +5,7 @@ v-select(
   item-title="text" 
   item-value="value"
   variant="solo-inverted"
+  density="compact"
   solo
 )
 </template>

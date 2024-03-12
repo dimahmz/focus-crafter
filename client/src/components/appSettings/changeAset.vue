@@ -2,7 +2,7 @@
 .flex.justify-between.align-center
   h2 {{label}}
   .switch_btn(:class="{ active_timer : settingsStore.state.timer[storeSet] }")
-    v-switch(v-model="settingsStore.state.timer[storeSet]" hide-details inset)
+    v-switch(v-model="settingsStore.state.timer[storeSet]" hide-details)
 </template>
 
 <script setup>
