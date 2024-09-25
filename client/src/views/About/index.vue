@@ -7,11 +7,11 @@
       .absolute.inset-0.h-full.flex.items-center
         v-btn(:ripple="false" variant="tonal" @click="goBack")
           v-icon(icon="mdi-arrow-left" start)
-          | back
-    h1.title About Then Focus Crafter website : 
-    p.text Our web-app is designed to help you implement the Pomodoro Technique in your daily work routine. With our easy-to-use interface, you can set your work and break intervals and get started with your Pomodoro sessions in no time. Our app also comes with a timer that will alert you when it's time to take a break or start a new Pomodoro session, so you can stay on track and achieve your goals.
-    h1.title What Is the Pomodoro Technique?
-    p.text The Pomodoro Technique is a time management strategy developed by Francesco Cirillo in the late 1980s. The technique involves breaking work into 25-minute intervals, called "Pomodoros," separated by short breaks. After four Pomodoros, a longer break is taken. This technique helps individuals to focus on one task at a time and manage their time effectively.
+          | {{content.back}}
+    h1.title {{content.title}}
+    p.text {{content.about_the_website}}
+    h1.title {{content.what_is_the_pomodoro}}
+    p.text {{content.pomodoro_definition}}
     FeedBackSection
 AboutFooter
 .h-16.bg-app-tertiary
@@ -21,6 +21,7 @@ AboutFooter
 import { useRouter } from "vue-router";
 import AboutFooter from "./AboutFooter.vue";
 import FeedBackSection from "./FeedBackSection.vue";
+import content from "@/content/pages/about.json";
 
 const router = useRouter();
 

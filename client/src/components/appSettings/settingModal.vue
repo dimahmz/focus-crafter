@@ -2,38 +2,38 @@
 AppModal(modalStoreSet="showSettingsModal").pt-12.pb-8
   .bg-app-primary.p-8.max-w-lg.mx-auto.max-h-full.overflow-y-auto.rounded-lg
     .flex.justify-between.mb-10.mx-10.items-center
-        h1.font-secondary.font-semibold.text-2xl Settings
+        h1.font-secondary.font-semibold.text-2xl {{content.settings_title}}
         span.close-modal-btn(@click='closeModal')
           v-icon(icon="mdi-close-circle")
     .flex.justify-between.space-x-3
-      AppNpt(nptLabel="Pomodoro"   storeSet="pomodoro_npt")
-      AppNpt(nptLabel="Short break" storeSet="shortBreak_npt")
-      AppNpt(nptLabel="Long break" storeSet="longBreak_npt")
+      AppNpt(:nptLabel="content.pomodoro_label"   storeSet="pomodoro_npt")
+      AppNpt(:nptLabel="content.short_break_label" storeSet="shortBreak_npt")
+      AppNpt(:nptLabel="content.long_break_label" storeSet="longBreak_npt")
     .px-4
       Line
       .flex-column.space-y-3      
         ChangeAset(
-            label="Auto start Pomodors"
+            :label="content.auto_start_pomodoros_label"
             storeSet="autoStartPomodoros")
         ChangeAset(
-            label="Auto start breaks"
+            :label="content.auto_start_breaks_label"
             storeSet="autoStartBreaks")
       Line
-      SetNpt(label="Rounds before long break")
+      SetNpt(:label="content.rounds_before_long_break_label")
         template(#aNpt)
           AppNpt(:nptValue="settingsStore.state.timer.rounds"
           storeSet="rounds")
       Line
       .flex-column.space-y-4
-        SetNpt(label="Alarm sound")
+        SetNpt(:label="content.alarm_sound_label")
           template(#aNpt)
             SelectAlaramSound(@change="changeAlarmSound")
-        SetNpt(label="Volume")
+        SetNpt(:label="content.volume_label")
           template(#aNpt)
               AppRangeNpt(:nptValue="settingsStore.state.timer.alarmVolume"
                 storeSet="alarmVolume")
       .save-btn-container
-        v-btn(text="save" size="large"  :loading="loadingBtn" @click="saveSettings()") 
+        v-btn(:text="content.save_button_text" size="large"  :loading="loadingBtn" @click="saveSettings()") 
 </template>
 
 <script setup>
@@ -46,6 +46,8 @@ import SelectAlaramSound from "../appBtns/selectAlarmNpt.vue";
 import Line from "./line.vue";
 import AppModal from "../appModal.vue";
 import AppBtn from "../appBtns/appBtn.vue";
+import settings from "@/content/settings.json"
+import content from "@/content/settings.json";
 
 import { useSettingsStore } from "@/stores/settings";
 import { useCounterStore } from "@/stores/timer";

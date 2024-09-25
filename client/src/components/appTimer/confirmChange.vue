@@ -3,7 +3,7 @@
   Next(colors_classes='fill-app-tertiary')
 v-dialog(width='500' v-model='open')
   v-card
-    v-alert(type='info' title='Confirm Change' text='Are you sure you want to change the timer' variant='tonal')
+    v-alert(type='info' :title="content.confirm_change" :text="content.are_you_sure" variant='tonal')
       .w-full.flex.justify-end.space-x-8.pt-5
         v-btn.close-btn(color="black" text='Close' variant="tonal" @click='cancelChange')
         v-btn.confirm-btn(text='confirm' variant="tonal" @click='confirmChange')
@@ -13,6 +13,7 @@ v-dialog(width='500' v-model='open')
 import { ref } from "vue";
 import { useCounterStore } from "@/stores/timer";
 import Next from "../_icons/next.vue";
+import content from "@/content/labels.json"
 
 const timerStore = useCounterStore();
 const open = ref(false);

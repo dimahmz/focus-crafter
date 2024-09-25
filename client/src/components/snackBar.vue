@@ -1,5 +1,7 @@
 <script setup>
 import { useUserStore } from "../stores/user";
+import content from "@/content/labels.json";
+
 const user = useUserStore();
 </script>
 <template>
@@ -19,7 +21,7 @@ const user = useUserStore();
           variant="text"
           @click="user.state.openSnackbar = false"
         >
-          Close
+          {{ content.close }}
         </v-btn>
       </template>
     </v-snackbar>

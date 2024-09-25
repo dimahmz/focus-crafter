@@ -1,9 +1,9 @@
 <template lang="pug">
 v-dialog(v-model='addNewTaskModal' width='400px')
   form(@submit="addNewTask")
-    v-card(title="Add task")
-      v-alert(v-model="openAlert" type="success" closable close-label="Close Alert" 
-        title="Task has been added"
+    v-card(:title="content.add_task")
+      v-alert(v-model="openAlert" type="success" closable :close-label="content.close_alert" 
+        :title="content.task_added"
       )
       .card-body
         .text-npt-container
@@ -11,10 +11,10 @@ v-dialog(v-model='addNewTaskModal' width='400px')
             variant="outlined"
             v-model="state.title"
             :error-messages='v$.title.$errors.map(e => e.$message)' 
-            placeholder="e.g : Reading a book" label="Task name"
+            :placeholder="content.new_task_placeholder" :label="content.task_name"
           )
-        .number-npt-container
-          label Rounds
+        .number-npt-container 
+          label {{content.rounds}}
           v-text-field(
             type="number"
             v-model="state.estimatedPomodoros" 
@@ -23,8 +23,8 @@ v-dialog(v-model='addNewTaskModal' width='400px')
             :error-messages='v$.estimatedPomodoros.$errors.map(e => e.$message)' 
           )
       v-card-actions
-        v-btn( variant="tonal" @click='addNewTaskModal = false') Cancel
-        v-btn.create-btn( variant="tonal" type="submit" :loading="loading") Create
+        v-btn( variant="tonal" @click='addNewTaskModal = false') {{content.cancel}}
+        v-btn.create-btn(variant="tonal" type="submit" :loading="loading") {{content.add}}
 </template>
 <script setup>
 import { ref, reactive, nextTick } from "vue";
@@ -32,6 +32,7 @@ import { useTasksStore } from "@/stores/tasks";
 import { storeToRefs } from "pinia";
 import { useVuelidate } from "@vuelidate/core";
 import { maxLength, required, numeric } from "@vuelidate/validators";
+import content from "@/content/labels.json";
 
 const { addNewTaskModal } = storeToRefs(useTasksStore());
 

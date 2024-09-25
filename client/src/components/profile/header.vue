@@ -3,7 +3,7 @@ header.max-w-4xl.w-full.bg-indigo-900.relative.h-40.mb-32
     .flex.justify-between.items-center.px-8.py-12
         span
             LeftArrow
-        p Edit profile
+        p {{content.edit_profile}}
         span
             RouterLink(:to="{ name : 'home' }" )
                 Home
@@ -29,6 +29,7 @@ import Dots from "../_icons/dots.vue";
 import Home from "../_icons/home.vue";
 import Spinner from "../../components/_loaders/spinner.vue";
 import SignOut from "../../components/_icons/signout.vue";
+import content from "@/content/"
 
 import { onMounted, ref } from "vue";
 import { useUserStore } from "../../stores/user";

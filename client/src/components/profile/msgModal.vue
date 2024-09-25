@@ -7,7 +7,7 @@ section.modal-wrapper
     span(v-else).bg-gray-800.flex-center
       Select
   p {{response.description}}
-  button(@click="closeModal") Confirm
+  button(@click="closeModal") {{conten.confirm}}
 </template>
 
 <script setup>
@@ -16,6 +16,7 @@ import { useUserStore } from "../../stores/user";
 
 import ErrorIcon from "../_icons/error_icon.vue";
 import Select from "../_icons/selected.vue";
+import content from "@/content/labels.json";
 
 const user = useUserStore().state;
 const response = user.serverResponse;

@@ -1,6 +1,6 @@
 <template lang="pug">
 .tasks-container.py-4.relative.flex-column.space-y-5(class="max-w-[400px]")
-  .text-xl(v-if="tasksStore.tasks.length==0") There is no task
+  .text-xl(v-if="tasksStore.tasks.length==0") {{content.no_task}}
   Task(
     v-for="(task , i) in tasksStore.tasks" 
     :key="i"
@@ -8,7 +8,7 @@
     :ndx="i"
   )
   .btn-container    
-    v-btn.mr-0(@click="()=>addNewTaskModal=true") Add Task
+    v-btn.mr-0(@click="()=>addNewTaskModal=true") {{content.add_task}}
 </template>
 
 <script setup>
@@ -21,6 +21,8 @@ import { useTasksStore } from "@/stores/tasks";
 import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
+import content from "@/content/labels.json"
+
 
 const { addNewTaskModal } = storeToRefs(useTasksStore());
 

@@ -14,7 +14,7 @@
       DeleteIcon(ref="deleteTaslIcon")
   .text-center(v-if="task.finishedPomodoros>= task.estimatedPomodoros")
     v-icon(icon="mdi-check") 
-    span Completed
+    span {{content.completed}}
 </template>
 
 <script setup>

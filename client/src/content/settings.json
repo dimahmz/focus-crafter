@@ -1,0 +1,12 @@
+{
+  "settings_title": "Settings",
+  "pomodoro_label": "Pomodoro",
+  "short_break_label": "Short break",
+  "long_break_label": "Long break",
+  "auto_start_pomodoros_label": "Auto start Pomodors",
+  "auto_start_breaks_label": "Auto start breaks",
+  "rounds_before_long_break_label": "Rounds before long break",
+  "alarm_sound_label": "Alarm sound",
+  "volume_label": "Volume",
+  "save_button_text": "save"
+}

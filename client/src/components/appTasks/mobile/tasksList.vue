@@ -1,7 +1,7 @@
 <template lang="pug">
 v-dialog(v-model='taskListMobile' width='400px')
   v-card.px-4.py-4
-    .text-xl.text-center(v-if="tasksStore.tasks.length==0") There is no task
+    .text-xl.text-center(v-if="tasksStore.tasks.length==0") {{content.no_task}}
     .tasks-container.py-4.relative.flex-column.space-y-5
       Task(v-for="(task , i) in tasksStore.tasks" :key="i" :task="task" :ndx="i")
       .btn-container
@@ -17,6 +17,7 @@ import { useTasksStore } from "@/stores/tasks";
 import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
+import content from "@/content/labels.json";
 
 const { taskListMobile, addNewTaskModal } = storeToRefs(useTasksStore());
 

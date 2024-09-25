@@ -7,9 +7,9 @@ header.w-full.text-center.flex-column
       router-link(:to="{name : 'home'}")
         img.w-14.mt-0(src="/logo.png")
   div.flex-column.space-y-2
-    h1(class="text-[#0c1A10]").text-2xl.font-semibold Good Afternoon
-    p(class="text-[#595959]") Focus on being productive instead of busy.
-  h2.text-start.text-2xl.py-2.font-semibold.text-app-tertiary Sing In
+    h1(class="text-[#0c1A10]").text-2xl.font-semibold {{content.greetings}}
+    p(class="text-[#595959]") {{content.message}} 
+  h2.text-start.text-2xl.py-2.font-semibold.text-app-tertiary {{content.singin}} 
 </template>
 
 <style scoped>
@@ -17,3 +17,7 @@ header.w-full.text-center.flex-column
   @apply flex justify-center mb-5 md:hidden;
 }
 </style>
+
+<script setup>
+import content from "@/content/pages/login.json"
+</script>

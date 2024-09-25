@@ -1,13 +1,14 @@
 <template lang="pug">
 .px-4.grid.place-items-center.font-primary
   .btns-container
-    button(:class="{ activeTimer: timer.startingPomodoroTimer }" @click="timer.goToPomodoro()") Pomodoro
-    button(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") Short break
-    button(:class="{ activeTimer: timer.startingLongBreakTimer }" @click="timer.getAlongBreak()") Long break
+    button(:class="{ activeTimer: timer.startingPomodoroTimer }" @click="timer.goToPomodoro()") {{content.pomodoro}}
+    button(:class="{ activeTimer: timer.startingShortBreakTimer }" @click="timer.getAshortBreak()") {{content.short_break}}
+    button(:class="{ activeTimer: timer.startingLongBreakTimer }" @click="timer.getAlongBreak()") {{content.long_break}}
 </template>
 <script setup>
 import { useTasksStore } from "@/stores/tasks";
 import { useCounterStore } from "@/stores/timer";
+import content from "@/content/labels.json";
 
 const tasksStore = useTasksStore();
 const timer = useCounterStore();
