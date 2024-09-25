@@ -29,7 +29,6 @@ import Dots from "../_icons/dots.vue";
 import Home from "../_icons/home.vue";
 import Spinner from "../../components/_loaders/spinner.vue";
 import SignOut from "../../components/_icons/signout.vue";
-import content from "@/content/"
 
 import { onMounted, ref } from "vue";
 import { useUserStore } from "../../stores/user";
