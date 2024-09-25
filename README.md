@@ -56,7 +56,7 @@ cd server
 
 npm install
 
-mv .env.example .env
+cp .env.example .env
 
 ```
 <h4>open the .env file and fill in these environment  varaibles </h4>
