@@ -1,12 +1,12 @@
 <template lang="pug">
 .flex.flex-col.justify-center.space-y-2
   p.text-center {{ nptLabel }}
-  .custom-number-input.h-9.w-28
+  div(class="sm:w-28").custom-number-input.h-9.w-24
     .flex.flex-row.w-full.rounded-2xl.relative.mt-1.bg-app-secondary.p-1
-      button.h-full.w-16.cursor-pointer.outline-none(@click="decrement")
+      button.p-1.h-full.w-12.cursor-pointer.outline-none(@click="decrement" class="sm:w-16")
         span.m-auto.text-2xl.font-semibold &minus;
       input.outline-none.text-center.w-full.font-semibold.text-md.flex.items-center.outline-none(type='number' class='focus:outline-none md:text-basecursor-default' v-model="settingsStore.state.timer[storeSet]" min="1")
-      button.h-full.w-16.rounded-r.cursor-pointer(data-action='increment' @click="increment")
+      button.p-1.h-full.w-10.rounded-r.cursor-pointer(data-action='increment' @click="increment" class="sm:w-16")
         span.m-auto.text-2xl.font-semibold &plus;
 </template>
 
