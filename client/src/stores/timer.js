@@ -44,10 +44,10 @@ export const useCounterStore = defineStore("counter", {
     },
     getCurrentTimerValue() {
       if (this.startingPomodoroTimer)
-        return `Focus time- ${this.getPomodoroCounter}`;
+        return `${this.getPomodoroCounter} - Focus Time`;
       if (this.startingShortBreakTimer)
-        return `Break time- ${this.getShortBreakCounter}`;
-      return `Break time- ${this.getLongBreakCounter}`;
+        return `${this.getShortBreakCounter} - Break Time`;
+      return `${this.getLongBreakCounter} - Break Time`;
     },
   },
   actions: {
