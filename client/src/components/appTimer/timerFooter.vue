@@ -21,6 +21,7 @@ import Next from "../_icons/next.vue";
 import { useCounterStore } from "@/stores/timer";
 import { useTasksStore } from "@/stores/tasks";
 import ConfirmModal from "./confirmChange.vue";
+import { onMounted, onUnmounted } from "vue";
 
 const tasksStore = useTasksStore();
 const timerStore = useCounterStore();
@@ -32,6 +33,25 @@ function start() {
     timerStore.startShortBreakTimer();
   else timerStore.startLongBreakTimer();
 }
+
+
+// toggle the timer when the space bar is clicked
+function onSpaceClicked(event) {
+  if (event.code == "Space") {
+    if(timerStore.isTimerCounting) timerStore.pauseOrResumeTimer()
+    else start()
+  }
+}
+
+onMounted(() => {
+  //add a listner to to catch the user confirmation before leaving the page
+  document.addEventListener("keyup", onSpaceClicked);
+});
+
+// remove keyboard event listener
+onUnmounted(() => {
+  document.removeEventListener("keyup", onSpaceClicked);
+});
 
 // change the timer
 </script>
