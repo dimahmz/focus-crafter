@@ -23,7 +23,7 @@ export const useSettingsStore = defineStore("settings", () => {
       notifyTime: 5,
       rounds: 4,
       alarmVolume: 0.5,
-      selectedAlarm: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
+      selectedAlarm: "/alarms/alarm-bird.mp3",
       finishedPomodoros: 0,
     },
   });
@@ -38,23 +38,23 @@ export const useSettingsStore = defineStore("settings", () => {
     alarmSound: [
       {
         text: "Bell",
-        value: "https://pomofocus.io/audios/alarms/alarm-bell.mp3",
+        value: "/alarms/alarm-bell.mp3",
       },
       {
         text: "Bird",
-        value: "https://pomofocus.io/audios/alarms/alarm-bird.mp3",
+        value: "/alarms/alarm-bird.mp3",
       },
       {
         text: "digital",
-        value: "https://pomofocus.io/audios/alarms/alarm-digital.mp3",
+        value: "/alarms/alarm-digital.mp3",
       },
       {
         text: "kitchen",
-        value: "https://pomofocus.io/audios/alarms/alarm-kitchen.mp3",
+        value: "/alarms/alarm-kitchen.mp3",
       },
       {
         text: "wood",
-        value: "https://pomofocus.io/audios/alarms/alarm-wood.mp3",
+        value: "/alarms/alarm-wood.mp3",
       },
     ],
   });
